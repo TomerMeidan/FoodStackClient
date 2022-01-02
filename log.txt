@@ -1,0 +1,56 @@
+######################## NEW RUN ############################
+2022-01-02 23:18:03 D BMClient: ComController initialized
+2022-01-02 23:18:03 D LoginPortalView: loginWindow initialized
+2022-01-02 23:18:03 I LoginWindow: showing window
+2022-01-02 23:18:03 D ComController: PortalView initialized
+2022-01-02 23:18:03 D ComController: connection established
+2022-01-02 23:18:04 D LoginWindow: updating status to: connected
+2022-01-02 23:18:09 I LoginWindow: login button was pressed
+2022-01-02 23:18:09 D ComController: Received message from server
+2022-01-02 23:18:09 D ComController: message : {"portalType":"Branch Manager","FirstName":"Romi","LastName":"Milmi","userID":"4","branch":"Center","command":"handshake","status":"ok"}
+2022-01-02 23:18:09 I ComController: messageType: handshake
+2022-01-02 23:18:09 D BranchManagerPortalView: branchManagerHomePage initialized
+2022-01-02 23:18:09 I BranchManagerHomePage: showing window
+2022-01-02 23:18:10 I BranchManagerHomePage: supplier registration button was pressed
+2022-01-02 23:18:10 D ComController: Received message from server
+2022-01-02 23:18:10 D ComController: message : {"suppliers":[{"last name":"Loðbrók","first name":"Ragnarr ","supplier name":"BBB.C","phone number":"0541125487","email":"Ragnarr@gmail.con"},{"last name":"Dir","first name":"Shir","supplier name":"Japanika.C","phone number":"0574541258","email":"Shir@gmail.con"}],"update":"show supplier registration window","command":"update"}
+2022-01-02 23:18:11 D BranchManagerPortalView: BranchManagerSupplierRgstrWindow initialized
+2022-01-02 23:18:11 I BranchManagerSupplierRgstrWindow: showing window
+2022-01-02 23:18:24 D ComController: Received message from server
+2022-01-02 23:18:24 D ComController: message : {"supplier name":"Japanika.C","update":"supplier has been registered","command":"update"}
+2022-01-02 23:18:25 I BranchManagerSupplierRgstrWindow: back button was pressed
+2022-01-02 23:18:25 I BranchManagerHomePage: showing window
+2022-01-02 23:18:25 W BranchManagerHomePage: exception in showWindow
+2022-01-02 23:18:26 I BranchManagerHomePage: logout button was pressed
+2022-01-02 23:18:26 D ComController: Received message from server
+2022-01-02 23:18:26 D ComController: message : {"portalType":"login","command":"handshake","status":"ok"}
+2022-01-02 23:18:26 I ComController: messageType: handshake
+2022-01-02 23:18:26 D LoginPortalView: loginWindow initialized
+2022-01-02 23:18:26 I LoginWindow: showing window
+2022-01-02 23:18:26 W LoginPortalView: Logged out
+2022-01-02 23:18:26 D LoginWindow: updating status to: connected
+2022-01-02 23:18:31 I LoginWindow: login button was pressed
+2022-01-02 23:18:31 D ComController: Received message from server
+2022-01-02 23:18:31 D ComController: message : {"portalType":"Customer","FirstName":"Mos","LastName":"\tHadi","userID":"9","branch":"South","command":"handshake","status":"ok"}
+2022-01-02 23:18:31 I ComController: messageType: handshake
+2022-01-02 23:18:31 D CustomerPortalView: Customer related windows initialized
+2022-01-02 23:18:31 I CustomerWindow: showing window
+2022-01-02 23:18:32 D ComController: Received message from server
+2022-01-02 23:18:32 D ComController: message : {"employerID":null,"address":"Kama","phoneNumber":"544435241","creditNumber":"545123","update":"W4C found","ID":"51335","command":"update","email":"Mos@gmail.com"}
+2022-01-02 23:18:32 I CustomerWindow: Order button was clicked
+2022-01-02 23:18:32 D ComController: Received message from server
+2022-01-02 23:18:32 D ComController: message : {"update":"Show order window","command":"update"}
+2022-01-02 23:18:32 I OrderWindow: showing window
+2022-01-02 23:18:32 D ComController: Received message from server
+2022-01-02 23:18:32 D ComController: message : {"restaurantList":[{"phoneNumber":"546635241","supplierID":"7","restaurantName":"Pizza Hut.S","branch":"South","deliveryTypes":"YYY"},{"phoneNumber":"0574541258","supplierID":"15","restaurantName":"Japanika.C","branch":"Center","deliveryTypes":"YYY"}],"update":"Show restaurant list","command":"update"}
+2022-01-02 23:18:32 I OrderWindow: Showing restaurants
+2022-01-02 23:18:34 D ComController: Received message from server
+2022-01-02 23:18:34 D ComController: message : {"update":"Show restaurant list","command":"update"}
+2022-01-02 23:18:34 I OrderWindow: Showing restaurants
+2022-01-02 23:18:43 I CustomerWindow: showing window
+2022-01-02 23:18:43 W CustomerWindow: exception in showWindow
+2022-01-02 23:18:57 D ComController: connection exception
+2022-01-02 23:18:58 D trying to connect...
+2022-01-02 23:18:58 D LoginPortalView: loginWindow initialized
+2022-01-02 23:18:58 I LoginWindow: showing window
+2022-01-02 23:18:58 D ComController: PortalView initialized

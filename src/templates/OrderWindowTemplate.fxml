@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="638.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaFXControllers.Customer.OrderWindow">
+   <children>
+      <VBox fx:id="pathVBox" prefHeight="638.0" prefWidth="233.0" style="-fx-background-color: #D93B48;">
+         <children>
+            <ImageView fx:id="foodStackIcon" fitHeight="125.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true">
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+               <VBox.margin>
+                  <Insets left="50.0" top="10.0" />
+               </VBox.margin>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" text="Foodstack" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="72.0" prefWidth="226.0" style="-fx-background-color: #D93B48;">
+               <children>
+                  <Pane fx:id="homePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="7.0" style="-fx-background-color: #D93B48;" />
+                  <ImageView fx:id="homeIcon" fitHeight="60.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="30.0" top="7.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="Home" textFill="WHITE" />
+               </children>
+            </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox fx:id="restaurantHBox" prefHeight="72.0" prefWidth="226.0" style="-fx-background-color: #F24444;">
+                     <children>
+                        <Pane fx:id="restaurantsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="7.0" style="-fx-background-color: #F2C12E;" />
+                        <ImageView fx:id="restaurantIcon" fitHeight="60.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="30.0" top="7.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="Restaurants" textFill="WHITE" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="mealsHBox" prefHeight="72.0" prefWidth="226.0" style="-fx-background-color: #D93B48;">
+                     <children>
+                        <Pane fx:id="mealsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="7.0" style="-fx-background-color: #D93B48;" />
+                        <ImageView fx:id="mealsIcon" fitHeight="60.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="30.0" top="7.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="Meals" textFill="WHITE" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="deliveryHBox" prefHeight="72.0" prefWidth="226.0" style="-fx-background-color: #D93B48;">
+                     <children>
+                        <Pane fx:id="deliveryPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="7.0" style="-fx-background-color: #D93B48;" />
+                        <ImageView fx:id="deliveryIcon" fitHeight="60.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="30.0" top="10.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="Delivery" textFill="WHITE" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="72.0" prefWidth="226.0" style="-fx-background-color: #D93B48;">
+                     <children>
+                        <Pane fx:id="paymentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="7.0" style="-fx-background-color: #D93B48;" />
+                        <ImageView fx:id="paymentIcon" fitHeight="60.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="30.0" top="7.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="Payment" textFill="WHITE" />
+                     </children>
+                  </HBox>
+                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="234.0" style="-fx-background-color: #F24444;" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Pane prefHeight="45.0" prefWidth="46.0" style="-fx-background-color: #F24444;">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Pane>
+                        <ImageView fitHeight="45.0" fitWidth="48.0">
+                           <image>
+                              <Image url="@Icons/backArrow.png" />
+                           </image>
+                        </ImageView>
+                        <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="101.0" style="-fx-background-color: #F24444;" text="back" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="90.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </VBox>
+      <HBox prefHeight="638.0" prefWidth="10.0" style="-fx-background-color: #F2C12E;" />
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+         <children>
+            <HBox prefHeight="98.0" prefWidth="700.0">
+               <children>
+                  <Label fx:id="userLabel" prefHeight="27.0" prefWidth="232.0" text="Label" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="Order" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="50.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button fx:id="cart" mnemonicParsing="false" onAction="#showCart" text="Shopping Cart">
+                     <HBox.margin>
+                        <Insets left="200.0" top="30.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Separator>
+            <HBox prefHeight="48.0" prefWidth="901.0">
+               <children>
+                  <Label fx:id="titleLabel" maxWidth="1.7976931348623157E308" text="Choose a restaurant" underline="true">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                  <Label maxWidth="1.7976931348623157E308" text="Branch">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="11.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ComboBox fx:id="choices" nodeOrientation="LEFT_TO_RIGHT" onAction="#onComboBox" prefHeight="30.0" prefWidth="200.0" visibleRowCount="3">
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </ComboBox>
+               </children>
+            </HBox>
+            <HBox fx:id="questionHBox" prefHeight="43.0" prefWidth="901.0" VBox.vgrow="NEVER">
+               <padding>
+                  <Insets left="10.0" />
+               </padding></HBox>
+            <HBox prefHeight="325.0" prefWidth="902.0">
+               <children>
+                  <VBox fx:id="mainVBox" prefHeight="305.0" prefWidth="902.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="36.0" prefWidth="901.0">
+               <children>
+                  <Label fx:id="feedBackLabel" text="Label" textFill="#f50202">
+                     <HBox.margin>
+                        <Insets left="550.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="44.0" prefWidth="902.0">
+               <children>
+                  <Button fx:id="checkOutButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCheckOutButton" prefHeight="39.0" prefWidth="383.0" style="-fx-background-color: #D93B48;" text="CHECKOUT" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="25.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="nextButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="39.0" prefWidth="383.0" style="-fx-background-color: #D93B48;" text="NEXT" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="90.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <HBox.margin>
+            <Insets bottom="10.0" right="10.0" />
+         </HBox.margin>
+      </VBox>
+   </children>
+</HBox>

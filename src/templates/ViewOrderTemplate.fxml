@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="638.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaFXControllers.Customer.ViewOrderWindow">
+   <children>
+      <VBox fx:id="pathVBox" prefHeight="638.0" prefWidth="233.0" style="-fx-background-color: #D93B48;">
+         <children>
+            <ImageView fx:id="foodStackIcon" fitHeight="125.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true">
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+               <VBox.margin>
+                  <Insets left="50.0" top="10.0" />
+               </VBox.margin>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" text="Foodstack" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="72.0" prefWidth="226.0" style="-fx-background-color: #D93B48;">
+               <children>
+                  <Pane fx:id="homePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="7.0" style="-fx-background-color: #D93B48;" />
+                  <ImageView fx:id="homeIcon" fitHeight="60.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="30.0" top="7.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="Home" textFill="WHITE" />
+               </children>
+            </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox prefHeight="72.0" prefWidth="226.0" style="-fx-background-color: #F24444;">
+                     <children>
+                        <Pane fx:id="restaurantsPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="7.0" style="-fx-background-color: #F2C12E;" />
+                        <ImageView fx:id="restaurantIcon" fitHeight="60.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <HBox.margin>
+                              <Insets left="30.0" top="7.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="View Orders" textFill="WHITE" />
+                     </children>
+                  </HBox>
+                  <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBackButton" prefHeight="39.0" prefWidth="198.0" style="-fx-background-color: #F24444;" text="BACK" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="15.0" top="280.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </VBox>
+      <HBox prefHeight="638.0" prefWidth="10.0" style="-fx-background-color: #F2C12E;" />
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" text="View Orders" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="50.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Separator>
+            <HBox prefHeight="325.0" prefWidth="902.0">
+               <children>
+                  <VBox fx:id="restaurantVBoxList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="902.0">
+                     <HBox.margin>
+                        <Insets top="-10.0" />
+                     </HBox.margin>
+                     <children>
+                        <Label text="Current active orders">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="345.0" top="15.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TableView fx:id="tableView" prefHeight="399.0" prefWidth="902.0">
+                          <columns>
+                            <TableColumn fx:id="orderIDColumn" prefWidth="75.0" text="OrderID" />
+                            <TableColumn fx:id="restaurantNameColumn" prefWidth="142.0" text="RestaurantName" />
+                              <TableColumn fx:id="statusColumn" prefWidth="122.0" text="Order Status" />
+                              <TableColumn fx:id="orderTimeColumn" prefWidth="185.0" text="Order Time" />
+                              <TableColumn fx:id="orderDueColumn" minWidth="0.0" prefWidth="166.0" text="Due Time" />
+                              <TableColumn fx:id="totalColumn" prefWidth="114.0" text="Total" />
+                          </columns>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </TableView>
+                     </children></VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="62.0" prefWidth="902.0">
+               <children>
+                  <Button fx:id="viewButton" mnemonicParsing="false" onAction="#onViewButton" prefHeight="34.0" prefWidth="133.0" style="-fx-background-color: #F24444;" text="View Order Details" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="200.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="approveButton" mnemonicParsing="false" onAction="#onApproveButton" prefHeight="34.0" prefWidth="133.0" style="-fx-background-color: #F24444;" text="Approve Reception" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="250.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children></HBox>
+         </children>
+         <HBox.margin>
+            <Insets bottom="10.0" right="10.0" />
+         </HBox.margin>
+      </VBox>
+   </children>
+</HBox>

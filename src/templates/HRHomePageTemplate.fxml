@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaFXControllers.HR.HRHomePageWindow">
+   <children>
+      <VBox prefHeight="575.0" prefWidth="220.0" style="-fx-background-color: #D93B48;">
+         <children>
+            <ImageView blendMode="LIGHTEN" fitHeight="106.0" fitWidth="204.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets left="50.0" />
+               </VBox.margin>
+               <image>
+                  <Image url="@../../../../../Desktop/מטלה%20ממשק/pictures/BiteMe-logo-red.png" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" text="Foodstack" textFill="WHITE" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="21.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Label>
+            <HBox layoutX="10.0" layoutY="147.0" prefHeight="65.0" prefWidth="233.0" style="-fx-background-color: #F24744;">
+               <children>
+                  <Pane prefHeight="65.0" prefWidth="9.0" style="-fx-background-color: #F2C12E;">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Pane>
+                  <Pane prefHeight="65.0" prefWidth="21.0" style="-fx-background-color: #F24744;">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Pane>
+                  <ImageView blendMode="ADD" fitHeight="53.0" fitWidth="49.0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../../../../../Desktop/מטלה%20ממשק/pictures/homepage-icon.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" prefHeight="65.0" prefWidth="78.0" text="Home" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <opaqueInsets>
+                  <Insets top="20.0" />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="407.0" prefHeight="60.0" prefWidth="233.0" VBox.vgrow="ALWAYS" />
+            <HBox prefHeight="44.0" prefWidth="233.0" style="-fx-background-color: #F24444;">
+               <children>
+                  <Pane prefHeight="45.0" prefWidth="46.0" style="-fx-background-color: #F24444;">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Pane>
+                  <ImageView fitHeight="45.0" fitWidth="49.0">
+                     <image>
+                        <Image url="@../../../../../Desktop/Icons/backArrow.png" />
+                     </image>
+                  </ImageView>
+                  <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLogoutButton" prefHeight="44.0" prefWidth="92.0" style="-fx-background-color: #F24444;" text="Logout" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+      <Pane prefHeight="575.0" prefWidth="10.0" style="-fx-background-color: #F2C12E;" />
+      <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="756.0">
+         <children>
+            <Label fx:id="welcomeLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="756.0" text="Welcome, HR" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Separator maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="730.0">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Separator>
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="756.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="317.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Button alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onRegisterEmployer" prefHeight="56.0" prefWidth="245.0" style="-fx-background-color: #D93B48;" text="Register Employer" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Button>
+                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onApproveBusinessAccount" prefHeight="56.0" prefWidth="245.0" style="-fx-background-color: #D93B48;" text="Approve Business Account" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="50.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>

@@ -41,7 +41,14 @@ public class SupplierWindow {
 	private Button updateStatusButton;
 	@FXML
     private Button receiptsButton;
-	
+	/**
+	 * Initialize method. The method initialize the parameters and the values of
+	 * this class
+	 * 
+	 * @param VBox supplierVBoxT - object of the all screen, Stage primaryStage,
+	 *             SupplierPortalView view - expression the communication between
+	 *             client - server
+	 */
 	@SuppressWarnings("unchecked")
 	public void init(VBox supplierVBoxTry, Stage primaryStage, SupplierPortalView view) {
 		this.supplierVBoxLoaded = supplierVBoxTry;
@@ -49,7 +56,12 @@ public class SupplierWindow {
 		this.view = view;
 		this.scene = new Scene(supplierVBoxLoaded);
 	}
-
+	/**
+	 * Present empty screen of "home page" and notify to sever that this window is
+	 * ready
+	 * 
+	 * @see tamplate of "home page"
+	 */
 	public void showWindow() {
 		// log
 		Logger.log(Level.INFO, "SupplierWindow: showing window");
@@ -70,7 +82,13 @@ public class SupplierWindow {
 		});
 
 	}
-
+	/**
+	 * clickOnLogOutButton
+	 * 
+	 * This method called when 'Event' occurred to 'LogOut' button.
+	 * This method sends to server event if 'LogOut' happened.
+	 * @param ActionEvent event.
+	 */
 	@FXML
 	void clickOnLogOutButton(ActionEvent event) throws Exception {
 		Logger.log(Level.INFO, "SupplierWindow: clickOnLogOutButton");
@@ -80,7 +98,13 @@ public class SupplierWindow {
 		json.put("command", "clickOnLogOutButton");
 		view.getComController().handleUserAction(json);
 	}
-
+	/**
+	 * clickOnUpdateButton
+	 * 
+	 * This method called when 'Event' occurred to 'Update Menu' button.
+	 * This method sends to server event if 'Update Menu' happened.
+	 * @param ActionEvent event.
+	 */
 	@FXML
 	void clickOnUpdateButton(ActionEvent event) {
 		Logger.log(Level.INFO, "SupplierWindow: clickOnUpdateButton");
@@ -89,7 +113,13 @@ public class SupplierWindow {
 		json.put("command", "Update menu was clicked");
 		view.ready(json);
 	}
-
+	/**
+	 * clickOnUpdateStatusButton
+	 * 
+	 * This method called when 'Event' occurred to 'Update Status' button.
+	 * This method sends to server event if 'Update Status' happened.
+	 * @param ActionEvent event.
+	 */
 	@FXML
     void clickOnUpdateStatusButton(ActionEvent event) {
 		Logger.log(Level.INFO, "SupplierWindow: clickOnUpdateStatusButton");
@@ -98,7 +128,13 @@ public class SupplierWindow {
 		json.put("command", "Update status was clicked");
 		view.ready(json);
     }
-
+	/**
+	 * clickOnReceiptsButton
+	 * 
+	 * This method called when 'Event' occurred to 'Receipts' button.
+	 * This method sends to server event if 'Receipts' happened.
+	 * @param ActionEvent event.
+	 */
 	 @FXML
 	    void clickOnReceiptsButton(ActionEvent event) {
 		 Logger.log(Level.INFO, "SupplierWindow: clickOnReceiptsButton");

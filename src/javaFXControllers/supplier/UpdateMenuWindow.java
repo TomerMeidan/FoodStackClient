@@ -55,7 +55,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-
+import javafx.scene.image.ImageView;
 /**
  * functionality of update menu action Add type, edit type, add meal (needs
  * enter to specified type), edit meal.
@@ -110,6 +110,12 @@ public class UpdateMenuWindow {
 	@FXML
 	private Pane sidePaneMeal;
 
+	@FXML
+    private ImageView imageType;
+
+	 @FXML
+	 private ImageView imageMeals;
+	 
 	/**
 	 * Initialize method. The method initialize the parameters and the values of
 	 * this class
@@ -140,24 +146,33 @@ public class UpdateMenuWindow {
 		editOpArr = new JSONArray();
 	}
 
+	/**
+	 * The method responsible to indicate that the user on the meals update stage
+	 */
 	public void barToMeal() {
 		sidePaneType.setStyle("-fx-background-color: #D93B48;");
 		sidePaneMeal.setStyle("-fx-background-color:  #F2C12E;");
 		paneType.setStyle("-fx-background-color: #D93B48;");
-		paneType.setText("");
 		paneMeal1.setStyle("-fx-background-color:   #F24444;");
-		paneMeal1.setText("Update Meals");
+		Image img = new Image("templates\\Icons\\Types.jpeg");
+		imageType.setImage(img);
+		img = new Image("templates\\Icons\\MealsS.jpeg");
+		imageMeals.setImage(img);
 
 	}
 	
+	/**
+	 * The method responsible to indicate that the user on the types update stage
+	 */
 	public void barToType() {
 		sidePaneMeal.setStyle("-fx-background-color: #D93B48;");
 		sidePaneType.setStyle("-fx-background-color:  #F2C12E;");
 		paneMeal1.setStyle("-fx-background-color: #D93B48;");
-		paneMeal1.setText("");
 		paneType.setStyle("-fx-background-color:   #F24444;");
-		paneType.setText("Update Meals");
-
+		Image img = new Image("templates\\Icons\\TypesS.jpeg");
+		imageType.setImage(img);
+		img = new Image("templates\\Icons\\Meals.jpeg");
+		imageMeals.setImage(img);
 	}
 
 	/**
@@ -197,6 +212,10 @@ public class UpdateMenuWindow {
 		});
 	}
 
+	/**
+	 * Private method that design a button.
+	 * @param Button button - button to be designed , int height - height of button , int width - width of button, String colorBack - color of button 
+	 */
 	private void designButton(Button button, int height, int width, String colorBack) {
 		button.setPrefHeight(height);
 		button.setPrefWidth(width);

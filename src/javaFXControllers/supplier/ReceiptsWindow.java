@@ -45,7 +45,17 @@ public class ReceiptsWindow {
 	private VBox supplierVBox;
 	@FXML
 	private Label labelSide;
-
+	
+	/**
+	 * init
+	 * 
+	 * Initialize method. The method initialize the parameters and the values of
+	 * this class
+	 * 
+	 * @param VBox supplierVBoxT - object of the all screen, Stage primaryStage,
+	 *             SupplierPortalView view - expression the communication between
+	 *             client - server
+	 */
 	@SuppressWarnings("unchecked")
 	public void init(VBox supplierVBoxTry, Stage primaryStage, SupplierPortalView view) {
 		this.supplierVBoxLoaded = supplierVBoxTry;
@@ -54,6 +64,15 @@ public class ReceiptsWindow {
 
 	}
 
+	/**
+	 * showWindow
+	 * 
+	 * Present empty screen of "Receipts" and notify to sever that this window
+	 * is ready
+	 * 
+	 * @param ID of the supplier
+	 * @see tamplate of "Receipts"
+	 */
 	public void showWindow(String userID) {
 		// log
 		Logger.log(Level.INFO, "ReceiptsWindow: showing window");
@@ -84,7 +103,13 @@ public class ReceiptsWindow {
 		});
 
 	}
-
+	/**
+	 * clickOnBackButton
+	 * 
+	 * This method called when 'Event' occurred to 'Back' button.
+	 * This method sends to server event if 'Back' happened.
+	 * @param ActionEvent event.
+	 */
 	@FXML
 	void clickOnBackButton(ActionEvent event) {
 
@@ -95,7 +120,14 @@ public class ReceiptsWindow {
 			}
 		});
 	}
-
+	/**
+	 * showReceipt 
+	 * 
+	 * Add receipt list of this month(default year) to the "Receipts". the
+	 * list presented bills after fees.
+	 * @param JSONObject descriptor - include JSONArray of receipts list.
+	 * @see Receipts list of this month.
+	 */
 	public void showReceipt(JSONObject descriptor) {
 		JSONArray receipts = (JSONArray) descriptor.get("receipts");
 		Platform.runLater(() -> {

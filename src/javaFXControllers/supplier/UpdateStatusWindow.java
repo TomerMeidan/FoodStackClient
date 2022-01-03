@@ -125,7 +125,10 @@ public class UpdateStatusWindow {
 		});
 	}
 
-	
+	/**
+	 * Private method that design a button.
+	 * @param Button button - button to be designed , int height - height of button , int width - width of button, String colorBack - color of button 
+	 */
 	private void designButton(Button button, int height, int width, String colorBack) {
 		button.setPrefHeight(height);
 		button.setPrefWidth(width);

@@ -14,6 +14,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+/**
+ * HRPortalView
+ * 
+ * This class is the portalView which handles HR behavior.
+ * This class implements PortalViewInterface.
+ * This class holds all the javaFX controllers which HR uses.
+ * Holds ComController to send messages.
+ * Holds JSONObject personalInfo,which holds: portalType,FirstName,LastName,branch.
+ * @author Roman Milman
+ */
 public class HRPortalView implements PortalViewInterface {
 
 	private ComController com;
@@ -33,6 +43,15 @@ public class HRPortalView implements PortalViewInterface {
 		this.com = com;
 	}
 
+	/**
+	 * init
+	 * 
+	 * This method initializing all the javaFX controllers.
+	 * Sets personalInfo to JSONObject descriptor, received from server.
+	 * Calls showWindow to show HR's home page.
+	 * @param JSONObject descriptor
+	 * @author Roman Milman
+	 */
 	@Override
 	public void init(JSONObject descriptor) {
 
@@ -88,6 +107,13 @@ public class HRPortalView implements PortalViewInterface {
 
 	}
 
+	/**
+	 * handleMsg
+	 * 
+	 * This method handles HR's messages received from server.
+	 * @param descriptor - read's 'command' key to define which handleCommand method to call.
+	 * @author Roman Milman
+	 */
 	@Override
 	public void handleMsg(JSONObject descriptor) {
 
@@ -105,6 +131,13 @@ public class HRPortalView implements PortalViewInterface {
 
 	}
 
+	/**
+	 * handleUpdateCommand
+	 * 
+	 * This method handles HR's update messages received from server.
+	 * @param descriptor - read's 'update' key to define what to do.
+	 * @author Roman Milman
+	 */
 	private void handleUpdateCommand(JSONObject descriptor) {
 		String updateType = Message.getValue(descriptor, "update");
 
@@ -134,26 +167,60 @@ public class HRPortalView implements PortalViewInterface {
 		}
 	}
 
+	/**
+	 * ready
+	 * 
+	 * This method sends the server (Window name here) is ready.
+	 * @param descriptor - 'command' key specifies which window is ready.
+	 * @author Roman Milman
+	 */
 	@Override
 	public void ready(JSONObject json) {
 		com.handleUserAction(json);
 	}
 
+	/**
+	 * getComController
+	 * 
+	 * This method returns ComController instance.
+	 * @return ComController
+	 * @author Roman Milman
+	 */
 	@Override
 	public ComController getComController() {
 		return com;
 	}
 
+	/**
+	 * showHRHomePage
+	 * 
+	 * This method shows HRs home page.
+	 * @author Roman Milman
+	 */
 	public void showHRHomePage() {
 		hrHomePageWindow.showWindow(personalInfo);
 
 	}
 
-	public Object getEmployerID() {
+	/**
+	 * getEmployerID
+	 * 
+	 * This method returns this HRs employerID from personalInfo
+	 * @return String
+	 * @author Roman Milman
+	 */
+	public String getEmployerID() {
 		return Message.getValue(personalInfo, "employerID");
 	}
-
-	public Object getBranch() {
+	
+	/**
+	 * getBranch
+	 * 
+	 * This method returns this HRs branch from personalInfo
+	 * @return String
+	 * @author Roman Milman
+	 */
+	public String getBranch() {
 		return Message.getValue(personalInfo, "branch");
 	}
 

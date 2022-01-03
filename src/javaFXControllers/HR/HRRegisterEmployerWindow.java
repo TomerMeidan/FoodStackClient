@@ -31,11 +31,19 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import util.W4C;
 
+/**
+ * HRRegisterEmployerWindow
+ * 
+ * This class is the javaFX controller for HREmployerRegistrationTemplate.fxml
+ * This class holds primaryStage, scene, registerEmployerRoot, view, registerButtonMap, employers.
+ * JSONArray employers - Array of employers with their info.
+ * @author Roman Milman
+ */
 public class HRRegisterEmployerWindow {
 
 	private Stage primaryStage;
 	private Scene scene;
-	private HBox employerRgstrHBox;
+	private HBox registerEmployerRoot;
 	private HRPortalView view;
 	private HashMap<String, Button> registerButtonMap;
 
@@ -72,13 +80,32 @@ public class HRRegisterEmployerWindow {
 	@FXML
 	private Button registerButton;
 
-	public void init(HBox employerRgstrHBox, Stage primaryStage, HRPortalView view) {
-		this.employerRgstrHBox = employerRgstrHBox;
+	/**
+	 * init
+	 * 
+	 * This method initializes the needed parameters for this controller.
+	 * @param HBox registerEmployerRoot
+	 * @param Stage primaryStage
+	 * @param BranchManagerPortalView view
+	 * @author Roman Milman
+	 */
+	public void init(HBox registerEmployerRoot, Stage primaryStage, HRPortalView view) {
+		this.registerEmployerRoot = registerEmployerRoot;
 		this.primaryStage = primaryStage;
 		this.view = view;
 		registerButtonMap = new HashMap<String, Button>();
 	}
 
+	/**
+	 * showWindow
+	 * 
+	 * This method sets employers by the array received from server.
+	 * This method calls Platform.runLater() to add javaFX task.
+	 * This method builds the scene and sets to primaryStage.
+	 * This method announces to server "ready" after showing window.
+	 * @param JSONObject descriptor - holds "employers" key to JSONArray.
+	 * @author Roman Milman
+	 */
 	public void showWindow(JSONObject descriptor) {
 		// log
 		Logger.log(Level.INFO, "HRRegisterEmployerWindow: showing window");
@@ -88,7 +115,7 @@ public class HRRegisterEmployerWindow {
 
 		Platform.runLater(() -> {
 			try {
-				Scene scene = new Scene(employerRgstrHBox);
+				Scene scene = new Scene(registerEmployerRoot);
 				this.scene = scene;
 			} catch (IllegalArgumentException e) {
 				// log
@@ -106,6 +133,12 @@ public class HRRegisterEmployerWindow {
 		});
 	}
 
+	/**
+	 * setLabels
+	 * 
+	 * This method sets Labels, and creates new W4C code.
+	 * @author Roman Milman
+	 */
 	private void setLabels() {
 		
 		statusLabel.setText("Status: ");
@@ -136,6 +169,15 @@ public class HRRegisterEmployerWindow {
 		}
 	}
 
+	/**
+	 * onRegisterButton
+	 * 
+	 * This method called when 'Event' occurred to 'register' button.
+	 * This method does some sanity checks on needed Widgets.
+	 * This method sends to server an event of 'registration' occurred, with employers info.
+	 * @param ActionEvent event.
+	 * @author Roman Milman
+	 */
 	@SuppressWarnings("unchecked")
 	@FXML
 	public void onRegisterButton(ActionEvent event) {
@@ -159,6 +201,14 @@ public class HRRegisterEmployerWindow {
 		view.getComController().handleUserAction(json);
 	}
 
+	/**
+	 * isBalanceValid
+	 * 
+	 * This method return true if all sanity checks on balance pass.
+	 * @param String balance
+	 * @return boolean
+	 * @author Roman Milman
+	 */
 	private boolean isBalanceValid(String balance) {
 		if (balance.equals(""))
 			return false;
@@ -171,6 +221,14 @@ public class HRRegisterEmployerWindow {
 		return true;
 	}
 
+	/**
+	 * showPopup
+	 * 
+	 * This method shows pop-up messages.
+	 * This method disables registerButton, if 'register' was successful.
+	 * @param JSONObject descriptor - holds: 'update' key with message from server.
+	 * @author Roman Milman
+	 */
 	public void showPopup(JSONObject descriptor) {
 		String msg = Message.getValue(descriptor, "update");
 
@@ -184,6 +242,13 @@ public class HRRegisterEmployerWindow {
 		});
 	}
 
+	/**
+	 * showPopup
+	 * 
+	 * This method shows pop-up messages.
+	 * @param String msg - contains the message we will display in the pop-up.
+	 * @author Roman Milman
+	 */
 	public void showPopup(String msg) {
 		Platform.runLater(() -> {
 			statusLabel.setText("Status: " + msg);
@@ -191,6 +256,15 @@ public class HRRegisterEmployerWindow {
 		});
 	}
 
+	/**
+	 * onBackButton
+	 * 
+	 * This method called when 'Event' occurred to 'Back' button.
+	 * This method calls showHRHomePage method.
+	 * Goes back to home page.
+	 * @param ActionEvent event.
+	 * @author Roman Milman
+	 */
 	@FXML
 	public void onBackButton(ActionEvent event) {
 		// log

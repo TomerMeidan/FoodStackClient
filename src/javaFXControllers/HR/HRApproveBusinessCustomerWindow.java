@@ -22,11 +22,19 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * HRApproveBusinessCustomerWindow
+ * 
+ * This class is the javaFX controller for HRApproveBusinessClient.fxml
+ * This class holds primaryStage, scene, approveRoot, view, approveButtonMap, customers variables.
+ * JSONArray customers - array of all potential business customers to be approved.
+ * @author Roman Milman
+ */
 public class HRApproveBusinessCustomerWindow {
 
 	private Stage primaryStage;
 	private Scene scene;
-	private HBox homePageHBox;
+	private HBox approveRoot;
 	private HRPortalView view;
 	private HashMap<String, Button> approveButtonMap;
 
@@ -35,13 +43,32 @@ public class HRApproveBusinessCustomerWindow {
 	@FXML
 	private VBox businessClientVBox;
 
-	public void init(HBox homePageHBox, Stage primaryStage, HRPortalView view) {
-		this.homePageHBox = homePageHBox;
+	/**
+	 * init
+	 * 
+	 * This method initializes the needed parameters for this controller.
+	 * @param HBox approveRoot
+	 * @param Stage primaryStage
+	 * @param BranchManagerPortalView view
+	 * @author Roman Milman
+	 */
+	public void init(HBox approveRoot, Stage primaryStage, HRPortalView view) {
+		this.approveRoot = approveRoot;
 		this.primaryStage = primaryStage;
 		this.view = view;
 		approveButtonMap = new HashMap<String, Button>();
 	}
 
+	/**
+	 * showWindow
+	 * 
+	 * This method sets customers by the array received from server.
+	 * This method calls Platform.runLater() to add javaFX task.
+	 * This method builds the scene and sets to primaryStage.
+	 * This method announces to server "ready" after showing window.
+	 * @param JSONObject descriptor - holds "customers" key to JSONArray.
+	 * @author Roman Milman
+	 */
 	public void showWindow(JSONObject descriptor) {
 		// log
 		Logger.log(Level.INFO, "HRApproveBusinessClientWindow: showing window");
@@ -51,7 +78,7 @@ public class HRApproveBusinessCustomerWindow {
 
 		Platform.runLater(() -> {
 			try {
-				Scene scene = new Scene(homePageHBox);
+				Scene scene = new Scene(approveRoot);
 				this.scene = scene;
 			} catch (IllegalArgumentException e) {
 				// log
@@ -59,7 +86,7 @@ public class HRApproveBusinessCustomerWindow {
 				System.out.println("HRApproveBusinessClientWindow: exception in showWindow");
 			}
 
-			buildEmployersScrollPane();
+			buildBusinessCustomersScrollPane();
 			primaryStage.setScene(scene);
 			primaryStage.show();
 
@@ -69,7 +96,14 @@ public class HRApproveBusinessCustomerWindow {
 		});
 	}
 
-	private void buildEmployersScrollPane() {
+	/**
+	 * buildBusinessCustomersScrollPane
+	 * 
+	 * This method builds scroll pane with customers info.
+	 * Info taken from customers JSONArray.
+	 * @author Roman Milman
+	 */
+	private void buildBusinessCustomersScrollPane() {
 		businessClientVBox.getChildren().clear();
 		approveButtonMap.clear();
 
@@ -80,13 +114,24 @@ public class HRApproveBusinessCustomerWindow {
 			String email = Message.getValue(employer, "email");
 			String credit = Message.getValue(employer, "credit");
 
-			VBox rowVBox = buildEmployerRow(id, phone, email, credit);
+			VBox rowVBox = buildBusinessCustomerRow(id, phone, email, credit);
 
 			businessClientVBox.getChildren().add(rowVBox);
 		}
 	}
 
-	private VBox buildEmployerRow(String id, String phone, String email, String credit) {
+	/**
+	 * buildBusinessCustomerRow
+	 * 
+	 * This method builds VBox row with business customers info.
+	 * @param String id
+	 * @param String phone
+	 * @param String email
+	 * @param String credit
+	 * @return VBox
+	 * @author Roman Milman
+	 */
+	private VBox buildBusinessCustomerRow(String id, String phone, String email, String credit) {
 		VBox rowVBox = new VBox();
 		HBox rowHBox = new HBox();
 
@@ -130,6 +175,13 @@ public class HRApproveBusinessCustomerWindow {
 		return rowVBox;
 	}
 
+	/**
+	 * disableApproveButton
+	 * 
+	 * This method disables a button in approveButtonMap by the given id as input.
+	 * @param JSONObject descriptor - includes "id" as key to customers id accordingly.
+	 * @author Roman Milman
+	 */
 	public void disableApproveButton(JSONObject descriptor) {
 		String id = Message.getValue(descriptor, "id");
 
@@ -137,6 +189,15 @@ public class HRApproveBusinessCustomerWindow {
 		disableButton.setDisable(true);
 	}
 
+	/**
+	 * onBackButton
+	 * 
+	 * This method called when 'Event' occurred to 'Back' button.
+	 * This method calls showHRHomePage method.
+	 * Goes back to home page.
+	 * @param ActionEvent event.
+	 * @author Roman Milman
+	 */
 	@FXML
 	public void onBackButton(ActionEvent event) {
 		// log

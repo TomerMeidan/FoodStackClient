@@ -14,6 +14,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+/**
+ * HRHomePageWindow
+ * 
+ * This class is the javaFX controller for HRHomePageTemplate.fxml
+ * This class holds primaryStage, scene, homePageRoot, view variables.
+ * @author Roman Milman
+ */
 public class HRHomePageWindow {
 
 	private Stage primaryStage;
@@ -24,6 +31,15 @@ public class HRHomePageWindow {
 	@FXML
 	private Label welcomeLabel;
 
+	/**
+	 * init
+	 * 
+	 * This method initializes the needed parameters for this controller.
+	 * @param HBox homePageRoot
+	 * @param Stage primaryStage
+	 * @param BranchManagerPortalView view
+	 * @author Roman Milman
+	 */
 	public void init(HBox homePageHBox, Stage primaryStage, HRPortalView view) {
 		this.homePageHBox = homePageHBox;
 		this.primaryStage = primaryStage;
@@ -31,6 +47,15 @@ public class HRHomePageWindow {
 
 	}
 
+	/**
+	 * showWindow
+	 * 
+	 * This method calls Platform.runLater() to add javaFX task.
+	 * This method builds the scene and sets to primaryStage.
+	 * This method announces to server "ready" after showing window.
+	 * @param JSONObject descriptor - has 'FirstName','LastName' keys with accordingly values.
+	 * @author Roman Milman
+	 */
 	public void showWindow(JSONObject descriptor) {
 		// log
 		Logger.log(Level.INFO, "HRHomePageWindow: showing window");
@@ -58,6 +83,14 @@ public class HRHomePageWindow {
 		});
 	}
 
+	/**
+	 * onLogoutButton
+	 * 
+	 * This method called when 'Event' occurred to 'Logout' button.
+	 * This method sends to server event of 'Logout' happened.
+	 * @param ActionEvent event.
+	 * @author Roman Milman
+	 */
 	@FXML
 	public void onLogoutButton(ActionEvent event) {
 		// log
@@ -69,6 +102,14 @@ public class HRHomePageWindow {
 		view.getComController().handleUserAction(json);
 	}
 
+	/**
+	 * onApproveBusinessAccount
+	 * 
+	 * This method called when 'Event' occurred to 'Approve business' button.
+	 * This method sends to server event of 'approve business' happened, with 'employerID'.
+	 * @param ActionEvent event.
+	 * @author Roman Milman
+	 */
 	@SuppressWarnings("unchecked")
 	@FXML
 	void onApproveBusinessAccount(ActionEvent event) {
@@ -83,6 +124,14 @@ public class HRHomePageWindow {
 
 	}
 
+	/**
+	 * onRegisterEmployer
+	 * 
+	 * This method called when 'Event' occurred to 'register employer' button.
+	 * This method sends to server event of 'register employer' happened.
+	 * @param ActionEvent event.
+	 * @author Roman Milman
+	 */
 	@FXML
 	void onRegisterEmployer(ActionEvent event) {
 		// log

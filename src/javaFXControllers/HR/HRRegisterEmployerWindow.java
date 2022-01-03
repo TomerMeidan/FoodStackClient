@@ -6,7 +6,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import clientSide.HRPortalView;
-import clientSide.W4C;
 import common.Logger;
 import common.Message;
 import common.Logger.Level;
@@ -29,6 +28,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import util.W4C;
 
 public class HRRegisterEmployerWindow {
 

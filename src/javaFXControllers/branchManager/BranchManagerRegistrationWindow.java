@@ -6,7 +6,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import clientSide.BranchManagerPortalView;
-import clientSide.W4C;
 import common.Logger;
 import common.Message;
 import common.Logger.Level;
@@ -34,6 +33,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import util.W4C;
 
 /**
  * BranchManagerRegistrationWindow

@@ -26,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import util.W4C;
@@ -64,6 +65,9 @@ public class HRRegisterEmployerWindow {
 
 	@FXML
 	private TextArea balanceTextArea;
+	
+	@FXML
+    private Label statusLabel;
 
 	@FXML
 	private Button registerButton;
@@ -103,6 +107,10 @@ public class HRRegisterEmployerWindow {
 	}
 
 	private void setLabels() {
+		
+		statusLabel.setText("Status: ");
+		statusLabel.setTextFill(Paint.valueOf("black"));
+		
 		if (employers.size() == 0) {
 			registerButton.setDisable(true);
 
@@ -168,48 +176,18 @@ public class HRRegisterEmployerWindow {
 
 		if (msg.equals("employer has been registered")) {
 			registerButton.setDisable(true);
+			statusLabel.setTextFill(Paint.valueOf("green"));
 		}
 
 		Platform.runLater(() -> {
-			Stage window = new Stage();
-			window.initModality(Modality.APPLICATION_MODAL);
-			window.setTitle("");
-			window.setMinWidth(300);
-			window.setMinHeight(20);
-
-			Label label = new Label();
-			label.setText(msg);
-
-			VBox layout = new VBox(10);
-			layout.getChildren().add(label);
-			layout.setAlignment(Pos.CENTER);
-
-			Scene scene = new Scene(layout);
-			window.setScene(scene);
-			window.showAndWait();
-
+			statusLabel.setText("Status: " + msg);
 		});
 	}
 
 	public void showPopup(String msg) {
 		Platform.runLater(() -> {
-			Stage window = new Stage();
-			window.initModality(Modality.APPLICATION_MODAL);
-			window.setTitle("");
-			window.setMinWidth(300);
-			window.setMinHeight(20);
-
-			Label label = new Label();
-			label.setText(msg);
-
-			VBox layout = new VBox(10);
-			layout.getChildren().add(label);
-			layout.setAlignment(Pos.CENTER);
-
-			Scene scene = new Scene(layout);
-			window.setScene(scene);
-			window.showAndWait();
-
+			statusLabel.setText("Status: " + msg);
+			statusLabel.setTextFill(Paint.valueOf("red"));
 		});
 	}
 

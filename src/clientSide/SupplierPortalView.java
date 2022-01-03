@@ -16,11 +16,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * Class used implement "PortalViewInterface" Loads the relevant templates that
- * the supplier can see
+ * SupplierPortalView
  * 
+ * This class is the portalView which handles Supplier behavior.
+ * This class implements PortalViewInterface.
+ * This class holds all the javaFX controllers which Supplier uses.
+ * Holds ComController to send messages.
+ * Holds JSONObject personalInfo,which holds: portalType,FirstName,LastName.
  * @author Daniel Ohayon
- * @version 12/11/2021
  */
 public class SupplierPortalView implements PortalViewInterface {
 
@@ -39,10 +42,17 @@ public class SupplierPortalView implements PortalViewInterface {
 		this.com = com;
 	}
 
+	/**
+	 * init
+	 * 
+	 * This method initializing all the javaFX controllers.
+	 * Sets personalInfo to JSONObject descriptor, received from server.
+	 * Calls showWindow to show branch Manager's home page.
+	 * @param JSONObject descriptor
+	 */
 	@Override
 	public void init(JSONObject json) {
 		try {
-			// LOGIN
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/templates/SupplierHomepage.fxml"));
 			userID = Message.getValue(json, "userID");
@@ -81,7 +91,12 @@ public class SupplierPortalView implements PortalViewInterface {
 		}
 
 	}
-
+	/**
+	 * handleMsg
+	 * 
+	 * This method handles Supplier's messages received from server.
+	 * @param descriptor - read's 'command' key to define which handleCommand method to call.
+	 */
 	@Override
 	public void handleMsg(JSONObject descriptor) {
 		switch (Message.getValue(descriptor, "command")) {
@@ -145,45 +160,79 @@ public class SupplierPortalView implements PortalViewInterface {
 			else if (Message.getValue(descriptor, "update").equals("receiptList"))
 				receiptsWindow.showReceipt(descriptor);
 
-		case "notify":
+		
 
 		default:
 			break;
 		}
 
 	}
-
-	private Object EditMeal(JSONObject descriptor) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
+	/**
+	 * ready
+	 * 
+	 * This method sends the server (Window name here) is ready.
+	 * @param descriptor - 'command' key specifies which window is ready.
+	 */
 	@Override
 	public void ready(JSONObject json) {
 		com.handleUserAction(json);
 	}
 
+	/**
+	 * getComController
+	 * 
+	 * This method returns ComController instance.
+	 * @return ComController
+	 */
 	@Override
 	public ComController getComController() {
 		return com;
 	}
 
+
+	/**
+	 * getUpdateMenuWindow
+	 * 
+	 * This method shows update menu.
+	 */
 	public UpdateMenuWindow getUpdateMenuWindow() {
 		return updateMenuWindow;
 	}
-
+	/**
+	 * getUpdateStatusWindow
+	 * 
+	 * This method shows update status.
+	 */
 	public UpdateStatusWindow getUpdateStatusWindow() {
 		return updateStatusWindow;
 	}
 
+	/**
+	 * getSupplierWindow
+	 * 
+	 * This method shows supplier home page.
+	 */
 	public SupplierWindow getSupplierWindow() {
 		return supplierWindow;
 	}
 
+	/**
+	 * getFirstname
+	 * 
+	 * This method returns this users first name.
+	 * @return String
+	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
+	/**
+	 * getUserID
+	 * 
+	 * This method returns this users ID.
+	 * @return String
+	 */
 	public String getUserID() {
 		return userID;
 	}

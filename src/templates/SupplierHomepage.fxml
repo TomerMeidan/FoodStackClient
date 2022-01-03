@@ -39,7 +39,7 @@
                         <Pane prefHeight="100.0" prefWidth="11.0" style="-fx-background-color: #F2C12E;" />
                         <ImageView blendMode="LIGHTEN" fitHeight="44.0" fitWidth="45.0">
                            <image>
-                              <Image url="@../../../../../Downloads/WhatsApp%20Image%202021-11-25%20at%2015.03.26.jpeg" />
+                              <Image url="@Icons/newHome1.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="40.0" top="15.0" />

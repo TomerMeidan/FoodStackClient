@@ -240,7 +240,6 @@ public class PaymentWindow {
 	 * 
 	 * @param order
 	 */
-
 	public void showPaymentOptions(JSONObject json) {
 		Order o = Order.fromJSONObject(order);
 		Platform.runLater(() -> {
@@ -290,9 +289,9 @@ public class PaymentWindow {
 				public void handle(ActionEvent event) {
 					if (balanceCB.isSelected()) {
 						if (refBalance - finalCost <= 0) {
-							orderDetails.getChildren()
-									.add(new Label("(Using Balance Refund: " + refBalance + ", 0 will remain)"));
 							leftToPay = finalCost - refBalance;
+							orderDetails.getChildren()
+									.add(new Label("(Using Balance Refund: " + refBalance + ", you will pay "+leftToPay+")"));
 							refBalance = 0;
 						} else {
 							leftToPay = 0;
@@ -324,7 +323,7 @@ public class PaymentWindow {
 				}
 
 			});
-			sendToController("Showing payment options");
+			sendToServer("Showing payment options");
 		});
 
 	}
@@ -440,7 +439,7 @@ public class PaymentWindow {
 		view.getOrderWindow().showDeliveryWindow();
 	}
 
-	public void sendToController(String cmd) {
+	public void sendToServer(String cmd) {
 		JSONObject json = new JSONObject();
 		json.put("command", cmd);
 		view.ready(json);
@@ -456,7 +455,7 @@ public class PaymentWindow {
 
 				@Override
 				public void handle(ActionEvent event) {
-					sendToController("Back to homepage button was clicked");
+					sendToServer("Back to homepage button was clicked");
 				}
 
 			});
@@ -501,7 +500,8 @@ public class PaymentWindow {
 		return imgView;
 	}
 
-	public void orderFailPopUp() {
+	public void orderFailPopUp(JSONObject json) {
+		Long currentBalance = Message.getValueLong(json, "currentBalance");
 		Platform.runLater(() -> {
 			Stage window = new Stage();
 			window.initModality(Modality.APPLICATION_MODAL);
@@ -511,20 +511,34 @@ public class PaymentWindow {
 
 			Label label = new Label();
 			label.setText(
-					"Not enough in your balance!");
+					"You have "+ currentBalance+" INS in your balance. Use card: "+ view.getCreditNumber()+" to pay the remaining "+(leftToPay-currentBalance)+" INS and complete the order?");
 
-			Button b1 = new Button("OK");
+			Button b1 = new Button("Yes");
 			b1.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					window.hide();
+					JSONObject toServer = new JSONObject();
+					toServer.put("order", order);
+					toServer.put("command", "Clicked yes after order failed");
+					view.ready(toServer);
+				}
+			});
+			Button b2 = new Button("No");
+			b2.setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
 				public void handle(ActionEvent event) {
 					window.hide();
 				}
 			});
+		
 			VBox layout = new VBox(10);
 			layout.getChildren().add(label);
 			layout.setAlignment(Pos.CENTER);
 			layout.getChildren().add(b1);
+			layout.getChildren().add(b2);
 
 			Scene scene = new Scene(layout);
 			window.setScene(scene);

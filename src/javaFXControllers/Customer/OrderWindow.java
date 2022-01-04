@@ -55,6 +55,13 @@ import util.OptionalFeature;
 import util.DateParser;
 import util.Meal;
 
+/** * CustomerWindow
+ * 
+ * This class is the javaFX controller for OrderWindowTemplate.fxml
+ * This class holds primaryStage, scene, view.
+ *@author mosa
+ *@version 3/1/2022
+ */
 @SuppressWarnings("unchecked")
 public class OrderWindow {
 
@@ -66,7 +73,6 @@ public class OrderWindow {
 
 	private JSONArray restaurantList;
 	private JSONObject menu;
-	private JSONArray selectedOptionals;
 	private String selectedBranch = null;
 	private JSONObject selectedRestaurant;
 	private JSONObject order;
@@ -75,8 +81,7 @@ public class OrderWindow {
 	@FXML
 	private Label userLabel;
 	@FXML
-	private VBox mainVBox; // TODO change name
-
+	private VBox mainVBox;
 	@FXML
 	private Label feedBackLabel;
 	@FXML
@@ -137,16 +142,22 @@ public class OrderWindow {
 	@FXML
 	private HBox deliveryHBox;
 
+	/**
+	 * init
+	 * 
+	 * This method initializes the needed parameters for this controller.
+	 * @param HBox orderHBox
+	 * @param Stage primaryStage
+	 * @param CustomerPortalView view
+	 */
 	public void init(HBox orderHBox, Stage primaryStage, CustomerPortalView view) {
 		this.orderHBox = orderHBox;
 		this.primaryStage = primaryStage;
 		this.view = view;
-		selectedOptionals = new JSONArray();
 		menu = new JSONObject();
 		nextButton.disableProperty().set(true);
 		checkOutButton.disableProperty().set(true);
 		order = new JSONObject();
-		// mealsJArray = new JSONArray();
 		choices.getItems().addAll("North", "South", "Center");
 		userLabel.setText("Welcome, "+view.getFirstName());
 
@@ -178,8 +189,7 @@ public class OrderWindow {
 	}
 
 	/**
-	 * Present an empty window of "Order Window", and send a message to controller
-	 * <p>
+	 * Present an empty window of "Order Window", and send a message to server side<p>
 	 * Message sent as JSON, contains keys:<br>
 	 * "command", value "Order window is displayed"
 	 */
@@ -375,6 +385,7 @@ public class OrderWindow {
 		for (int i = 1; i < itemArr.size(); i++) {
 			JSONObject item = (JSONObject) itemArr.get(i);
 			String itemName = Message.getValueString(item, "mealName");
+			JSONArray selectedOptionals = new JSONArray();
 			if (itemName == null || itemName.isEmpty())
 				continue;
 			String itemID = Message.getValueString(item, "mealID");
@@ -410,8 +421,8 @@ public class OrderWindow {
 						meal.put("mealPrice", itemPrice);
 						meal.put("mealType", itemType);
 						addMustFeatures(mustFeatures, hboxForMeal, meal);
-						addOptionalFeatures(optionalFeatures, hboxForMeal, meal);
-						addAddMealButton(meal, hboxForMeal);
+						addOptionalFeatures(optionalFeatures, hboxForMeal, selectedOptionals);
+						addAddMealButton(meal, hboxForMeal,selectedOptionals);
 					} else {
 						hboxForMeal.getChildren().clear();
 						hboxForMeal.getChildren().addAll(vboxForMeal, priceLabel);
@@ -428,20 +439,18 @@ public class OrderWindow {
 	}
 
 	/**
-	 * adds a button "Add Meal" with an event handler
+	 * Adds a button "Add Meal" with an event handler
 	 * 
-	 * @param meal
-	 * @param vboxForMeal
-	 * @param hboxForMeal
+	 * @param meal (the meal that will be added to shopping cart through the event handler
+	 * @param hboxForMeal (the hbox to which the button is added)
 	 */
-	public void addAddMealButton(JSONObject meal, HBox hboxForMeal) {
+	private void addAddMealButton(JSONObject meal, HBox hboxForMeal, JSONArray selectedOptionals) {
 		Button addMeal = new Button("Add Meal");
 		addMeal.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				if (meal.containsKey("mustFeatureID")) {
 					clickOnAddMeal(selectedOptionals, meal);
-					selectedOptionals = new JSONArray();
 				} else {
 					System.out.println("Please choose a Must Feature!");
 					showPopup("Please choose a Must Feature!");
@@ -488,12 +497,12 @@ public class OrderWindow {
 	/**
 	 * Add a ListView of optional features checkboxes with eventhandlers
 	 * 
-	 * @param optionalFeatures
-	 * @param hboxForMeal
-	 * @param meal
+	 * @param optionalFeaturesJArray (optional features array of a specific meal)
+	 * @param hboxForMeal (the hbox to which the listview is added)
+	 * @param meal 
 	 */
-	public void addOptionalFeatures(JSONArray optionalFeatures, HBox hboxForMeal, JSONObject meal) {
-		if (optionalFeatures == null)
+	private void addOptionalFeatures(JSONArray optionalFeaturesJArray, HBox hboxForMeal, JSONArray selectedOptionals) {
+		if (optionalFeaturesJArray == null)
 			return;
 		VBox vboxForOptional = new VBox(5);
 		Label title = new Label("Optional Features:");
@@ -503,8 +512,8 @@ public class OrderWindow {
 		vboxForOptional.getChildren().add(title);
 		vboxForOptional.getChildren().add(lvForOptional);
 		hboxForMeal.getChildren().add(vboxForOptional);
-		for (int j = 0; j < optionalFeatures.size(); j++) {
-			JSONObject optionalFeature = (JSONObject) optionalFeatures.get(j);
+		for (int j = 0; j < optionalFeaturesJArray.size(); j++) {
+			JSONObject optionalFeature = (JSONObject) optionalFeaturesJArray.get(j);
 			String optionalFeatureName = Message.getValueString(optionalFeature, "optionalFeatureName");
 			String optionalFeaturePrice = " (+";
 			optionalFeaturePrice += Message.getValueLong(optionalFeature, "optionalFeaturePrice");
@@ -531,7 +540,7 @@ public class OrderWindow {
 	 * @param hboxForMeal
 	 * @param meal
 	 */
-	public void addMustFeatures(JSONArray mustFeatures, HBox hboxForMeal, JSONObject meal) {
+	private void addMustFeatures(JSONArray mustFeatures, HBox hboxForMeal, JSONObject meal) {
 		if (mustFeatures != null) {
 			ToggleGroup group = new ToggleGroup();
 			VBox vboxForMust = new VBox(5);
@@ -592,7 +601,7 @@ public class OrderWindow {
 	 * 
 	 * @param event
 	 */
-	@FXML // TODO optimize later
+	@FXML
 	public void onComboBox(ActionEvent event) {
 		Platform.runLater(() -> {
 			// mealsJArray.clear();
@@ -629,7 +638,6 @@ public class OrderWindow {
 
 	@FXML
 	public void showCart() {
-
 		Platform.runLater(() -> {
 			Stage window = new Stage();
 			VBox layout = new VBox(10);
@@ -665,7 +673,7 @@ public class OrderWindow {
 							String itemPrice = Message.getValueString(item, "mealPrice");
 							JSONArray mustFeatures = Message.getValueJArray(item, "mustFeatureJArray");
 							JSONArray optionalFeatures = Message.getValueJArray(item, "optionalFeatureJArray");
-
+							JSONArray selectedOptionals = new JSONArray();
 							HBox hBoxForButtons = new HBox(5);
 							VBox vboxForMeal = new VBox(5);
 							HBox hboxForMeal = new HBox(10);
@@ -701,7 +709,7 @@ public class OrderWindow {
 							meal.put("mealPrice", itemPrice);
 							meal.put("mealType", mealType);
 							addMustFeatures(mustFeatures, hboxForMeal, meal);
-							addOptionalFeatures(optionalFeatures, hboxForMeal, meal);
+							addOptionalFeatures(optionalFeatures, hboxForMeal, selectedOptionals);
 							hboxForMeal.getChildren().add(vboxForMeal);
 							layout.getChildren().add(hboxForMeal);
 							Button backButtonForCart = new Button("Back");
@@ -724,7 +732,7 @@ public class OrderWindow {
 										mealList.remove(m);
 										meal.put("optionalJArray", selectedOptionals);
 										mealList.add(Meal.fromJSONObject(meal));
-										selectedOptionals = new JSONArray();
+										//selectedOptionals = new JSONArray();
 										shoppingCart.getSelectionModel().clearSelection();
 										window.hide();
 										showCart();

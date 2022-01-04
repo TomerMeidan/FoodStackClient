@@ -28,6 +28,13 @@ import common.Logger;
 import common.Message;
 import common.Logger.Level;
 
+/** * CustomerWindow
+ * 
+ * This class is the javaFX controller for CustomerWindowTemplate.fxml
+ * This class holds primaryStage, scene, view.
+ *@author mosa
+ *@version 3/1/2022
+ */
 @SuppressWarnings("unchecked")
 public class CustomerWindow {
 
@@ -60,6 +67,14 @@ public class CustomerWindow {
 	@FXML
 	private ImageView foodstackIcon;
 
+	/**
+	 * init
+	 * 
+	 * This method initializes the needed parameters for this controller.
+	 * @param VBox homePageVBox
+	 * @param Stage primaryStage
+	 * @param CustomerPortalView view
+	 */
 	public void init(VBox homePageVBox, Stage primaryStage, CustomerPortalView view) {
 		this.homePageVBox = homePageVBox;
 		this.primaryStage = primaryStage;
@@ -75,6 +90,14 @@ public class CustomerWindow {
 		scanButton.disableProperty().set(false);
 	}
 
+	/**
+	 * showWindow
+	 * 
+	 * This method sets a welcome message on the screen
+	 * This method calls Platform.runLater() to add javaFX task.
+	 * This method builds the scene and sets to primaryStage.
+	 * This method announces to server side "ready" after showing window.
+	 */
 	public void showWindow() {
 		// log
 		Logger.log(Level.INFO, "CustomerWindow: showing window");
@@ -103,10 +126,16 @@ public class CustomerWindow {
 		});
 	}
 
+	/**
+	 * This method is called when clicking on "Order" button<br>
+	 * If w4cScanned == true, it sends a message to server side  "Order button was clicked",
+	 * else display feedback on the screen
+	 * @param event
+	 */
 	@FXML
 	public void onOrderButton(ActionEvent event) {
 		if (w4cScanned) {
-			sendToController("Order button was clicked");
+			sendToServer("Order button was clicked");
 			// log
 			Logger.log(Level.INFO, "CustomerWindow: Order button was clicked");
 			System.out.println("CustomerWindow: Order button was clicked");
@@ -114,19 +143,31 @@ public class CustomerWindow {
 			orderLabel.setVisible(true);
 	}
 
+	/**
+	 * This method is called when clicking on "View Order" button<br>
+	 * Send a message to server side "View Order button was clicked"
+	 */
 	@FXML
 	public void onViewOrderButton() {
-		sendToController("View Order button was clicked");
+		sendToServer("View Order button was clicked");
 		// log
 		Logger.log(Level.INFO, "CustomerWindow: View Order button was clicked");
 		System.out.println("CustomerWindow:View Order button was clicked");
 	}
 
+	/**
+	 * This method is called when clicking on "Scan W4C" button<br>
+	 * Send a message to server side "Scan button was clicked"
+	 */
 	@FXML
 	public void onScanButton() {
-		sendToController("Scan button was clicked");
+		sendToServer("Scan button was clicked");
 	}
 
+	/**
+	 * This method is called from server side if scanning W4C code has succeeded.<br>
+	 * disables the functionality of the button
+	 */
 	public void scanSuccess() {
 		w4cScanned = true;
 		orderLabel.setVisible(false);
@@ -134,30 +175,46 @@ public class CustomerWindow {
 		scanButton.disableProperty().set(true);
 	}
 
+	/**
+	 * This method is called from server side if scanning W4C code has failed.<br>
+	 * Show feedback to user to know that it failed using a label
+	 */
 	public void scanFail() {
 		w4cLabel.setVisible(true);
 	}
 
+	/**
+	 * This method is called when clicking on "Logout" button<br>
+	 * Send a message to server side "Log out"
+	 * @param event
+	 */
 	@FXML
 	public void onLogoutButton(ActionEvent event) {
-		sendToController("Log out");
+		sendToServer("Log out");
 		// log
 		Logger.log(Level.WARNING, "CustomerWindow: Logout button was clicked");
 		System.out.println("CustomerWindow: Logout button was clicked");
 
 	}
 
-	public void sendToController(String cmd) {
+	/**Method to avoid repeating the same 3 lines of code whenever sending a message to server
+	 * @param cmd
+	 */
+	public void sendToServer(String cmd) {
 		JSONObject json = new JSONObject();
 		json.put("command", cmd);
 		view.ready(json);
 	}
 
+	/**This method is called from server side if an order is ready for the customer
+	 * @param descriptor
+	 * @author danielle
+	 */
 	public void orderReadyPopup(JSONObject descriptor) {
 		Logger.log(Level.INFO, "CustomerWindow: orderReadyPopup: Showing popup");
 		System.out.println("CustomerWindow: orderReadyPopup: Showing popup");
 		Platform.runLater(() -> {
-			sendToController("Order is ready");
+			sendToServer("Order is ready");
 			Stage window = new Stage();
 			window.initModality(Modality.APPLICATION_MODAL);
 			window.setTitle("Message");

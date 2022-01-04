@@ -68,7 +68,7 @@ public class PDFGenerator {
 	private String leastIncomeFromRestaurantName = "";
 	private String mostOrdersFromRestaurantName = "";
 	private String mostIncomeFromRestaurantName = "";
-
+	private String fileName = "";
 	public void setReportsInfo(JSONObject quarterReports, String currentBranch, String currentYear,
 			String currentQuarter, String managerName) {
 		this.quarterReports = quarterReports;
@@ -76,9 +76,17 @@ public class PDFGenerator {
 		this.currentYear = currentYear;
 		this.currentQuarter = currentQuarter;
 		this.managerName = managerName;
-		String fileName = currentBranch + "_" + currentQuarter + "_" + currentYear + ".pdf";
+		fileName = currentBranch + "_" + currentQuarter + "_" + currentYear + ".pdf";
 		FILEPATH = "src//javaFXControllers//branchManager//CreatePDF//" + fileName;
 
+	}
+	
+	public void setFilePath(String str) {
+		FILEPATH = str;
+	}
+
+	public String getFileName() {
+		return fileName;
 	}
 	
 	public String getFilePath() {
@@ -108,8 +116,6 @@ public class PDFGenerator {
 		}
 		
 		System.out.println(
-				"PDFGenerator: createPDF: Temp quarterly report file was created");
-		Logger.log(Level.WARNING,
 				"PDFGenerator: createPDF: Temp quarterly report file was created");
 	}
 

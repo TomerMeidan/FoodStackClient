@@ -61,6 +61,14 @@ public class LoginPortalView implements PortalViewInterface {
 		}
 	}
 
+	/** Handle Msg<p>
+	 * 
+	 * This method handles a certain login portal view related events sent by the communication
+	 * controller using a JSONObject message containing the message keys (mostly using keys such as "command")
+	 * 
+	 * @param descriptor - Holding a certain "command" key message for the login portal view.
+	 * 
+	 * */
 	@Override
 	public void handleMsg(JSONObject descriptor) {
 
@@ -90,18 +98,30 @@ public class LoginPortalView implements PortalViewInterface {
 	}
 
 	// ----- Functions for loginWindow
-
+	/** Get Com Controller<p>
+	 * This method return an object of ComController class.
+	 * */
 	@Override
 	public ComController getComController() {
 		return com;
 	}
-
+	
+	/** Ready<p>
+	 * This method receives a certain JSON message containing a task and sends it to the communication
+	 * controller class using the handle user action method.
+	 * @param json - Message contains a certain task or update.
+	 * */
 	@Override
 	public void ready(JSONObject json) {
 		com.handleUserAction(json);
 	}
 
+	/** Get Login Portal View<p>
+	 * This method return an object of this class.
+	 * */
 	public LoginPortalView getLoginPortalView() {
 		return this;
 	}
+	
+	
 }

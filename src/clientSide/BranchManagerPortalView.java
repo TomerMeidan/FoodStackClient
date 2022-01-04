@@ -175,6 +175,9 @@ public class BranchManagerPortalView implements PortalViewInterface {
 		case "regular customer has been registered":
 			branchManagerRegistrationWindow.showPopup(descriptor);
 			break;
+		case "could not register regular customer":
+			branchManagerRegistrationWindow.showPopup(descriptor);
+			break;
 		case "employer has been activated":
 			branchManagerApproveEmployerWindow.showPopup(descriptor);
 			break;

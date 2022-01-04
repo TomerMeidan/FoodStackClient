@@ -319,7 +319,7 @@ public class BranchManagerEditStatusWindow {
 		+ Message.getValue(selectedUser, "Name");
 
 		if (isSwitched(key)) {
-			showPopup("This user has been switched allready");
+			showPopup("This user has been registered allready");
 			return;
 		}
 
@@ -362,6 +362,7 @@ public class BranchManagerEditStatusWindow {
 			String key = Message.getValue(descriptor, "phone number") + Message.getValue(descriptor, "email")
 					+ Message.getValue(descriptor, "name");
 			switchedUsers.add(key);
+			statusLabel.setTextFill(Paint.valueOf("green"));
 		}
 
 		Platform.runLater(() -> {

@@ -480,10 +480,12 @@ public class BranchManagerRegistrationWindow {
 
 		if (msg.equals("business customer has been registered")) {
 			registeredCustomers.add(Message.getValue(descriptor, "w4c"));
+			statusLabel.setTextFill(Paint.valueOf("green"));
 		}
 
 		if (msg.equals("regular customer has been registered")) {
 			registeredCustomers.add(Message.getValue(descriptor, "w4c"));
+			statusLabel.setTextFill(Paint.valueOf("green"));
 		}
 
 		Platform.runLater(() -> {

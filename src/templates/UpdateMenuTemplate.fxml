@@ -26,7 +26,7 @@
                         <Insets left="50.0" />
                      </VBox.margin>
                      <image>
-                        <Image url="@Icons/FoodStackLogo.png" />
+                        <Image url="@templates/Icons/FoodStackLogo.png" />
                      </image>
                   </ImageView>
                   <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" text="Foodstack" textFill="WHITE" VBox.vgrow="ALWAYS">
@@ -69,7 +69,7 @@
                                  <graphic>
                                     <ImageView fx:id="imageType" fitHeight="44.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@Icons/TypesS.jpeg" />
+                                          <Image url="@templates/Icons/TypesS.jpeg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -88,7 +88,7 @@
                                  <graphic>
                                     <ImageView fx:id="imageMeals" fitHeight="44.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@Icons/Meals.jpeg" />
+                                          <Image url="@templates/Icons/Meals.jpeg" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -103,7 +103,7 @@
                      <children>
                         <ImageView fitHeight="40.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Icons/backArrow.png" />
+                              <Image url="@templates/Icons/backArrow.png" />
                            </image>
                         </ImageView>
                         <Button fx:id="backButton" alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="40.0" prefWidth="74.0" style="-fx-background-color: #F24444;" text="Back" textFill="WHITE">

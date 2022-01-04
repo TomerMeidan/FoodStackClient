@@ -197,7 +197,7 @@ public class UpdateStatusWindow {
 					String recieveTimeS = Message.getValue(order, "recieveTime");
 					String[] recieveTimeSplit = recieveTimeS.split(":");
 					String recieveTime = recieveTimeSplit[0] + ":" + recieveTimeSplit[1];
-					if (!status.equals("Ready")) {
+					if (status.equals("Waiting for approval")) {
 						cnt++;
 						Label orderIDTxt = new Label("Order ID: " + id);
 						orderIDTxt.setFont(Font.font("verdana", FontWeight.MEDIUM, FontPosture.REGULAR, 12));

@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="638.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaFXControllers.Customer.OrderWindow">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="638.0" prefWidth="1155.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaFXControllers.Customer.OrderWindow">
    <children>
       <VBox fx:id="pathVBox" prefHeight="638.0" prefWidth="233.0" style="-fx-background-color: #D93B48;">
          <children>
@@ -99,7 +99,7 @@
                         </Pane>
                         <ImageView fitHeight="45.0" fitWidth="48.0">
                            <image>
-                              <Image url="@Icons/backArrow.png" />
+                              <Image url="@templates/Icons/backArrow.png" />
                            </image>
                         </ImageView>
                         <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="101.0" style="-fx-background-color: #F24444;" text="back" textFill="WHITE">

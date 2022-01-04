@@ -20,7 +20,7 @@
                <children>
                   <ImageView blendMode="LIGHTEN" fitHeight="124.0" fitWidth="150.0" pickOnBounds="true">
                      <image>
-                        <Image url="@Icons/FoodStackLogo.png" />
+                        <Image url="@templates/Icons/FoodStackLogo.png" />
                      </image>
                      <viewport>
                         <Rectangle2D />
@@ -39,7 +39,7 @@
                         <Pane prefHeight="100.0" prefWidth="11.0" />
                         <ImageView blendMode="LIGHTEN" fitHeight="44.0" fitWidth="45.0">
                            <image>
-                              <Image url="@Icons/newHome2.png" />
+                              <Image url="@templates/Icons/newHome2.png" />
                            </image>
                            <HBox.margin>
                               <Insets left="40.0" top="15.0" />
@@ -64,7 +64,7 @@
                                     <Pane prefHeight="100.0" prefWidth="11.0" style="-fx-background-color: #F2C12E;" />
                                     <ImageView fitHeight="78.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@Icons/Register1.jpg" />
+                                          <Image url="@templates/Icons/Register1.jpg" />
                                        </image></ImageView>
                                     <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="41.0" prefWidth="141.0" style="-fx-background-color: #F24444;" text="Receipts " textFill="WHITE" HBox.hgrow="ALWAYS">
                                        <padding>
@@ -87,7 +87,7 @@
                      <children>
                         <ImageView fitHeight="43.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Icons/backArrow.png" />
+                              <Image url="@templates/Icons/backArrow.png" />
                            </image>
                            <HBox.margin>
                               <Insets />

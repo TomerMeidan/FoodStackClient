@@ -12,13 +12,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaFXControllers.CEO.ViewQuarterlyReportsWindow">
+<HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaFXControllers.CEO.ViewQuarterlyReportsWindow">
    <children>
       <VBox prefHeight="575.0" prefWidth="220.0" style="-fx-background-color: #D93B48;">
          <children>
             <ImageView blendMode="LIGHTEN" fitHeight="106.0" fitWidth="204.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Icons/FoodStackLogo.png" />
+                  <Image url="@templates/Icons/FoodStackLogo.png" />
                </image>
                <VBox.margin>
                   <Insets left="50.0" />
@@ -44,7 +44,7 @@
                   </Pane>
                   <ImageView fitHeight="53.0" fitWidth="49.0">
                      <image>
-                        <Image url="@Icons/newHome2.png" />
+                        <Image url="@templates/Icons/newHome2.png" />
                      </image>
                      <HBox.margin>
                         <Insets top="5.0" />
@@ -77,7 +77,7 @@
                   </Pane>
                   <ImageView fitHeight="53.0" fitWidth="49.0">
                      <image>
-                        <Image url="@Icons/QuarterHomePage1.jpg" />
+                        <Image url="@templates/Icons/QuarterHomePage1.jpg" />
                      </image>
                      <HBox.margin>
                         <Insets top="5.0" />
@@ -105,7 +105,7 @@
                   </Pane>
                   <ImageView fitHeight="45.0" fitWidth="49.0">
                      <image>
-                        <Image url="@Icons/backArrow.png" />
+                        <Image url="@templates/Icons/backArrow.png" />
                      </image>
                   </ImageView>
                   <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBackButton" prefHeight="44.0" prefWidth="92.0" style="-fx-background-color: #F24444;" text="Back" textFill="WHITE">

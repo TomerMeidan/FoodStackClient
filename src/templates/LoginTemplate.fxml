@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="-Infinity" prefHeight="404.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaFXControllers.LoginWindow">
+<VBox minHeight="-Infinity" prefHeight="404.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaFXControllers.LoginWindow">
    <children>
       <HBox VBox.vgrow="NEVER">
          <children>
@@ -21,7 +21,7 @@
                <children>
                   <ImageView blendMode="LIGHTEN" fitHeight="106.0" fitWidth="204.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
                      <image>
-                        <Image url="@Icons/FoodStackLogo.png" />
+                        <Image url="@templates/Icons/FoodStackLogo.png" />
                      </image>
                      <VBox.margin>
                         <Insets />

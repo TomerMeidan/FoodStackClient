@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaFXControllers.CEO.ViewDownloadQuarterlyReportsWindow">
+<HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaFXControllers.CEO.ViewDownloadQuarterlyReportsWindow">
    <children>
       <VBox prefHeight="575.0" prefWidth="220.0" style="-fx-background-color: #D93B48;">
          <children>
@@ -21,7 +21,7 @@
                   <Insets left="50.0" />
                </VBox.margin>
                <image>
-                  <Image url="@Icons/FoodStackLogo.png" />
+                  <Image url="@templates/Icons/FoodStackLogo.png" />
                </image>
             </ImageView>
             <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" text="Foodstack" textFill="WHITE" VBox.vgrow="ALWAYS">
@@ -47,7 +47,7 @@
                         <Insets top="5.0" />
                      </HBox.margin>
                      <image>
-                        <Image url="@Icons/newHome2.png" />
+                        <Image url="@templates/Icons/newHome2.png" />
                      </image>
                   </ImageView>
                   <Label alignment="CENTER" prefHeight="65.0" prefWidth="78.0" text="Home" textFill="WHITE">
@@ -94,7 +94,7 @@
                   </Pane>
                   <ImageView fitHeight="53.0" fitWidth="49.0">
                      <image>
-                        <Image url="@Icons/QuarterHomePage2.jpg" />
+                        <Image url="@templates/Icons/QuarterHomePage2.jpg" />
                      </image>
                      <HBox.margin>
                         <Insets top="5.0" />
@@ -130,7 +130,7 @@
                   </Pane>
                   <ImageView fitHeight="49.0" fitWidth="46.0">
                      <image>
-                        <Image url="@Icons/Download1.png" />
+                        <Image url="@templates/Icons/Download1.png" />
                      </image>
                      <HBox.margin>
                         <Insets top="8.0" />
@@ -159,7 +159,7 @@
                   </Pane>
                   <ImageView fitHeight="45.0" fitWidth="49.0">
                      <image>
-                        <Image url="@Icons/backArrow.png" />
+                        <Image url="@templates/Icons/backArrow.png" />
                      </image>
                   </ImageView>
                   <Button fx:id="BackButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBackButton" prefHeight="44.0" prefWidth="92.0" style="-fx-background-color: #F24444;" text="Back" textFill="WHITE">

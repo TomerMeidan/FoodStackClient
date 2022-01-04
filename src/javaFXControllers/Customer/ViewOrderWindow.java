@@ -37,6 +37,13 @@ import util.Message;
 import util.OptionalFeature;
 import util.Order;
 
+/** * ViewOrderWindow
+ * 
+ * This class is the javaFX controller for ViewOrderWindow.fxml
+ * This class holds primaryStage, scene, view.
+ *@author mosa
+ *@version 3/1/2022
+ */
 @SuppressWarnings("unchecked")
 public class ViewOrderWindow {
 
@@ -112,6 +119,14 @@ public class ViewOrderWindow {
 	@FXML
 	private TableColumn<Order, Integer> totalColumn;
 
+	/**
+	 * init
+	 * 
+	 * This method initializes the needed parameters for this controller.
+	 * @param HBox homePageHBox
+	 * @param Stage primaryStage
+	 * @param CustomerPortalView view
+	 */
 	public void init(HBox homePageHBox, Stage primaryStage, CustomerPortalView view) {
 		this.viewOrderHBox = homePageHBox;
 		this.primaryStage = primaryStage;
@@ -153,6 +168,12 @@ public class ViewOrderWindow {
 		//
 	}
 
+	/**
+	 * Present an empty window of "Customer Window", and send a message to server side
+	 * <p>
+	 * Message sent as JSON, contains keys:<br>
+	 * "command", value "View Order window is displayed"
+	 */
 	public void showWindow() {
 		// log
 		Logger.log(Level.INFO, "ViewOrderWindow: showing window");
@@ -173,10 +194,7 @@ public class ViewOrderWindow {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-
-			JSONObject json = new JSONObject();
-			json.put("command", "View Order window is displayed");
-			view.ready(json);
+			sendToServer("View Order window is displayed");
 		});
 	}
 	
@@ -226,6 +244,10 @@ public class ViewOrderWindow {
 		return orderList;
 	}
 
+	/**
+	 * Method called when View Order Details button clicked<br>
+	 * Send message to server "View button clicked"
+	 */
 	@FXML
 	public void onViewButton() {
 		Order order = tableView.getSelectionModel().getSelectedItem();
@@ -289,6 +311,10 @@ public class ViewOrderWindow {
 		});
 	}
 
+	/**create ListView using labels for the order
+	 * @param order
+	 * @return
+	 */
 	public ListView<Label> createListViewOfOrder(Order order) {
 		ListView<Label> lv = new ListView<>();
 		ArrayList<Meal> mealList = order.getMeals();
@@ -340,6 +366,9 @@ public class ViewOrderWindow {
 		view.ready(json);
 	}
 
+	/**
+	 * Show the customer window
+	 */
 	@FXML
 	public void onBackButton() {
 		Logger.log(Level.WARNING, "ViewOrderWindow: Back button was clicked");
@@ -349,7 +378,6 @@ public class ViewOrderWindow {
 
 	/**
 	 * show a pop up that user successfuly approved order delivery
-	 * 
 	 * @param msg
 	 */
 	public void showPopupSuccess(String msg) {
@@ -384,5 +412,13 @@ public class ViewOrderWindow {
 			tableView.getItems().remove(index);
 		});
 	}
-
+	
+	/**Method to avoid repeating the same 3 lines of code whenever sending a message to server
+	 * @param cmd
+	 */
+	public void sendToServer(String cmd) {
+		JSONObject json = new JSONObject();
+		json.put("command", cmd);
+		view.ready(json);
+	}
 }

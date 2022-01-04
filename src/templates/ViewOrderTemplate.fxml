@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -54,16 +55,33 @@
                         <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="75.0" style="-fx-background-color: transparent;" text="View Orders" textFill="WHITE" />
                      </children>
                   </HBox>
-                  <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBackButton" prefHeight="39.0" prefWidth="198.0" style="-fx-background-color: #F24444;" text="BACK" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="15.0" top="280.0" />
-                     </VBox.margin>
-                  </Button>
                </children>
             </VBox>
+            <HBox prefHeight="44.0" prefWidth="233.0" style="-fx-background-color: #F24444;">
+               <children>
+                  <Pane prefHeight="45.0" prefWidth="46.0" style="-fx-background-color: #F24444;">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Pane>
+                  <ImageView fitHeight="45.0" fitWidth="49.0">
+                     <image>
+                        <Image url="@Icons/backArrow.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBackButton" prefHeight="44.0" prefWidth="92.0" style="-fx-background-color: #F24444;" text="back" textFill="WHITE">
+                     <font>
+                        <Font name="Verdana" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
          </children>
          <opaqueInsets>
             <Insets />

@@ -86,6 +86,9 @@ public class LoginPortalView implements PortalViewInterface {
 			case "freeze":
 				loginWindow.showPopup("User status is frozen.");
 				break;
+			case "User already logged in":
+				loginWindow.showPopup("User already logged in.");
+				break;
 			default:
 				loginWindow.showPopup("User does not exist in the system.");
 				break;

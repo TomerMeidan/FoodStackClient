@@ -332,6 +332,7 @@ public class BranchManagerSupplierRgstrWindow {
 
 		if (msg.equals("supplier has been registered")) {
 			registerButtonMap.get(Message.getValue(descriptor, "supplier name")).setDisable(true);
+			statusLabel.setTextFill(Paint.valueOf("green"));
 		}
 
 		Platform.runLater(() -> {

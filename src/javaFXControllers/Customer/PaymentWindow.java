@@ -45,6 +45,15 @@ import util.OptionalFeature;
 import util.Order;
 import util.Logger.Level;
 
+/**
+ *  PaymentWindow
+ * 
+ * This class is the javaFX controller for PaymentWindowTemplate.fxml This class
+ * holds primaryStage, scene, view.
+ * 
+ * @author mosa
+ * @version 3/1/2022
+ */
 @SuppressWarnings("unchecked")
 public class PaymentWindow {
 	private final static String FOLDER_NAME = "/images/";
@@ -55,7 +64,7 @@ public class PaymentWindow {
 	private JSONObject order;
 	int finalCost; //cost of the order after discount
 	boolean businessCustomer;
-	int refBalance;
+	int refBalance; 
 	int leftToPay; // how much the customer has to pay after using refund balance
 
 	@FXML
@@ -142,6 +151,15 @@ public class PaymentWindow {
 	@FXML
 	private Label refBalanceLbl;
 
+	
+	/**
+	 * init
+	 * 
+	 * This method initializes the needed parameters for this controller.
+	 * @param VBox paymentHBox
+	 * @param Stage primaryStage
+	 * @param CustomerPortalView view
+	 */
 	public void init(HBox paymentHBox, Stage primaryStage, CustomerPortalView view) {
 		this.paymentHBox = paymentHBox;
 		this.primaryStage = primaryStage;
@@ -151,7 +169,7 @@ public class PaymentWindow {
 		regRB.setToggleGroup(group);
 		userLabel.setText("Welcome, "+view.getFirstName());
 
-		/////// load icons, can be removed if scenebuilder works////////////
+		/////// load icons
 		Image img = new Image(FOLDER_NAME + "Foodstack.jpg");
 		foodStackIcon.setImage(img);
 		img = new Image(FOLDER_NAME + "Home.jpg");
@@ -171,11 +189,8 @@ public class PaymentWindow {
 		paymentIcon.setBlendMode(BlendMode.LIGHTEN);
 		img = new Image(FOLDER_NAME + "RegularAcc.jpg");
 		regularImage.setImage(img);
-		// regularImage.setBlendMode(BlendMode.LIGHTEN);
 		img = new Image(FOLDER_NAME + "BusinessAcc.jpg");
 		businessImage.setImage(img);
-		// businessImage.setBlendMode(BlendMode.LIGHTEN);
-
 		////////
 	}
 
@@ -240,7 +255,6 @@ public class PaymentWindow {
 	 * 
 	 * @param order
 	 */
-
 	public void showPaymentOptions(JSONObject json) {
 		Order o = Order.fromJSONObject(order);
 		Platform.runLater(() -> {
@@ -290,9 +304,9 @@ public class PaymentWindow {
 				public void handle(ActionEvent event) {
 					if (balanceCB.isSelected()) {
 						if (refBalance - finalCost <= 0) {
-							orderDetails.getChildren()
-									.add(new Label("(Using Balance Refund: " + refBalance + ", 0 will remain)"));
 							leftToPay = finalCost - refBalance;
+							orderDetails.getChildren()
+									.add(new Label("(Using Balance Refund: " + refBalance + ", you will pay "+leftToPay+")"));
 							refBalance = 0;
 						} else {
 							leftToPay = 0;
@@ -324,11 +338,15 @@ public class PaymentWindow {
 				}
 
 			});
-			sendToController("Showing payment options");
+			sendToServer("Showing payment options");
 		});
 
 	}
 
+	/**Method to build a list view of the selected meals 
+	 * @param order
+	 * @return List View of the selected meals in the order
+	 */
 	public ListView<Label> createListViewOfOrder(Order order) {
 		ListView<Label> lv = new ListView<>();
 		ArrayList<Meal> mealList = order.getMeals();
@@ -363,11 +381,20 @@ public class PaymentWindow {
 		return lv;
 	}
 
+	/**
+	 * Method called when a payment method (radio button) is chosen to enable confirm button
+	 */
 	@FXML
-	public void chosePayment() {
+	public void chosePaymentMethod() {
 		confirmButton.disableProperty().set(false);
 	}
 
+	/**
+	 * Method called when "Confirm" button is clicked<br>
+	 * Send message to server side as JSONObject, keys:<br>
+	 * "order", has value JSONObject containing all the necessary information about that the order
+	 * "command", "Confirm button was clicked"
+	 */
 	@FXML
 	public void clickConfirmButton() {
 		JSONObject json = new JSONObject();
@@ -395,26 +422,6 @@ public class PaymentWindow {
 
 	}
 
-//	public static void addTextLimiter(final TextField tf, final int maxLength) {
-//		tf.textProperty().addListener(new ChangeListener<String>() {
-//			@Override
-//			public void changed(final ObservableValue<? extends String> ov, final String oldValue,
-//					final String newValue) {
-//				if (tf.getText().length() > maxLength) {
-//					String s = tf.getText().substring(0, maxLength);
-//					tf.setText(s);
-//				}
-//
-//				if (tf.getText().isEmpty())
-//					;
-//				else if (!(tf.getText().matches("[0-9]+"))) {
-//					String s = tf.getText().substring(0, tf.getText().length() - 1);
-//					tf.setText(s);
-//				}
-//			}
-//		});
-//	}
-
 	public boolean checkEmail() {
 		String email = emailTxt.getText();
 		Pattern pattern = Pattern.compile("^(.+)@(.+)$");
@@ -434,18 +441,26 @@ public class PaymentWindow {
 		return false;
 	}
 
+	/**
+	 * Method called when "Back" button is clicked<br>
+	 * Shows Delivery Window
+	 */
 	@FXML
 	public void onBackButton() {
 		view.getOrderWindow().showWindow();
 		view.getOrderWindow().showDeliveryWindow();
 	}
 
-	public void sendToController(String cmd) {
+	public void sendToServer(String cmd) {
 		JSONObject json = new JSONObject();
 		json.put("command", cmd);
 		view.ready(json);
 	}
 
+	/**
+	 * When order is successfuly processed, build a new GUI to display<br>
+	 * Contain button to go back to homepage<br>
+	 */
 	public void showSuccessWindow() {
 		Platform.runLater(() -> {
 			backButton.disableProperty().set(true);
@@ -456,7 +471,7 @@ public class PaymentWindow {
 
 				@Override
 				public void handle(ActionEvent event) {
-					sendToController("Back to homepage button was clicked");
+					sendToServer("Back to homepage button was clicked");
 				}
 
 			});
@@ -501,7 +516,14 @@ public class PaymentWindow {
 		return imgView;
 	}
 
-	public void orderFailPopUp() {
+	/**Method called by server side when payment fails<br>
+	 * Pop up a dialog window asking if user would like to pay using his credit aswell<br>
+	 * 2 buttons: "yes", "no"
+	 * 
+	 * @param json
+	 */
+	public void orderFailPopUp(JSONObject json) {
+		Long currentBalance = Message.getValueLong(json, "currentBalance");
 		Platform.runLater(() -> {
 			Stage window = new Stage();
 			window.initModality(Modality.APPLICATION_MODAL);
@@ -511,20 +533,34 @@ public class PaymentWindow {
 
 			Label label = new Label();
 			label.setText(
-					"Not enough in your balance!");
+					"You have "+ currentBalance+" INS in your balance. Use card: "+ view.getCreditNumber()+" to pay the remaining "+(leftToPay-currentBalance)+" INS and complete the order?");
 
-			Button b1 = new Button("OK");
+			Button b1 = new Button("Yes");
 			b1.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					window.hide();
+					JSONObject toServer = new JSONObject();
+					toServer.put("order", order);
+					toServer.put("command", "Clicked yes after order failed");
+					view.ready(toServer);
+				}
+			});
+			Button b2 = new Button("No");
+			b2.setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
 				public void handle(ActionEvent event) {
 					window.hide();
 				}
 			});
+		
 			VBox layout = new VBox(10);
 			layout.getChildren().add(label);
 			layout.setAlignment(Pos.CENTER);
 			layout.getChildren().add(b1);
+			layout.getChildren().add(b2);
 
 			Scene scene = new Scene(layout);
 			window.setScene(scene);
@@ -532,6 +568,9 @@ public class PaymentWindow {
 		});
 	}
 
+	/**general pop up message
+	 * @param msg
+	 */
 	public void showPopup(String msg) {
 		Platform.runLater(() -> {
 			Stage window = new Stage();
@@ -566,7 +605,6 @@ public class PaymentWindow {
 
 	/**
 	 * Method to check if (difference) time has passed from start to end
-	 * 
 	 * @param start
 	 * @param end
 	 * @param difference (minutes)

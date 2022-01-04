@@ -2,22 +2,25 @@ package clientSide;
 
 import java.io.IOException;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import clientSide.LoginPortalView;
+
+import common.Logger;
+import common.Logger.Level;
 import javaFXControllers.Customer.CustomerWindow;
+import javaFXControllers.Customer.OrderWindow;
 import javaFXControllers.Customer.PaymentWindow;
 import javaFXControllers.Customer.ViewOrderWindow;
-import javaFXControllers.Customer.OrderWindow;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import common.Logger;
 import util.Message;
-import common.Logger.Level;
-
+/**
+ * Class used implement "PortalViewInterface" Loads the relevant templates and information that
+ * the customer can see, also handles messages from/to server
+ * @author Mosa Hadish
+ * @version 3/1/2021
+ */
 public class CustomerPortalView implements PortalViewInterface {
 
 	private ComController com;
@@ -47,6 +50,7 @@ public class CustomerPortalView implements PortalViewInterface {
 		this.com = com;
 	}
 
+	
 	@Override
 	public void init(JSONObject json) {
 		defaultBranch = Message.getValueString(json, "branch");
@@ -72,10 +76,17 @@ public class CustomerPortalView implements PortalViewInterface {
 				customerWindow.scanFail();
 			else if (Message.getValueString(descriptor, "update").equals("Order is ready"))
 				customerWindow.orderReadyPopup(descriptor);
-		
+			else if (Message.getValueString(descriptor, "update").equals("W4C found")) {
+				address = Message.getValueString(descriptor, "address");
+				phoneNumber = Message.getValueString(descriptor, "phoneNumber");
+				creditNumber = Message.getValueString(descriptor, "creditNumber");
+				email = Message.getValueString(descriptor, "email");
+				ID = Message.getValueString(descriptor, "ID");
+				customerWindow.scanSuccess();
+			}
 			else if (Message.getValueString(descriptor, "update").equals("Go back to homepage")) {
-				loadOrderWindow();
-				loadPaymentWindow();
+				loadOrderWindow(); //reload because changing a lot
+				loadPaymentWindow();//reload because changing a lot
 				customerWindow.showWindow();
 			}
 			// orderWindow
@@ -96,8 +107,12 @@ public class CustomerPortalView implements PortalViewInterface {
 				paymentWindow.showPaymentOptions(descriptor);
 			else if (Message.getValueString(descriptor, "update").equals("Order was successfuly added"))
 				paymentWindow.showSuccessWindow();
-			else if (Message.getValueString(descriptor, "update").equals("Show pop up: not enough funds"))
-				paymentWindow.orderFailPopUp();
+			else if (Message.getValueString(descriptor, "update").equals("Show pop up: failed order")) {
+				if(Message.getValueString(descriptor, "reason").equals("Error in system"))
+					paymentWindow.showPopup("There was a problem processing your order, try again later");
+				if(Message.getValueString(descriptor, "reason").equals("Not enough in balance"))
+					paymentWindow.orderFailPopUp(descriptor);
+			}
 
 		
 
@@ -112,14 +127,6 @@ public class CustomerPortalView implements PortalViewInterface {
 				viewOrderWindow.displayOrderInformation();
 			else if (Message.getValueString(descriptor, "update").equals("Refresh View Window")) {
 				viewOrderWindow.refreshWindowIfShowing(descriptor);
-			}
-			else if (Message.getValueString(descriptor, "update").equals("W4C found")) {
-				address = Message.getValueString(descriptor, "address");
-				phoneNumber = Message.getValueString(descriptor, "phoneNumber");
-				creditNumber = Message.getValueString(descriptor, "creditNumber");
-				email = Message.getValueString(descriptor, "email");
-				ID = Message.getValueString(descriptor, "ID");
-				customerWindow.scanSuccess();
 			}
 		default:
 			break;
@@ -180,53 +187,61 @@ public class CustomerPortalView implements PortalViewInterface {
 		return creditNumber;
 	}
 
+	/**
+	 * Load an FXML file for the Order Window and initialize it
+	 */
 	public void loadOrderWindow() {
 		FXMLLoader loader2 = new FXMLLoader();
 		loader2.setLocation(getClass().getResource("/templates/OrderWindowTemplate.fxml"));
 		try {
 			orderHBox = loader2.load();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("CustomerPortalView: IOException in loadOrderWindow "+e);
 		}
 		orderWindow = loader2.getController();
 		orderWindow.init(orderHBox, primaryStage, this);
 	}
 
+	/**
+	 * Load an FXML file for the Payment Window and initialize it
+	 */
 	public void loadPaymentWindow() {
 		FXMLLoader loader4 = new FXMLLoader();
 		loader4.setLocation(getClass().getResource("/templates/PaymentWindow.fxml"));
 		try {
 			paymentHBox = loader4.load();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("CustomerPortalView: IOException in loadPaymentWindow "+e);
 		}
 		paymentWindow = loader4.getController();
 		paymentWindow.init(paymentHBox, primaryStage, this);
 	}
 
+	/**
+	 * Load an FXML file for the Customer Window and initialize it
+	 */
 	public void loadCustomerWindow() {
 		FXMLLoader loader1 = new FXMLLoader();
 		loader1.setLocation(getClass().getResource("/templates/CustomerHomepageTemplate.fxml"));
 		try {
 			homePageVBox = loader1.load();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("CustomerPortalView: IOException in loadCustomerWindow "+e);
 		}
 		customerWindow = loader1.getController();
 		customerWindow.init(homePageVBox, primaryStage, this);
 	}
 
+	/**
+	 * Load an FXML file for the View Order Window and initialize it
+	 */
 	public void loadViewOrderWindow() {
 		FXMLLoader loader3 = new FXMLLoader();
 		loader3.setLocation(getClass().getResource("/templates/ViewOrderTemplate.fxml"));
 		try {
 			viewOrderHBox = loader3.load();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("CustomerPortalView: IOException in loadViewOrderWindow "+e);
 		}
 		viewOrderWindow = loader3.getController();
 		viewOrderWindow.init(viewOrderHBox, primaryStage, this);

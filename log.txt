@@ -1,56 +1,53 @@
 ######################## NEW RUN ############################
-2022-01-02 23:18:03 D BMClient: ComController initialized
-2022-01-02 23:18:03 D LoginPortalView: loginWindow initialized
-2022-01-02 23:18:03 I LoginWindow: showing window
-2022-01-02 23:18:03 D ComController: PortalView initialized
-2022-01-02 23:18:03 D ComController: connection established
-2022-01-02 23:18:04 D LoginWindow: updating status to: connected
-2022-01-02 23:18:09 I LoginWindow: login button was pressed
-2022-01-02 23:18:09 D ComController: Received message from server
-2022-01-02 23:18:09 D ComController: message : {"portalType":"Branch Manager","FirstName":"Romi","LastName":"Milmi","userID":"4","branch":"Center","command":"handshake","status":"ok"}
-2022-01-02 23:18:09 I ComController: messageType: handshake
-2022-01-02 23:18:09 D BranchManagerPortalView: branchManagerHomePage initialized
-2022-01-02 23:18:09 I BranchManagerHomePage: showing window
-2022-01-02 23:18:10 I BranchManagerHomePage: supplier registration button was pressed
-2022-01-02 23:18:10 D ComController: Received message from server
-2022-01-02 23:18:10 D ComController: message : {"suppliers":[{"last name":"Loðbrók","first name":"Ragnarr ","supplier name":"BBB.C","phone number":"0541125487","email":"Ragnarr@gmail.con"},{"last name":"Dir","first name":"Shir","supplier name":"Japanika.C","phone number":"0574541258","email":"Shir@gmail.con"}],"update":"show supplier registration window","command":"update"}
-2022-01-02 23:18:11 D BranchManagerPortalView: BranchManagerSupplierRgstrWindow initialized
-2022-01-02 23:18:11 I BranchManagerSupplierRgstrWindow: showing window
-2022-01-02 23:18:24 D ComController: Received message from server
-2022-01-02 23:18:24 D ComController: message : {"supplier name":"Japanika.C","update":"supplier has been registered","command":"update"}
-2022-01-02 23:18:25 I BranchManagerSupplierRgstrWindow: back button was pressed
-2022-01-02 23:18:25 I BranchManagerHomePage: showing window
-2022-01-02 23:18:25 W BranchManagerHomePage: exception in showWindow
-2022-01-02 23:18:26 I BranchManagerHomePage: logout button was pressed
-2022-01-02 23:18:26 D ComController: Received message from server
-2022-01-02 23:18:26 D ComController: message : {"portalType":"login","command":"handshake","status":"ok"}
-2022-01-02 23:18:26 I ComController: messageType: handshake
-2022-01-02 23:18:26 D LoginPortalView: loginWindow initialized
-2022-01-02 23:18:26 I LoginWindow: showing window
-2022-01-02 23:18:26 W LoginPortalView: Logged out
-2022-01-02 23:18:26 D LoginWindow: updating status to: connected
-2022-01-02 23:18:31 I LoginWindow: login button was pressed
-2022-01-02 23:18:31 D ComController: Received message from server
-2022-01-02 23:18:31 D ComController: message : {"portalType":"Customer","FirstName":"Mos","LastName":"\tHadi","userID":"9","branch":"South","command":"handshake","status":"ok"}
-2022-01-02 23:18:31 I ComController: messageType: handshake
-2022-01-02 23:18:31 D CustomerPortalView: Customer related windows initialized
-2022-01-02 23:18:31 I CustomerWindow: showing window
-2022-01-02 23:18:32 D ComController: Received message from server
-2022-01-02 23:18:32 D ComController: message : {"employerID":null,"address":"Kama","phoneNumber":"544435241","creditNumber":"545123","update":"W4C found","ID":"51335","command":"update","email":"Mos@gmail.com"}
-2022-01-02 23:18:32 I CustomerWindow: Order button was clicked
-2022-01-02 23:18:32 D ComController: Received message from server
-2022-01-02 23:18:32 D ComController: message : {"update":"Show order window","command":"update"}
-2022-01-02 23:18:32 I OrderWindow: showing window
-2022-01-02 23:18:32 D ComController: Received message from server
-2022-01-02 23:18:32 D ComController: message : {"restaurantList":[{"phoneNumber":"546635241","supplierID":"7","restaurantName":"Pizza Hut.S","branch":"South","deliveryTypes":"YYY"},{"phoneNumber":"0574541258","supplierID":"15","restaurantName":"Japanika.C","branch":"Center","deliveryTypes":"YYY"}],"update":"Show restaurant list","command":"update"}
-2022-01-02 23:18:32 I OrderWindow: Showing restaurants
-2022-01-02 23:18:34 D ComController: Received message from server
-2022-01-02 23:18:34 D ComController: message : {"update":"Show restaurant list","command":"update"}
-2022-01-02 23:18:34 I OrderWindow: Showing restaurants
-2022-01-02 23:18:43 I CustomerWindow: showing window
-2022-01-02 23:18:43 W CustomerWindow: exception in showWindow
-2022-01-02 23:18:57 D ComController: connection exception
-2022-01-02 23:18:58 D trying to connect...
-2022-01-02 23:18:58 D LoginPortalView: loginWindow initialized
-2022-01-02 23:18:58 I LoginWindow: showing window
-2022-01-02 23:18:58 D ComController: PortalView initialized
+2022-01-04 10:25:13 D BMClient: ComController initialized
+2022-01-04 10:25:13 D LoginPortalView: loginWindow initialized
+2022-01-04 10:25:13 I LoginWindow: showing window
+2022-01-04 10:25:13 D ComController: PortalView initialized
+2022-01-04 10:25:13 D ComController: connection established
+2022-01-04 10:25:14 D LoginWindow: updating status to: connected
+2022-01-04 10:25:17 I LoginWindow: login button was pressed
+2022-01-04 10:25:17 D ComController: Received message from server
+2022-01-04 10:25:17 D ComController: message : {"portalType":"Business Customer","FirstName":"Harry","LastName":"Poter","userID":"10","branch":"North","command":"handshake","status":"ok"}
+2022-01-04 10:25:17 I ComController: messageType: handshake
+2022-01-04 10:25:17 D CustomerPortalView: Customer related windows initialized
+2022-01-04 10:25:17 I CustomerWindow: showing window
+2022-01-04 10:25:18 D ComController: Received message from server
+2022-01-04 10:25:18 D ComController: message : {"employerID":"6","address":"London","phoneNumber":"0528894563","creditNumber":"2566635","update":"W4C found","employerName":"IBM","employerW4C":"oc1rxn3fmj","ID":"778855","command":"update","email":"Harry@gmail.con"}
+2022-01-04 10:25:18 I CustomerWindow: Order button was clicked
+2022-01-04 10:25:18 D ComController: Received message from server
+2022-01-04 10:25:18 D ComController: message : {"update":"Show order window","command":"update"}
+2022-01-04 10:25:18 I OrderWindow: showing window
+2022-01-04 10:25:18 D ComController: Received message from server
+2022-01-04 10:25:18 D ComController: message : {"restaurantList":[{"phoneNumber":"546635241","supplierID":"7","restaurantName":"Pizza Hut.S","branch":"South","deliveryTypes":"YYY"},{"phoneNumber":"0574541258","supplierID":"15","restaurantName":"Japanika.C","branch":"Center","deliveryTypes":"YYY"}],"update":"Show restaurant list","command":"update"}
+2022-01-04 10:25:18 I OrderWindow: Showing restaurants
+2022-01-04 10:25:19 D ComController: Received message from server
+2022-01-04 10:25:19 D ComController: message : {"update":"Show restaurant list","command":"update"}
+2022-01-04 10:25:19 I OrderWindow: Showing restaurants
+2022-01-04 10:25:20 W OrderWindow: Restaurant was selected
+2022-01-04 10:25:20 D ComController: Received message from server
+2022-01-04 10:25:20 D ComController: message : {"restaurantName":"Pizza Hut.S","update":"Show item types list","menu":{"Pizza":[{"imgType":"typeImg\/pizzaDish.png"},{"mealID":"275","mustFeatureJArray":[{"mustFeaturePrice":0,"mustFeatureID":"120","mustFeatureName":"Regular"},{"mustFeaturePrice":5,"mustFeatureID":"121","mustFeatureName":"Large"}],"mealPrice":"25","imgMeal":"mealImg\/pizza.png","optionalFeatureJArray":[{"optionalFeatureName":"Olive","optionalFeatureID":"127","optionalFeaturePrice":5}],"mealName":"Pepperoni"},{"mealID":"276","mustFeatureJArray":[{"mustFeaturePrice":10,"mustFeatureID":"122","mustFeatureName":"Big"},{"mustFeaturePrice":0,"mustFeatureID":"123","mustFeatureName":"Regular"}],"mealPrice":"15","imgMeal":"mealImg\/rise.png","optionalFeatureJArray":[{"optionalFeatureName":"Potatoes","optionalFeatureID":"128","optionalFeaturePrice":3},{"optionalFeatureName":"Sauce","optionalFeatureID":"129","optionalFeaturePrice":5}],"mealName":"Rice"}],"cakes":[{"imgType":"typeImg\/dessert.png"},{"mealID":"274","mustFeatureJArray":[{"mustFeaturePrice":10,"mustFeatureID":"118","mustFeatureName":"Cherry"},{"mustFeaturePrice":7,"mustFeatureID":"119","mustFeatureName":"Cream"}],"mealPrice":"70","imgMeal":"mealImg\/cake.png","optionalFeatureJArray":[{"optionalFeatureName":"Cheese","optionalFeatureID":"125","optionalFeaturePrice":7},{"optionalFeatureName":"Bacon","optionalFeatureID":"126","optionalFeaturePrice":17}],"mealName":"coco cake"}]},"command":"update"}
+2022-01-04 10:25:20 I OrderWindow: Showing types
+2022-01-04 10:25:21 D ComController: Received message from server
+2022-01-04 10:25:21 D ComController: message : {"itemType":"Pizza","update":"Show meals by type","command":"update"}
+2022-01-04 10:25:21 I OrderWindow: Showing meals
+2022-01-04 10:25:22 I OrderWindow: clickOnAddMeal: Meal added
+2022-01-04 10:25:22 D ComController: Received message from server
+2022-01-04 10:25:22 D ComController: message : {"update":"Show item types list","command":"update"}
+2022-01-04 10:25:22 I OrderWindow: Showing types
+2022-01-04 10:25:23 I OrderWindow: clickOnCheckOut: Clicked CheckOut
+2022-01-04 10:25:23 D ComController: Received message from server
+2022-01-04 10:25:23 D ComController: message : {"update":"Show delivery window","command":"update"}
+2022-01-04 10:25:27 I OrderWindow: showDeliveryWindow: Showing delivery window
+2022-01-04 10:25:27 D ComController: Received message from server
+2022-01-04 10:25:27 D ComController: message : {"update":"Show payment window","command":"update","order":{"employerID":"6","supplierID":"7","restaurantName":"Pizza Hut.S","pickUpType":"Self Pickup","dueDate":"Jan 04 11:22:00 IST 2022","restaurantBranch":"South","employerName":"IBM","employerW4C":"oc1rxn3fmj","mealsJArray":[{"mustFeaturePrice":5,"mealID":"275","optionalJArray":[{"optionalFeatureName":"Olive","optionalFeatureID":"127","optionalFeaturePrice":5}],"mustFeatureID":"121","mealPrice":"25","mustFeatureName":"Large","mealName":"Pepperoni"}]}}
+2022-01-04 10:25:27 D ComController: Received message from server
+2022-01-04 10:25:27 D ComController: message : {"refundBalance":"60","update":"Show payment methods","command":"update"}
+2022-01-04 10:25:34 D ComController: Received message from server
+2022-01-04 10:25:34 D ComController: message : {"reason":"Not enough in balance","currentBalance":20,"update":"Show pop up: failed order","command":"update"}
+2022-01-04 10:25:43 D ComController: Received message from server
+2022-01-04 10:25:43 D ComController: message : {"update":"Order was successfuly added","command":"update"}
+2022-01-04 10:25:49 D ComController: Received message from server
+2022-01-04 10:25:49 D ComController: message : {"update":"Go back to homepage","command":"update"}
+2022-01-04 10:25:50 I CustomerWindow: showing window
+2022-01-04 10:25:50 W CustomerWindow: exception in showWindow
+2022-01-04 10:25:53 D ComController: connection exception

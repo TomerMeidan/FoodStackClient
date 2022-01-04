@@ -55,6 +55,15 @@ import util.OptionalFeature;
 import util.DateParser;
 import util.Meal;
 
+/**
+ *  OrderWindow
+ * 
+ * This class is the javaFX controller for OrderWindowTemplate.fxml This class
+ * holds primaryStage, scene, view.
+ * 
+ * @author mosa
+ * @version 3/1/2022
+ */
 @SuppressWarnings("unchecked")
 public class OrderWindow {
 
@@ -66,7 +75,6 @@ public class OrderWindow {
 
 	private JSONArray restaurantList;
 	private JSONObject menu;
-	private JSONArray selectedOptionals;
 	private String selectedBranch = null;
 	private JSONObject selectedRestaurant;
 	private JSONObject order;
@@ -75,8 +83,7 @@ public class OrderWindow {
 	@FXML
 	private Label userLabel;
 	@FXML
-	private VBox mainVBox; // TODO change name
-
+	private VBox mainVBox;
 	@FXML
 	private Label feedBackLabel;
 	@FXML
@@ -137,18 +144,25 @@ public class OrderWindow {
 	@FXML
 	private HBox deliveryHBox;
 
+	/**
+	 * init
+	 * 
+	 * This method initializes the needed parameters for this controller.
+	 * 
+	 * @param HBox               orderHBox
+	 * @param Stage              primaryStage
+	 * @param CustomerPortalView view
+	 */
 	public void init(HBox orderHBox, Stage primaryStage, CustomerPortalView view) {
 		this.orderHBox = orderHBox;
 		this.primaryStage = primaryStage;
 		this.view = view;
-		selectedOptionals = new JSONArray();
 		menu = new JSONObject();
 		nextButton.disableProperty().set(true);
 		checkOutButton.disableProperty().set(true);
 		order = new JSONObject();
-		// mealsJArray = new JSONArray();
 		choices.getItems().addAll("North", "South", "Center");
-		userLabel.setText("Welcome, "+view.getFirstName());
+		userLabel.setText("Welcome, " + view.getFirstName());
 
 		/////// load icons
 		Image img = new Image(FOLDER_NAME + "Foodstack.jpg");
@@ -178,7 +192,7 @@ public class OrderWindow {
 	}
 
 	/**
-	 * Present an empty window of "Order Window", and send a message to controller
+	 * Present an empty window of "Order Window", and send a message to server side
 	 * <p>
 	 * Message sent as JSON, contains keys:<br>
 	 * "command", value "Order window is displayed"
@@ -204,7 +218,7 @@ public class OrderWindow {
 			Logger.log(Level.INFO, "OrderWindow: showing window");
 			System.out.println("OrderWindow: showing window");
 			if (selectedBranch == null)
-				sendToController("Order window is displayed");
+				sendToServer("Order window is displayed");
 		});
 	}
 
@@ -275,7 +289,7 @@ public class OrderWindow {
 							FOLDER_NAME + restaurantName + ".jpg");
 			}
 			mainVBox.getChildren().add(grid.getGrid());
-			sendToController("Restaurant list is displayed");
+			sendToServer("Restaurant list is displayed");
 		});
 	}
 
@@ -294,17 +308,11 @@ public class OrderWindow {
 		if (jsonMenu != null)
 			menu = jsonMenu;
 		Platform.runLater(() -> {
-			restaurantsPane.setStyle("-fx-background-color: #D93B48;");
-			restaurantHBox.setStyle("-fx-background-color: #D93B48;");
-			mealsPane.setStyle("-fx-background-color:  #F2C12E;");
-			mealsHBox.setStyle("-fx-background-color:   #F24444;");
+			setPathToMealFromRestaurants();
 			backButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
-					restaurantsPane.setStyle("-fx-background-color: #F2C12E;");
-					restaurantHBox.setStyle("-fx-background-color: #F24444;");
-					mealsPane.setStyle("-fx-background-color:  #D93B48;");
-					mealsHBox.setStyle("-fx-background-color:   #D93B48;");
+					setPathToRestaurants();
 					showRestaurants(null);
 				}
 			});
@@ -322,7 +330,7 @@ public class OrderWindow {
 				grid.addToGrid(itemType, createEventForType(itemType), Message.getValueString(temp, "imgType"));
 			}
 			mainVBox.getChildren().add(grid.getGrid());
-			sendToController("Item types list is displayed");
+			sendToServer("Item types list is displayed");
 		});
 	}
 
@@ -356,7 +364,7 @@ public class OrderWindow {
 			loadItemsToWindow(itemType);
 			Logger.log(Level.INFO, "OrderWindow: Showing meals");
 			System.out.println("OrderWindow: Showing meals");
-			sendToController("Meals by type are displayed");
+			sendToServer("Meals by type are displayed");
 		});
 	}
 
@@ -375,6 +383,7 @@ public class OrderWindow {
 		for (int i = 1; i < itemArr.size(); i++) {
 			JSONObject item = (JSONObject) itemArr.get(i);
 			String itemName = Message.getValueString(item, "mealName");
+			JSONArray selectedOptionals = new JSONArray();
 			if (itemName == null || itemName.isEmpty())
 				continue;
 			String itemID = Message.getValueString(item, "mealID");
@@ -410,8 +419,8 @@ public class OrderWindow {
 						meal.put("mealPrice", itemPrice);
 						meal.put("mealType", itemType);
 						addMustFeatures(mustFeatures, hboxForMeal, meal);
-						addOptionalFeatures(optionalFeatures, hboxForMeal, meal);
-						addAddMealButton(meal, hboxForMeal);
+						addOptionalFeatures(optionalFeatures, hboxForMeal, selectedOptionals);
+						addAddMealButton(meal, hboxForMeal, selectedOptionals);
 					} else {
 						hboxForMeal.getChildren().clear();
 						hboxForMeal.getChildren().addAll(vboxForMeal, priceLabel);
@@ -428,20 +437,26 @@ public class OrderWindow {
 	}
 
 	/**
-	 * adds a button "Add Meal" with an event handler
+	 * Adds a button "Add Meal" with an event handler
 	 * 
-	 * @param meal
-	 * @param vboxForMeal
-	 * @param hboxForMeal
+	 * @param meal        (the meal that will be added to shopping cart through the
+	 *                    event handler
+	 * @param hboxForMeal (the hbox to which the button is added)
 	 */
-	public void addAddMealButton(JSONObject meal, HBox hboxForMeal) {
+	private void addAddMealButton(JSONObject meal, HBox hboxForMeal, JSONArray selectedOptionals) {
 		Button addMeal = new Button("Add Meal");
 		addMeal.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				if (meal.containsKey("mustFeatureID")) {
-					clickOnAddMeal(selectedOptionals, meal);
-					selectedOptionals = new JSONArray();
+					nextButton.disableProperty().set(true);
+					checkOutButton.disableProperty().set(false);
+					meal.put("optionalJArray", selectedOptionals);
+					mealList.add(Meal.fromJSONObject(meal));
+					shoppingCart.setItems(mealList);
+					Logger.log(Level.INFO, "OrderWindow: clickOnAddMeal: Meal added");
+					System.out.println("OrderWindow: clickOnAddMeal: Meal added");
+					sendToServer("Add meal button was clicked");
 				} else {
 					System.out.println("Please choose a Must Feature!");
 					showPopup("Please choose a Must Feature!");
@@ -453,6 +468,7 @@ public class OrderWindow {
 
 	/**
 	 * general popup for general information
+	 * 
 	 * @param msg (the message you want to show to user)
 	 */
 	public void showPopup(String msg) {
@@ -488,12 +504,13 @@ public class OrderWindow {
 	/**
 	 * Add a ListView of optional features checkboxes with eventhandlers
 	 * 
-	 * @param optionalFeatures
-	 * @param hboxForMeal
+	 * @param optionalFeaturesJArray (all the optional features array of a specific
+	 *                               meal)
+	 * @param hboxForMeal            (the hbox to which the listview is added)
 	 * @param meal
 	 */
-	public void addOptionalFeatures(JSONArray optionalFeatures, HBox hboxForMeal, JSONObject meal) {
-		if (optionalFeatures == null)
+	private void addOptionalFeatures(JSONArray optionalFeaturesJArray, HBox hboxForMeal, JSONArray selectedOptionals) {
+		if (optionalFeaturesJArray == null)
 			return;
 		VBox vboxForOptional = new VBox(5);
 		Label title = new Label("Optional Features:");
@@ -503,8 +520,8 @@ public class OrderWindow {
 		vboxForOptional.getChildren().add(title);
 		vboxForOptional.getChildren().add(lvForOptional);
 		hboxForMeal.getChildren().add(vboxForOptional);
-		for (int j = 0; j < optionalFeatures.size(); j++) {
-			JSONObject optionalFeature = (JSONObject) optionalFeatures.get(j);
+		for (int j = 0; j < optionalFeaturesJArray.size(); j++) {
+			JSONObject optionalFeature = (JSONObject) optionalFeaturesJArray.get(j);
 			String optionalFeatureName = Message.getValueString(optionalFeature, "optionalFeatureName");
 			String optionalFeaturePrice = " (+";
 			optionalFeaturePrice += Message.getValueLong(optionalFeature, "optionalFeaturePrice");
@@ -527,11 +544,12 @@ public class OrderWindow {
 
 	/**
 	 * Add must feature radio boxes, and set event handler
-	 * @param mustFeatures
-	 * @param hboxForMeal
+	 * 
+	 * @param mustFeatures (all the must features of a specific meal)
+	 * @param hboxForMeal  (the hbox to which the listview is added)
 	 * @param meal
 	 */
-	public void addMustFeatures(JSONArray mustFeatures, HBox hboxForMeal, JSONObject meal) {
+	private void addMustFeatures(JSONArray mustFeatures, HBox hboxForMeal, JSONObject meal) {
 		if (mustFeatures != null) {
 			ToggleGroup group = new ToggleGroup();
 			VBox vboxForMust = new VBox(5);
@@ -542,9 +560,7 @@ public class OrderWindow {
 			vboxForMust.getChildren().add(title);
 			vboxForMust.getChildren().add(lvForMust);
 			title.setLayoutY(2);
-			// lvForMust.getItems().add(title);
 			hboxForMeal.getChildren().add(vboxForMust);
-			// hboxForMeal.getChildren().add(lvForMust);
 			for (int j = 0; j < mustFeatures.size(); j++) {
 				JSONObject mustFeature = (JSONObject) mustFeatures.get(j);
 				String mustFeatureName = Message.getValueString(mustFeature, "mustFeatureName");
@@ -587,49 +603,71 @@ public class OrderWindow {
 	}
 
 	/**
-	 * when selecting a branch in the combo box, send command to go back to
-	 * restaurant list
+	 * Go back to restaurants list, display restaurants in the branch selected Sends
+	 * a message to the server side "Combo box option was selected"
 	 * 
 	 * @param event
 	 */
-	@FXML // TODO optimize later
+	@FXML
 	public void onComboBox(ActionEvent event) {
 		Platform.runLater(() -> {
-			// mealsJArray.clear();
-			restaurantsPane.setStyle("-fx-background-color: #F2C12E;");
-			restaurantHBox.setStyle("-fx-background-color: #F24444;");
-			mealsPane.setStyle("-fx-background-color:  #D93B48;");
-			mealsHBox.setStyle("-fx-background-color:   #D93B48;");
-			deliveryPane.setStyle("-fx-background-color:  #D93B48;");
-			deliveryHBox.setStyle("-fx-background-color:   #D93B48;");
+			resetPath();
 			mealList.clear();
 			questionHBox.getChildren().clear();
 			checkOutButton.setVisible(true);
 			selectedBranch = choices.getSelectionModel().getSelectedItem();
-			sendToController("Combo box option was selected");
+			sendToServer("Combo box option was selected");
 		});
 	}
 
 	/**
-	 * save meal into mealsList
-	 * 
-	 * @param selectedOptionals
-	 * @param meal
+	 * Handle the GUI (left hand side of the screen showing the different windows)
 	 */
-	public void clickOnAddMeal(JSONArray selectedOptionals, JSONObject meal) {
-		nextButton.disableProperty().set(true);
-		checkOutButton.disableProperty().set(false);
-		meal.put("optionalJArray", selectedOptionals);
-		mealList.add(Meal.fromJSONObject(meal));
-		shoppingCart.setItems(mealList);
-		Logger.log(Level.INFO, "OrderWindow: clickOnAddMeal: Meal added");
-		System.out.println("OrderWindow: clickOnAddMeal: Meal added");
-		sendToController("Add meal button was clicked");
+	public void setPathToRestaurants() {
+		restaurantsPane.setStyle("-fx-background-color: #F2C12E;");
+		restaurantHBox.setStyle("-fx-background-color: #F24444;");
+		mealsPane.setStyle("-fx-background-color:  #D93B48;");
+		mealsHBox.setStyle("-fx-background-color:   #D93B48;");
 	}
 
+	public void setPathToMealFromRestaurants() {
+		restaurantsPane.setStyle("-fx-background-color: #D93B48;");
+		restaurantHBox.setStyle("-fx-background-color: #D93B48;");
+		mealsPane.setStyle("-fx-background-color:  #F2C12E;");
+		mealsHBox.setStyle("-fx-background-color:   #F24444;");
+	}
+
+	public void setPathToDelivery() {
+		mealsPane.setStyle("-fx-background-color:  #D93B48;");
+		mealsHBox.setStyle("-fx-background-color:   #D93B48;");
+		deliveryPane.setStyle("-fx-background-color:  #F2C12E;");
+		deliveryHBox.setStyle("-fx-background-color:   #F24444;");
+	}
+
+	public void setPathToMealFromDelivery() {
+		mealsPane.setStyle("-fx-background-color:  #F2C12E;");
+		mealsHBox.setStyle("-fx-background-color:   #F24444;");
+		deliveryPane.setStyle("-fx-background-color:  #D93B48;");
+		deliveryHBox.setStyle("-fx-background-color:   #D93B48;");
+	}
+
+	public void resetPath() {
+		restaurantsPane.setStyle("-fx-background-color: #F2C12E;");
+		restaurantHBox.setStyle("-fx-background-color: #F24444;");
+		mealsPane.setStyle("-fx-background-color:  #D93B48;");
+		mealsHBox.setStyle("-fx-background-color:   #D93B48;");
+		deliveryPane.setStyle("-fx-background-color:  #D93B48;");
+		deliveryHBox.setStyle("-fx-background-color:   #D93B48;");
+	}
+	/////
+
+	/**
+	 * Display the shopping cart with the selected meals<br>
+	 * Add buttons to allow deletion of selected meals, or edit them or close the
+	 * shopping cart<br>
+	 */
 	@FXML
 	public void showCart() {
-
 		Platform.runLater(() -> {
 			Stage window = new Stage();
 			VBox layout = new VBox(10);
@@ -637,7 +675,7 @@ public class OrderWindow {
 			window.setTitle("Shopping Cart");
 			window.setMinWidth(300);
 			window.setMinHeight(20);
-			Button b1 = new Button("Exit");
+			Button b1 = new Button("Close");
 			b1.setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
@@ -665,7 +703,7 @@ public class OrderWindow {
 							String itemPrice = Message.getValueString(item, "mealPrice");
 							JSONArray mustFeatures = Message.getValueJArray(item, "mustFeatureJArray");
 							JSONArray optionalFeatures = Message.getValueJArray(item, "optionalFeatureJArray");
-
+							JSONArray selectedOptionals = new JSONArray();
 							HBox hBoxForButtons = new HBox(5);
 							VBox vboxForMeal = new VBox(5);
 							HBox hboxForMeal = new HBox(10);
@@ -701,7 +739,7 @@ public class OrderWindow {
 							meal.put("mealPrice", itemPrice);
 							meal.put("mealType", mealType);
 							addMustFeatures(mustFeatures, hboxForMeal, meal);
-							addOptionalFeatures(optionalFeatures, hboxForMeal, meal);
+							addOptionalFeatures(optionalFeatures, hboxForMeal, selectedOptionals);
 							hboxForMeal.getChildren().add(vboxForMeal);
 							layout.getChildren().add(hboxForMeal);
 							Button backButtonForCart = new Button("Back");
@@ -724,18 +762,14 @@ public class OrderWindow {
 										mealList.remove(m);
 										meal.put("optionalJArray", selectedOptionals);
 										mealList.add(Meal.fromJSONObject(meal));
-										selectedOptionals = new JSONArray();
 										shoppingCart.getSelectionModel().clearSelection();
 										window.hide();
 										showCart();
-
 									} else {
 										System.out.println("Please choose a Must Feature!");
 										showPopup("Please choose a Must Feature!");
 									}
-
 								}
-
 							});
 							hBoxForButtons.setAlignment(Pos.CENTER);
 							hBoxForButtons.getChildren().add(backButtonForCart);
@@ -745,7 +779,6 @@ public class OrderWindow {
 						}
 					}
 				}
-
 			});
 			Button b3 = new Button("Delete");
 			b3.setOnAction(new EventHandler<ActionEvent>() {
@@ -784,7 +817,8 @@ public class OrderWindow {
 	}
 
 	/**
-	 * save all the relevant information about the order
+	 * Save the needed information of the selected restaurant<br>
+	 * Send a message to server side "Check out button was clicked"
 	 */
 	@FXML
 	public void onCheckOutButton() {
@@ -801,12 +835,13 @@ public class OrderWindow {
 			mealsJArray.add(m.toJSONObject());
 		}
 		order.put("mealsJArray", mealsJArray);
-		sendToController("Check out button was clicked");
+		sendToServer("Check out button was clicked");
 	}
 
 	/**
 	 * dynamically build the GUI for DeliveryWindow and display it to the user<br>
-	 * show the delivery types available for the restaurant chosen
+	 * show the delivery types (radio boxes) available for the restaurant chosen and
+	 * set proper ActionEvents<br>
 	 */
 	public void showDeliveryWindow() {
 		if (!(questionHBox.getChildren().isEmpty()))
@@ -828,6 +863,7 @@ public class OrderWindow {
 		Label timeAndDate = new Label("Please enter the order's due date:");
 		DatePicker datePicker = new DatePicker();
 		datePicker.setValue(LocalDate.now());
+
 		// user can't select past dates in the DatePicker
 		datePicker.setDayCellFactory(picker -> new DateCell() {
 			public void updateItem(LocalDate date, boolean empty) {
@@ -836,6 +872,7 @@ public class OrderWindow {
 				setDisable(empty || date.compareTo(today) < 0);
 			}
 		});
+
 		TextField timeHours = new TextField();
 		TextField timeMinutes = new TextField();
 		timeHours.setPromptText("hour (2 digits)");
@@ -843,10 +880,10 @@ public class OrderWindow {
 		timeHours.setPrefWidth(110);
 		timeMinutes.setPrefWidth(110);
 
-		addTextLimiter(timeHours, 2, 1);
-		addTextLimiter(timeMinutes, 2, 1);
-		addTextLimiter(phone, 10, 1);
-		addTextLimiter(recipient, 20, 2);
+		addTextLimiter(timeHours, 2, 1); // limit hours input to 2 digits and only numbers
+		addTextLimiter(timeMinutes, 2, 1); // limit minutes input to 2 digits and only numbers
+		addTextLimiter(phone, 10, 1); // limit phone input to 10 digits and only numbers
+		addTextLimiter(recipient, 30, 2); // limit recipient name to 30 letters and only letters
 
 		VBox self = new VBox(10);
 		VBox robot = new VBox(10);
@@ -854,6 +891,10 @@ public class OrderWindow {
 		self.setAlignment(Pos.CENTER);
 		robot.setAlignment(Pos.CENTER);
 		delivery.setAlignment(Pos.CENTER);
+		// hboxes for address recipient and phone necessary for deliveries
+		HBox hboxForAddress = new HBox(5);
+		HBox hboxForRecipient = new HBox(5);
+		HBox hboxForPhone = new HBox(5);
 
 		Label selfLabel = new Label("Self Pickup");
 		Label robotLabel = new Label("By a Robot");
@@ -882,74 +923,77 @@ public class OrderWindow {
 		qIMG3.setFitHeight(15);
 		qIMG3.setFitWidth(15);
 
-		RadioButton rb1 = new RadioButton();
-		RadioButton rb2 = new RadioButton();
-		RadioButton rb3 = new RadioButton();
+		RadioButton rbForSelf = new RadioButton();
+		RadioButton rbForRobot = new RadioButton();
+		RadioButton rbForDelivery = new RadioButton();
 
 		HBox selfH = new HBox(5);
 		HBox robotH = new HBox(5);
 		HBox deliveryH = new HBox(5);
 
-		selfH.getChildren().addAll(rb1, qIMG1);
-		robotH.getChildren().addAll(rb2, qIMG2);
-		deliveryH.getChildren().addAll(rb3, qIMG3);
+		selfH.getChildren().addAll(rbForSelf, qIMG1);
+		robotH.getChildren().addAll(rbForRobot, qIMG2);
+		deliveryH.getChildren().addAll(rbForDelivery, qIMG3);
 
 		ToggleGroup group = new ToggleGroup();
-		rb1.setToggleGroup(group);
-		rb2.setToggleGroup(group);
-		rb3.setToggleGroup(group);
+		rbForSelf.setToggleGroup(group);
+		rbForRobot.setToggleGroup(group);
+		rbForDelivery.setToggleGroup(group);
 
-		rb1.setGraphic(selfIMG);
-		rb2.setGraphic(robotIMG);
-		rb3.setGraphic(deliveryIMG);
+		rbForSelf.setGraphic(selfIMG);
+		rbForRobot.setGraphic(robotIMG);
+		rbForDelivery.setGraphic(deliveryIMG);
 
-		rb1.setOnAction(new EventHandler<ActionEvent>() {
+		rbForSelf.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				nextButton.disableProperty().set(false);
 				String orderType = selfLabel.getText();
 				order.put("pickUpType", orderType);
-				if (delivery.getChildren().size() > 2)
-					for (int i = 1; i <= 3; i++) { // remove the labels and textfields under Delivery
-						delivery.getChildren().remove(2);
-					}
+				hboxForAddress.setVisible(false);
+				hboxForRecipient.setVisible(false);
+				hboxForPhone.setVisible(false);
 			}
 		});
-		rb2.setOnAction(new EventHandler<ActionEvent>() {
+		rbForRobot.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				nextButton.disableProperty().set(false);
 				String orderType = robotLabel.getText();
 				order.put("pickUpType", orderType);
-				if (delivery.getChildren().size() > 2)
-					for (int i = 1; i <= 3; i++) {// remove the labels and textfields under Delivery
-						delivery.getChildren().remove(2);
-					}
+				hboxForAddress.setVisible(false);
+				hboxForRecipient.setVisible(false);
+				hboxForPhone.setVisible(false);
 			}
 		});
-		rb3.setOnAction(new EventHandler<ActionEvent>() {
+		rbForDelivery.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				nextButton.disableProperty().set(false);
 				String orderType = deliveryLabel.getText();
 				order.put("pickUpType", orderType);
-				HBox h1 = new HBox(5);
-				HBox h2 = new HBox(5);
-				HBox h3 = new HBox(5);
-
-				h1.getChildren().add(new Label("*Address:"));
-				h1.getChildren().add(address);
-				h2.getChildren().add(new Label("*Recipient:"));
-				h2.getChildren().add(recipient);
-				h3.getChildren().add(new Label("*Phone:"));
-				h3.getChildren().add(phone);
-				delivery.getChildren().addAll(h1, h2, h3);
+				hboxForAddress.setVisible(true);
+				hboxForRecipient.setVisible(true);
+				hboxForPhone.setVisible(true);
 			}
 		});
 
 		self.getChildren().addAll(selfLabel, selfH);
 		robot.getChildren().addAll(robotLabel, robotH);
 		delivery.getChildren().addAll(deliveryLabel, deliveryH);
+
+		hboxForAddress.getChildren().add(new Label("*Address:"));
+		hboxForAddress.getChildren().add(address);
+		hboxForRecipient.getChildren().add(new Label("*Recipient:"));
+		hboxForRecipient.getChildren().add(recipient);
+		hboxForPhone.getChildren().add(new Label("*Phone:"));
+		hboxForPhone.getChildren().add(phone);
+		// hide until Delivery radio button is selected
+		hboxForAddress.setVisible(false);
+		hboxForRecipient.setVisible(false);
+		hboxForPhone.setVisible(false);
+		//
+		delivery.getChildren().addAll(hboxForAddress, hboxForRecipient, hboxForPhone);
 
 		if ((deliveryTypes.charAt(0) == 'Y')) // 0 is self pickup
 			hbox.getChildren().add(self);
@@ -961,8 +1005,7 @@ public class OrderWindow {
 			hbox.getChildren().add(robot);
 
 		////////// remove if robot gets implemented ever
-		// robot.disableProperty().set(true);
-		rb2.disableProperty().set(true);
+		rbForRobot.disableProperty().set(true);
 		String message = "*Robot option is yet to be implemented";
 		Label l = new Label(message);
 		l.setTextFill(Color.color(1, 0, 0));
@@ -972,11 +1015,7 @@ public class OrderWindow {
 		backButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				mealsPane.setStyle("-fx-background-color:  #F2C12E;");
-				mealsHBox.setStyle("-fx-background-color:   #F24444;");
-
-				deliveryPane.setStyle("-fx-background-color:  #D93B48;");
-				deliveryHBox.setStyle("-fx-background-color:   #D93B48;");
+				setPathToMealFromDelivery();
 
 				questionHBox.getChildren().clear();
 				nextButton.disableProperty().set(true);
@@ -988,11 +1027,7 @@ public class OrderWindow {
 		});
 
 		Platform.runLater(() -> {
-			mealsPane.setStyle("-fx-background-color:  #D93B48;");
-			mealsHBox.setStyle("-fx-background-color:   #D93B48;");
-
-			deliveryPane.setStyle("-fx-background-color:  #F2C12E;");
-			deliveryHBox.setStyle("-fx-background-color:   #F24444;");
+			setPathToDelivery();
 			titleLabel.setText("Choose a delivery option:");
 			Label errorHoursLbl = new Label("*");
 			Label errorMinutesLbl = new Label("*");
@@ -1019,14 +1054,14 @@ public class OrderWindow {
 					feedBackLabel.setVisible(false);
 					json.put("command", "Delivery method was selected");
 					json.put("order", order);
-					String inputTime = getTimeFromUser(timeHours.getText(), timeMinutes.getText());
+					String inputTime = appendHoursAndMinutes(timeHours.getText(), timeMinutes.getText());
 					checksFlag = checkDueTime(inputTime)
 							& checkDueDate(DateParser.toSQLStyle(datePicker.getEditor().getText(), inputTime));
 					if (!checksFlag) {
 						errorMinutesLbl.setVisible(true);
 						errorHoursLbl.setVisible(true);
 					}
-					if (rb3.isSelected()) {
+					if (rbForDelivery.isSelected()) {
 						if ((checkRecipient(recipient.getText()) & checkPhoneNumber(phone.getText())
 								& checkAddress(address.getText()))) {
 							order.put("address", address.getText());
@@ -1046,12 +1081,21 @@ public class OrderWindow {
 
 	}
 
-	public String getTimeFromUser(String hours, String minutes) {
+	/**Method to append the hours from textfield on delivery window with the minutes
+	 * @param hours (03)
+	 * @param minutes (20)
+	 * @return hours:minutes (from example 03:20)
+	 */
+	public String appendHoursAndMinutes(String hours, String minutes) {
 		if (hours.isEmpty() || minutes.isEmpty())
 			return "";
 		return hours + ":" + minutes;
 	}
 
+	/**Check that input phone is not empty, and is 10 characters long
+	 * @param phoneNumber
+	 * @return true if not empty and is 10 characters, else false
+	 */
 	public boolean checkPhoneNumber(String phoneNumber) {
 		if ((phoneNumber.isEmpty()) || phoneNumber.length() != 10) {
 			System.out.println("Please enter a valid phone number");
@@ -1060,6 +1104,10 @@ public class OrderWindow {
 		return true;
 	}
 
+	/** Check that input recipient is not empty
+	 * @param recipient
+	 * @return true if not empty, else false
+	 */
 	public boolean checkRecipient(String recipient) {
 		if ((recipient.isEmpty())) {
 			System.out.println("Please enter a recipient name");
@@ -1068,14 +1116,22 @@ public class OrderWindow {
 		return true;
 	}
 
+	/**Check that input address is not empty
+	 * @param address
+	 * @return true if not empty, else false
+	 */
 	public boolean checkAddress(String address) {
-		if (address == null || (address.isEmpty())) {
+		if ((address.isEmpty())) {
 			System.out.println("Please enter a valid address");
 			return false;
 		}
 		return true;
 	}
 
+	/**Check that input dueDate is correct
+	 * @param dueDate
+	 * @return
+	 */
 	public boolean checkDueDate(String dueDate) {
 		if (dueDate.isEmpty()) {
 			System.out.println("Please choose a valid date");
@@ -1119,13 +1175,21 @@ public class OrderWindow {
 		}
 		return flag;
 	}
+	
+	public boolean checkDueTime(String dueTime) {
+		if ((dueTime.isEmpty())) {
+			System.out.println("Please enter a time");
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	 * Method to check if (difference) time has passed from start to end
 	 * 
 	 * @param start
 	 * @param end
-	 * @param difference
+	 * @param difference (in minutes)
 	 * @return true if end - start > difference
 	 */
 	public boolean checkIfDifferencePassed(String start, String end, int difference) {
@@ -1137,14 +1201,6 @@ public class OrderWindow {
 			return true;
 		else
 			return false;
-	}
-
-	public boolean checkDueTime(String dueTime) {
-		if ((dueTime.isEmpty())) {
-			System.out.println("Please enter a time");
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -1258,13 +1314,7 @@ public class OrderWindow {
 		return ev;
 	}
 
-	/**
-	 * send a json {"command", cmd} to controller
-	 * 
-	 * @param cmd
-	 */
-	// @Override
-	public void sendToController(String cmd) {
+	public void sendToServer(String cmd) {
 		JSONObject json = new JSONObject();
 		json.put("command", cmd);
 		view.ready(json);

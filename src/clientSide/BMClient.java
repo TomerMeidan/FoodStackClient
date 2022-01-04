@@ -1,8 +1,5 @@
 package clientSide;
 
-import org.json.simple.JSONObject;
-
-import clientSide.ComController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import common.Logger;

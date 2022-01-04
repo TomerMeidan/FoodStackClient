@@ -381,9 +381,11 @@ public class BranchManagerEditRoleWindow {
 	public void showPopup(JSONObject descriptor) {
 		String msg = Message.getValue(descriptor, "update");
 		
-		if(msg.equals("customer role has been switched"))
+		if(msg.equals("customer role has been switched")) {
 			switchedCustomers.add(Message.getValue(descriptor, "id"));
-
+			statusLabel.setTextFill(Paint.valueOf("green"));
+		}
+		
 		Platform.runLater(() -> {
 			statusLabel.setText("Status: " + msg);
 		});

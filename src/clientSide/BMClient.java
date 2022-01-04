@@ -1,9 +1,9 @@
 package clientSide;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
 import common.Logger;
 import common.Logger.Level;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 public class BMClient extends Application {
 

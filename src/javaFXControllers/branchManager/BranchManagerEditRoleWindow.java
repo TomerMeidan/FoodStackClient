@@ -7,15 +7,14 @@ import org.json.simple.JSONObject;
 
 import clientSide.BranchManagerPortalView;
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
+import common.Message;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,9 +25,7 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -171,11 +168,11 @@ public class BranchManagerEditRoleWindow {
 
 			JSONObject tableRow = new JSONObject();
 
-			String firstName = Message.getValue(customer, "first name");
-			String lastName = Message.getValue(customer, "last name");
-			String role = Message.getValue(customer, "role");
-			String employerName = Message.getValue(customer, "employer name");
-			String id = Message.getValue(customer, "id");
+			String firstName = Message.getValueString(customer, "first name");
+			String lastName = Message.getValueString(customer, "last name");
+			String role = Message.getValueString(customer, "role");
+			String employerName = Message.getValueString(customer, "employer name");
+			String id = Message.getValueString(customer, "id");
 
 			tableRow.put("First name", firstName);
 			tableRow.put("Last name", lastName);
@@ -205,9 +202,9 @@ public class BranchManagerEditRoleWindow {
 					
 					switchButton.setVisible(true);
 					
-					String role = Message.getValue(selectedCustomer, "Role");
+					String role = Message.getValueString(selectedCustomer, "Role");
 
-					nameLabel.setText(Message.getValue(selectedCustomer, "First name"));
+					nameLabel.setText(Message.getValueString(selectedCustomer, "First name"));
 
 					if (role.equals("Customer")) {
 						switchFromLabel.setText("Switch from: Customer");
@@ -303,7 +300,7 @@ public class BranchManagerEditRoleWindow {
 	@FXML
 	void onSwitch(ActionEvent event) {
 		
-		if (isSwitched(Message.getValue(selectedCustomer, "id"))) {
+		if (isSwitched(Message.getValueString(selectedCustomer, "id"))) {
 			showPopup("This customer has been switched allready");
 			return;
 		}
@@ -311,7 +308,7 @@ public class BranchManagerEditRoleWindow {
 		JSONObject json = new JSONObject();
 
 		json.put("command", "role switch has been pressed");
-		json.put("id", Message.getValue(selectedCustomer, "id"));
+		json.put("id", Message.getValueString(selectedCustomer, "id"));
 
 		if (employerLabel.isVisible()) {
 
@@ -379,10 +376,10 @@ public class BranchManagerEditRoleWindow {
 	 * @author Roman Milman
 	 */
 	public void showPopup(JSONObject descriptor) {
-		String msg = Message.getValue(descriptor, "update");
+		String msg = Message.getValueString(descriptor, "update");
 		
 		if(msg.equals("customer role has been switched")) {
-			switchedCustomers.add(Message.getValue(descriptor, "id"));
+			switchedCustomers.add(Message.getValueString(descriptor, "id"));
 			statusLabel.setTextFill(Paint.valueOf("green"));
 		}
 		

@@ -1,10 +1,10 @@
 package javaFXControllers.CEO;
 
-import java.io.IOException;
-
 import org.json.simple.JSONObject;
 
 import clientSide.CEOPortalView;
+import common.Logger;
+import common.Logger.Level;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,8 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import common.Logger;
-import common.Logger.Level;
 
 public class CEOWindow {
 

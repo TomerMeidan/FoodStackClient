@@ -5,8 +5,8 @@ import java.io.IOException;
 import org.json.simple.JSONObject;
 
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
+import common.Message;
 import javaFXControllers.HR.HRApproveBusinessCustomerWindow;
 import javaFXControllers.HR.HRHomePageWindow;
 import javaFXControllers.HR.HRRegisterEmployerWindow;
@@ -117,7 +117,7 @@ public class HRPortalView implements PortalViewInterface {
 	@Override
 	public void handleMsg(JSONObject descriptor) {
 
-		switch (Message.getValue(descriptor, "command")) {
+		switch (Message.getValueString(descriptor, "command")) {
 		case "update":
 			handleUpdateCommand(descriptor);
 			break;
@@ -139,7 +139,7 @@ public class HRPortalView implements PortalViewInterface {
 	 * @author Roman Milman
 	 */
 	private void handleUpdateCommand(JSONObject descriptor) {
-		String updateType = Message.getValue(descriptor, "update");
+		String updateType = Message.getValueString(descriptor, "update");
 
 		switch (updateType) {
 
@@ -210,7 +210,7 @@ public class HRPortalView implements PortalViewInterface {
 	 * @author Roman Milman
 	 */
 	public String getEmployerID() {
-		return Message.getValue(personalInfo, "employerID");
+		return Message.getValueString(personalInfo, "employerID");
 	}
 	
 	/**
@@ -221,7 +221,7 @@ public class HRPortalView implements PortalViewInterface {
 	 * @author Roman Milman
 	 */
 	public String getBranch() {
-		return Message.getValue(personalInfo, "branch");
+		return Message.getValueString(personalInfo, "branch");
 	}
 
 }

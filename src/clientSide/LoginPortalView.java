@@ -47,7 +47,7 @@ public class LoginPortalView implements PortalViewInterface {
 			// displays login window
 			loginWindow.showWindow();
 
-			if (json != null && Message.getValue(json, "portalType").equals("login")) {
+			if (json != null && Message.getValueString(json, "portalType").equals("login")) {
 				loginWindow.onStatusConnected();
 				
 				// log

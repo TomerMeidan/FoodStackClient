@@ -1,8 +1,9 @@
 package clientSide;
 //
 import java.io.IOException;
+
 import org.json.simple.JSONObject;
-import clientSide.LoginPortalView;
+
 import common.Logger;
 import common.Logger.Level;
 import common.Message;
@@ -11,7 +12,6 @@ import javaFXControllers.supplier.SupplierWindow;
 import javaFXControllers.supplier.UpdateMenuWindow;
 import javaFXControllers.supplier.UpdateStatusWindow;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -55,8 +55,8 @@ public class SupplierPortalView implements PortalViewInterface {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/templates/SupplierHomepage.fxml"));
-			userID = Message.getValue(json, "userID");
-			firstName = Message.getValue(json, "FirstName");
+			userID = Message.getValueString(json, "userID");
+			firstName = Message.getValueString(json, "FirstName");
 			homePageVBox = loader.load();
 			supplierWindow = loader.getController();
 			supplierWindow.init(homePageVBox, primaryStage, this);
@@ -99,65 +99,65 @@ public class SupplierPortalView implements PortalViewInterface {
 	 */
 	@Override
 	public void handleMsg(JSONObject descriptor) {
-		switch (Message.getValue(descriptor, "command")) {
+		switch (Message.getValueString(descriptor, "command")) {
 		case "update":
 
 			// --------update menu---------------//
-			if (Message.getValue(descriptor, "update").equals("showUpdateWindow"))
+			if (Message.getValueString(descriptor, "update").equals("showUpdateWindow"))
 				updateMenuWindow.showWindow(userID);
-			else if (Message.getValue(descriptor, "update").equals("menuList"))
+			else if (Message.getValueString(descriptor, "update").equals("menuList"))
 				updateMenuWindow.showTypes(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("itemNames"))
-				updateMenuWindow.showItemNames(Message.getValue(descriptor, "itemType"));
-			else if (Message.getValue(descriptor, "update").equals("showEditTypeDetails"))
+			else if (Message.getValueString(descriptor, "update").equals("itemNames"))
+				updateMenuWindow.showItemNames(Message.getValueString(descriptor, "itemType"));
+			else if (Message.getValueString(descriptor, "update").equals("showEditTypeDetails"))
 				updateMenuWindow.showEditTypeDetails(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("saveType"))
+			else if (Message.getValueString(descriptor, "update").equals("saveType"))
 				updateMenuWindow.afterPressedSaveEditType(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("showAddTypeDetails"))
+			else if (Message.getValueString(descriptor, "update").equals("showAddTypeDetails"))
 				updateMenuWindow.showAddTypeDetails();
-			else if (Message.getValue(descriptor, "update").equals("addNewType"))
+			else if (Message.getValueString(descriptor, "update").equals("addNewType"))
 				updateMenuWindow.afterPressedSaveAddType(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("deleteType"))
+			else if (Message.getValueString(descriptor, "update").equals("deleteType"))
 				updateMenuWindow.responseForDeleteType(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("exitNewType"))
+			else if (Message.getValueString(descriptor, "update").equals("exitNewType"))
 				updateMenuWindow.responseForExitAddType(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("showEditMealDetails"))
+			else if (Message.getValueString(descriptor, "update").equals("showEditMealDetails"))
 				updateMenuWindow.showEditDishDetails(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("editDish"))
+			else if (Message.getValueString(descriptor, "update").equals("editDish"))
 				updateMenuWindow.afterPressedSaveEditDish(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("exitEditType"))
+			else if (Message.getValueString(descriptor, "update").equals("exitEditType"))
 				updateMenuWindow.responseForExitEditType();
-			else if (Message.getValue(descriptor, "update").equals("exitAdd/EditMeal"))
-				updateMenuWindow.responseForExitAddMeal(Message.getValue(descriptor, "itemType"));
+			else if (Message.getValueString(descriptor, "update").equals("exitAdd/EditMeal"))
+				updateMenuWindow.responseForExitAddMeal(Message.getValueString(descriptor, "itemType"));
 
-			else if (Message.getValue(descriptor, "update").equals("showAddMealDetails"))
+			else if (Message.getValueString(descriptor, "update").equals("showAddMealDetails"))
 				updateMenuWindow.showAddMealDetails(descriptor);
 
-			else if (Message.getValue(descriptor, "update").equals("deleteDish"))
+			else if (Message.getValueString(descriptor, "update").equals("deleteDish"))
 				updateMenuWindow.responseForDeleteDish(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("checkAddFeature"))
+			else if (Message.getValueString(descriptor, "update").equals("checkAddFeature"))
 				updateMenuWindow.responseForAddFeat(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("checkEditFeature"))
+			else if (Message.getValueString(descriptor, "update").equals("checkEditFeature"))
 				updateMenuWindow.responseForEditFeat(descriptor);
 
 			// --------update status---------------//
-			if (Message.getValue(descriptor, "update").equals("showUpdateStatusWindow"))
+			if (Message.getValueString(descriptor, "update").equals("showUpdateStatusWindow"))
 				updateStatusWindow.showWindow(userID);
-			else if (Message.getValue(descriptor, "update").equals("ordersList"))
+			else if (Message.getValueString(descriptor, "update").equals("ordersList"))
 				updateStatusWindow.showOrderList(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("Order is ready"))
+			else if (Message.getValueString(descriptor, "update").equals("Order is ready"))
 				updateStatusWindow.afterPressApproveButton(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("Order was successfuly added"))
+			else if (Message.getValueString(descriptor, "update").equals("Order was successfuly added"))
 				updateStatusWindow.alertSupplier(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("removeOrder"))
+			else if (Message.getValueString(descriptor, "update").equals("removeOrder"))
 				updateStatusWindow.afterPressRemoveButton(descriptor);
-			else if (Message.getValue(descriptor, "update").equals("showOrderDetails"))
+			else if (Message.getValueString(descriptor, "update").equals("showOrderDetails"))
 				updateStatusWindow.afterPressOrderDetails(descriptor);
 
 			// ----------Receipts ------------//
-			if (Message.getValue(descriptor, "update").equals("showReceiptsWindow"))
+			if (Message.getValueString(descriptor, "update").equals("showReceiptsWindow"))
 				receiptsWindow.showWindow(userID);
-			else if (Message.getValue(descriptor, "update").equals("receiptList"))
+			else if (Message.getValueString(descriptor, "update").equals("receiptList"))
 				receiptsWindow.showReceipt(descriptor);
 
 		

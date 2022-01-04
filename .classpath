@@ -14,5 +14,7 @@
 	<classpathentry kind="lib" path="jars/mysql-connector-java-8.0.13.jar"/>
 	<classpathentry kind="lib" path="jars/OCSF.jar"/>
 	<classpathentry kind="lib" path="jars/Util4Biteme.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="jars/mockito-all-2.0.2-beta.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -141,7 +141,7 @@ public class ViewMonthlyReportsWindow {
 			if (view instanceof BranchManagerPortalView) {
 				selectBranchCombo.setVisible(false);
 				selectBranchLabel.setVisible(false);
-				selectedBranch = Message.getValue(personalInfo, "branch");
+				selectedBranch = Message.getValueString(personalInfo, "branch");
 			}
 
 			JSONObject json = new JSONObject();
@@ -166,7 +166,7 @@ public class ViewMonthlyReportsWindow {
 
 		for (int i = 0; i < report.size(); i++) {
 			JSONObject restaurant = (JSONObject) report.get(i);
-			String year = Message.getValue(restaurant, "dateYear");
+			String year = Message.getValueString(restaurant, "dateYear");
 			if (!arrayYear.contains(year)) {
 				selectYearCombo.getItems().add(year);
 				arrayYear.add(year);
@@ -450,9 +450,9 @@ public class ViewMonthlyReportsWindow {
 
 			for (int i = 0; i < size; i++) {
 				JSONObject singleRestaurantItem = (JSONObject) itemsReportData.get(i);
-				String restaurantName = Message.getValue(singleRestaurantItem, "restaurantName");
+				String restaurantName = Message.getValueString(singleRestaurantItem, "restaurantName");
 				if (isNewRestaurant) {
-					currentRestaurantName = Message.getValue(singleRestaurantItem, "restaurantName");
+					currentRestaurantName = Message.getValueString(singleRestaurantItem, "restaurantName");
 					isNewRestaurant = false;
 				}
 
@@ -464,7 +464,7 @@ public class ViewMonthlyReportsWindow {
 					} else {
 						filteredRestaurantsData.add(relevantRestaurantItems);
 						relevantRestaurantItems = new JSONArray();
-						currentRestaurantName = Message.getValue(singleRestaurantItem, "restaurantName");
+						currentRestaurantName = Message.getValueString(singleRestaurantItem, "restaurantName");
 						relevantRestaurantItems.add(singleRestaurantItem);
 						releventCount++;
 					}
@@ -509,9 +509,9 @@ public class ViewMonthlyReportsWindow {
 	 * */
 	public boolean relevantReportData(JSONObject restaurantInfo) {
 
-		String orderBranch = Message.getValue(restaurantInfo, "branch");
-		String year = Message.getValue(restaurantInfo, "dateYear");
-		String month = Message.getValue(restaurantInfo, "dateMonth");
+		String orderBranch = Message.getValueString(restaurantInfo, "branch");
+		String year = Message.getValueString(restaurantInfo, "dateYear");
+		String month = Message.getValueString(restaurantInfo, "dateMonth");
 
 		if (year == null || month == null) {
 			Logger.log(Level.DEBUG,
@@ -550,7 +550,7 @@ public class ViewMonthlyReportsWindow {
 		for (int i = 0; i < size; i++) {
 			JSONObject restaurantInfo = (JSONObject) filteredRestaurantsData.get(i);
 
-			restaurantName = Message.getValue(restaurantInfo, "restaurantName");
+			restaurantName = Message.getValueString(restaurantInfo, "restaurantName");
 			tempLong = (long) restaurantInfo.get("totalIncome");
 			totalIncome = (int) tempLong;
 			tempLong = (long) restaurantInfo.get("totalOrders");
@@ -642,10 +642,10 @@ public class ViewMonthlyReportsWindow {
 
 			// Updating the graph's information with the most orders and most income
 			Integer mostOrders = (Integer) maxOrderInformation.get("maxOrders");
-			String mostOrdersRestaurant = Message.getValue(maxOrderInformation, "restaurantWithMaxOrders");
+			String mostOrdersRestaurant = Message.getValueString(maxOrderInformation, "restaurantWithMaxOrders");
 
 			Integer mostIncome = (Integer) maxIncomeInformation.get("maxIncome");
-			String mostIncomeRestaurant = Message.getValue(maxIncomeInformation, "restaurantWithMaxIncome");
+			String mostIncomeRestaurant = Message.getValueString(maxIncomeInformation, "restaurantWithMaxIncome");
 
 			// Important facts about the orders will go into this vbox
 			VBox sideIncomeInfo = new VBox();
@@ -701,7 +701,7 @@ public class ViewMonthlyReportsWindow {
 			for (int i = 0; i < filteredRestaurantsData.size(); i++) {
 				Map<String, Object> singleRow = new HashMap<>();
 				JSONObject restaurantValues = (JSONObject) filteredRestaurantsData.get(i);
-				String restaurantName = Message.getValue(restaurantValues, "restaurantName");
+				String restaurantName = Message.getValueString(restaurantValues, "restaurantName");
 				long totalOrders = (long) restaurantValues.get("totalOrders");
 				long totalIncome = (long) restaurantValues.get("totalIncome");
 
@@ -964,9 +964,9 @@ public class ViewMonthlyReportsWindow {
 			// Creating all the histogram graph's columns ///////////////////////////////
 			for (int j = 0; j < restaurantItems.size(); j++) {
 				JSONObject restaurantSingleItemType = (JSONObject) restaurantItems.get(j);
-				itemTypeInCheck = Message.getValue(restaurantSingleItemType, "itemType");
+				itemTypeInCheck = Message.getValueString(restaurantSingleItemType, "itemType");
 				if (firstEnterance) {
-					String restaurantName = Message.getValue(restaurantSingleItemType, "restaurantName");
+					String restaurantName = Message.getValueString(restaurantSingleItemType, "restaurantName");
 					tableRow.put("Restaurant", restaurantName);
 					currentItemType = itemTypeInCheck;
 					firstEnterance = false;
@@ -1275,85 +1275,4 @@ public class ViewMonthlyReportsWindow {
 		return true;
 
 	}
-
-	/**
-	 * Parsering the type of date information from an SQL date string
-	 * 
-	 * @param dateString - for example: Fri Nov 26 12:43:27 IST 2021
-	 * @param type       - year, month, day, time
-	 * @return
-	 * @author Tomer Meidan
-	 */
-	public static String dateParser(String dateString, String type) {
-
-		String parsedString = "";
-
-		switch (type) {
-		case "year":
-			parsedString = dateString.substring(24, 28);
-			break;
-		case "month":
-			switch (dateString.substring(4, 7)) {
-			case "Jan":
-				parsedString = "01";
-				break;
-			case "Feb":
-				parsedString = "02";
-				break;
-			case "Mar":
-				parsedString = "03";
-				break;
-			case "Apr":
-				parsedString = "04";
-				break;
-			case "May":
-				parsedString = "05";
-				break;
-			case "Jun":
-				parsedString = "06";
-				break;
-			case "Jul":
-				parsedString = "07";
-				break;
-			case "Aug":
-				parsedString = "08";
-				break;
-			case "Sep":
-				parsedString = "09";
-				break;
-			case "Oct":
-				parsedString = "10";
-				break;
-			case "Nov":
-				parsedString = "11";
-				break;
-			case "Dec":
-				parsedString = "12";
-				break;
-			default:
-				System.out.println("Parser: dateSQL: Invalid month detected, parsing did not succeed.");
-				break;
-			}
-			break;
-		case "day":
-			parsedString = dateString.substring(8, 10);
-			break;
-		case "seconds":
-			parsedString = dateString.substring(17, 19);
-			break;
-		case "minutes":
-			parsedString = dateString.substring(14, 16);
-			break;
-		case "hours":
-			parsedString = dateString.substring(11, 13);
-			break;
-		default:
-			System.out.println("Parser: dateSQL: Invalid date value detected, parsing did not succeed.");
-			break;
-		}
-
-		return parsedString;
-
-	}
-
 }

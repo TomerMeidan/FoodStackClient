@@ -4,11 +4,9 @@ import java.io.IOException;
 
 import org.json.simple.JSONObject;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import common.Logger;
 import common.Logger.Level;
+import common.Message;
 import javaFXControllers.ViewMonthlyReportsWindow;
 import javaFXControllers.branchManager.BranchManagerApproveEmployerWindow;
 import javaFXControllers.branchManager.BranchManagerEditChoicesWindow;
@@ -18,7 +16,9 @@ import javaFXControllers.branchManager.BranchManagerHomePageWindow;
 import javaFXControllers.branchManager.BranchManagerRegistrationWindow;
 import javaFXControllers.branchManager.BranchManagerSupplierRgstrWindow;
 import javaFXControllers.branchManager.BranchManagerUploadQuarterlyReportsWindow;
-import common.Message;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 /**
  * BranchManagerPortalView
@@ -118,7 +118,7 @@ public class BranchManagerPortalView implements PortalViewInterface {
 	@Override
 	public void handleMsg(JSONObject descriptor) {
 
-		switch (Message.getValue(descriptor, "command")) {
+		switch (Message.getValueString(descriptor, "command")) {
 		case "update":
 
 			handleUpdateCommand(descriptor);
@@ -141,7 +141,7 @@ public class BranchManagerPortalView implements PortalViewInterface {
 	 * @author Roman Milman
 	 */
 	private void handleUpdateCommand(JSONObject descriptor) {
-		String updateType = Message.getValue(descriptor, "update");
+		String updateType = Message.getValueString(descriptor, "update");
 
 		switch (updateType) {
 
@@ -220,7 +220,7 @@ public class BranchManagerPortalView implements PortalViewInterface {
 	}
 	
 	private void handleEventFileStatus(JSONObject descriptor) {
-		String message = Message.getValue(descriptor, "message");
+		String message = Message.getValueString(descriptor, "message");
 		Logger.log(Level.DEBUG, message);
 		System.out.println(message);
 		branchManagerUploadQuarterlyReportsWindow.setUploadMessage(message);
@@ -354,7 +354,7 @@ public class BranchManagerPortalView implements PortalViewInterface {
 	 * @author Roman Milman
 	 */
 	public String getBranch() {
-		return Message.getValue(personalInfo, "branch");
+		return Message.getValueString(personalInfo, "branch");
 	}
 
 	/**
@@ -365,7 +365,7 @@ public class BranchManagerPortalView implements PortalViewInterface {
 	 * @author Roman Milman
 	 */
 	public String getFirstname() {
-		return Message.getValue(personalInfo, "first name");
+		return Message.getValueString(personalInfo, "first name");
 	}
 
 	/**
@@ -376,7 +376,7 @@ public class BranchManagerPortalView implements PortalViewInterface {
 	 * @author Roman Milman
 	 */
 	public String getLastname() {
-		return Message.getValue(personalInfo, "last name");
+		return Message.getValueString(personalInfo, "last name");
 	}
 
 	/**

@@ -7,8 +7,8 @@ import org.json.simple.JSONObject;
 
 import clientSide.HRPortalView;
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
+import common.Message;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -109,10 +109,10 @@ public class HRApproveBusinessCustomerWindow {
 
 		for (int i = 0; i < customers.size(); i++) {
 			JSONObject employer = (JSONObject) customers.get(i);
-			String id = Message.getValue(employer, "id");
-			String phone = Message.getValue(employer, "number");
-			String email = Message.getValue(employer, "email");
-			String credit = Message.getValue(employer, "credit");
+			String id = Message.getValueString(employer, "id");
+			String phone = Message.getValueString(employer, "number");
+			String email = Message.getValueString(employer, "email");
+			String credit = Message.getValueString(employer, "credit");
 
 			VBox rowVBox = buildBusinessCustomerRow(id, phone, email, credit);
 
@@ -183,7 +183,7 @@ public class HRApproveBusinessCustomerWindow {
 	 * @author Roman Milman
 	 */
 	public void disableApproveButton(JSONObject descriptor) {
-		String id = Message.getValue(descriptor, "id");
+		String id = Message.getValueString(descriptor, "id");
 
 		Button disableButton = approveButtonMap.get(id);
 		disableButton.setDisable(true);

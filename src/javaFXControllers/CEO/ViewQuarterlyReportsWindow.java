@@ -1,7 +1,5 @@
 package javaFXControllers.CEO;
 
-import java.io.File;
-
 import org.json.simple.JSONObject;
 
 import clientSide.CEOPortalView;
@@ -14,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 public class ViewQuarterlyReportsWindow {

@@ -5,13 +5,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 import org.json.simple.JSONObject;
 
-import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 import clientSide.BranchManagerPortalView;
@@ -114,10 +112,10 @@ public class BranchManagerUploadQuarterlyReportsWindow {
 	public void setLabels() {
 
 		Date now = new Date();
-		managerName = Message.getValue(personalInfo, "FirstName") + " " + Message.getValue(personalInfo, "LastName");
+		managerName = Message.getValueString(personalInfo, "FirstName") + " " + Message.getValueString(personalInfo, "LastName");
 		managerNameLabel.setText(managerName);
 		managerNameLabel.setStyle("-fx-font-weight: bold");
-		branchNameLabel.setText(Message.getValue(personalInfo, "branch"));
+		branchNameLabel.setText(Message.getValueString(personalInfo, "branch"));
 		branchNameLabel.setStyle("-fx-font-weight: bold");
 
 		quarterArray = setChosenQuarter(now.getMonth());
@@ -126,7 +124,7 @@ public class BranchManagerUploadQuarterlyReportsWindow {
 		else
 			yearNameLabel.setText(now.getYear() + 1900 + "");
 		yearNameLabel.setStyle("-fx-font-weight: bold");
-		currentBranch = Message.getValue(personalInfo, "branch");
+		currentBranch = Message.getValueString(personalInfo, "branch");
 		currentYear = yearNameLabel.getText();
 		currentQuarter = quarterArray.get(0) + " - " + quarterArray.get(2);
 

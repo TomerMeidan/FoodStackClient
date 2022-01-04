@@ -4,8 +4,8 @@ import org.json.simple.JSONObject;
 
 import clientSide.HRPortalView;
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
+import common.Message;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -70,8 +70,8 @@ public class HRHomePageWindow {
 				Logger.log(Level.WARNING, "HRHomePageWindow: exception in showWindow");
 				System.out.println("HRHomePageWindow: exception in showWindow");
 			}
-			welcomeLabel.setText("Welcome, " + Message.getValue(descriptor, "FirstName") + " "
-					+ Message.getValue(descriptor, "LastName"));
+			welcomeLabel.setText("Welcome, " + Message.getValueString(descriptor, "FirstName") + " "
+					+ Message.getValueString(descriptor, "LastName"));
 
 			primaryStage.setScene(scene);
 			primaryStage.show();

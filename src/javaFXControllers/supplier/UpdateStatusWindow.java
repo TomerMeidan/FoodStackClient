@@ -24,18 +24,15 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -169,7 +166,7 @@ public class UpdateStatusWindow {
 			labelSide.setText(welcomeMessage.toString());
 			labelSide.setFont(new Font("verdana", 14));
 			labelSide.setPrefWidth(300);
-			String restaurantName = Message.getValue(descriptor, "restaurantName");
+			String restaurantName = Message.getValueString(descriptor, "restaurantName");
 			orderByGroup = (HashMap<String, HashMap<String, JSONObject>>) descriptor.get("orders");
 			for (String hour : orderByGroup.keySet()) {
 				Button approveB = new Button("Approve");
@@ -188,13 +185,13 @@ public class UpdateStatusWindow {
 				for (String id : orders.keySet()) {
 
 					JSONObject order = orders.get(id);
-					String employerID = Message.getValue(order, "employerID");
-					String total = Message.getValue(order, "total");
+					String employerID = Message.getValueString(order, "employerID");
+					String total = Message.getValueString(order, "total");
 					HBox h = new HBox();
 					VBox v = new VBox();
-					String status = Message.getValue(order, "status");
-					String customerID = Message.getValue(order, "clientID");
-					String recieveTimeS = Message.getValue(order, "recieveTime");
+					String status = Message.getValueString(order, "status");
+					String customerID = Message.getValueString(order, "clientID");
+					String recieveTimeS = Message.getValueString(order, "recieveTime");
 					String[] recieveTimeSplit = recieveTimeS.split(":");
 					String recieveTime = recieveTimeSplit[0] + ":" + recieveTimeSplit[1];
 					if (status.equals("Waiting for approval")) {
@@ -274,7 +271,7 @@ public class UpdateStatusWindow {
 										approvalCustomer.add(customerID);
 									approveB.disableProperty().set(false);
 									selectedOrder.put("selected", true);
-									selectedOrder.put("email", Message.getValue(order, "email"));
+									selectedOrder.put("email", Message.getValueString(order, "email"));
 									totalSelect++;
 									if (employerID != null)
 										businessSelect++;
@@ -386,13 +383,13 @@ public class UpdateStatusWindow {
 	 */
 	private void checkApprove(JSONObject json) {
 		JSONArray ordersPerHour = (JSONArray) json.get("ordersPerHour");
-		String approvalNumS = Message.getValue(json, "approvalNum");
+		String approvalNumS = Message.getValueString(json, "approvalNum");
 		int approvalNum = Integer.parseInt(approvalNumS);
 		VBox approvalDetails = new VBox();
 		for (int i = 0; i < ordersPerHour.size(); i++) {
 			JSONObject order = (JSONObject) ordersPerHour.get(i);
-			String orderID = Message.getValue(order, "orderID");
-			String employerID = Message.getValue(order, "employerID");
+			String orderID = Message.getValueString(order, "orderID");
+			String employerID = Message.getValueString(order, "employerID");
 			boolean selected = (boolean) order.get("selected");
 			if (selected) {
 				Label orderIDTxt = new Label("Order ID: " + orderID);
@@ -451,8 +448,8 @@ public class UpdateStatusWindow {
 	public void afterPressOrderDetails(JSONObject descriptor) {
 		Logger.log(Level.INFO, "UpdateStatusWindow: afterPressOrderDetails");
 		System.out.println("UpdateStatusWindow: afterPressOrderDetails");
-		String id = Message.getValue(descriptor, "orderID");
-		String hour = Message.getValue(descriptor, "hour");
+		String id = Message.getValueString(descriptor, "orderID");
+		String hour = Message.getValueString(descriptor, "hour");
 		Platform.runLater(() -> {
 			orders = orderByGroup.get(hour);
 			JSONObject order = orders.get(id);
@@ -463,14 +460,14 @@ public class UpdateStatusWindow {
 			for (int i = 0; i < arrOrders.size(); i++) {
 				JSONObject json = (JSONObject) arrOrders.get(i);
 
-				String itemType = Message.getValue(json, "itemType");
+				String itemType = Message.getValueString(json, "itemType");
 				Label itemTypeL = new Label("Type: " + itemType);
 				sv.getChildren().add(itemTypeL);
-				String itemName = Message.getValue(json, "itemName");
+				String itemName = Message.getValueString(json, "itemName");
 				Label itemNameL = new Label("Meal: " + itemName);
 				sv.getChildren().add(itemNameL);
-				if (Message.getValue(json, "mustFeature") != null) {
-					Label must = new Label("Must feature: " + Message.getValue(json, "mustFeature"));
+				if (Message.getValueString(json, "mustFeature") != null) {
+					Label must = new Label("Must feature: " + Message.getValueString(json, "mustFeature"));
 					sv.getChildren().add(must);
 				}
 				ArrayList<String> opName = (ArrayList<String>) json.get("optionalNames");

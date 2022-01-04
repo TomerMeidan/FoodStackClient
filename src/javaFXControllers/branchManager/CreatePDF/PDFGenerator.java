@@ -39,8 +39,8 @@ import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
+import common.Message;
 
 public class PDFGenerator {
 	
@@ -317,13 +317,13 @@ public class PDFGenerator {
 
 		for (int i = 0; i < reportSize; i++) {
 			JSONObject singleRowReport = (JSONObject) quarterlyReport.get(i);
-			table.addCell(Message.getValue(singleRowReport, "restaurantName"));
+			table.addCell(Message.getValueString(singleRowReport, "restaurantName"));
 			table.addCell(singleRowReport.get("totalIncome") + "");
 			table.addCell(singleRowReport.get("totalOrders") + "");
 
 			long currentRestaurantIncome = (long) singleRowReport.get("totalIncome");
 			long currentRestaurantOrders = (long) singleRowReport.get("totalOrders");
-			String currentRestaurantName = Message.getValue(singleRowReport, "restaurantName");
+			String currentRestaurantName = Message.getValueString(singleRowReport, "restaurantName");
 
 			if (currentRestaurantIncome > mostIncomeFromRestaurant) {
 				mostIncomeFromRestaurant = currentRestaurantIncome;

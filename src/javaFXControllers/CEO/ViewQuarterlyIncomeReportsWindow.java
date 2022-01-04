@@ -277,9 +277,9 @@ public class ViewQuarterlyIncomeReportsWindow {
 
 		// Updating the graph's information with the most orders and most income
 		Integer mostOrders = (Integer) mostOrderInformation.get("maxOrders");
-		String mostOrdersRestaurant = Message.getValue(mostOrderInformation, "restaurantWithMaxOrders");
+		String mostOrdersRestaurant = Message.getValueString(mostOrderInformation, "restaurantWithMaxOrders");
 		Integer mostIncome = (Integer) mostIncomeInformation.get("maxIncome");
-		String mostIncomeRestaurant = Message.getValue(mostIncomeInformation, "restaurantWithMaxIncome");
+		String mostIncomeRestaurant = Message.getValueString(mostIncomeInformation, "restaurantWithMaxIncome");
 		
 		int totalIncome = view.getViewMonthlyReportsWindow().getTotalValueFromAllRestaurants(restaurantDataList, "totalIncome");
 		int totalOrders = view.getViewMonthlyReportsWindow().getTotalValueFromAllRestaurants(restaurantDataList, "totalOrders");
@@ -404,8 +404,8 @@ public class ViewQuarterlyIncomeReportsWindow {
 				JSONObject restaurantRow = (JSONObject) singleRestaurantData.get(j);
 
 				if (isFirstEnterance) {
-					restaurantName = Message.getValue(restaurantRow, "restaurantName");
-					branch = Message.getValue(restaurantRow, "branch");
+					restaurantName = Message.getValueString(restaurantRow, "restaurantName");
+					branch = Message.getValueString(restaurantRow, "branch");
 					if (!branch.equals(chosenBranch))
 						break;
 					totalIncome = 0;
@@ -693,7 +693,7 @@ public class ViewQuarterlyIncomeReportsWindow {
 				JSONArray restaurant = (JSONArray) reportData.get(i);
 				for (int j = 0; j < restaurant.size(); j++) {
 					JSONObject restaurantRow = (JSONObject) restaurant.get(j);
-					String year = Message.getValue(restaurantRow, "dateYear");
+					String year = Message.getValueString(restaurantRow, "dateYear");
 					if (!arrayYear.contains(year)) {
 						selectYearCombo1.getItems().add(year);
 						selectYearCombo2.getItems().add(year);
@@ -719,9 +719,9 @@ public class ViewQuarterlyIncomeReportsWindow {
 	public boolean relevantReportData(JSONObject restaurantInfo, String chosenYear, String chosenBranch,
 			ArrayList<String> chosenQuarter) {
 
-		String orderBranch = Message.getValue(restaurantInfo, "branch");
-		String year = Message.getValue(restaurantInfo, "dateYear");
-		String month = Message.getValue(restaurantInfo, "dateMonth");
+		String orderBranch = Message.getValueString(restaurantInfo, "branch");
+		String year = Message.getValueString(restaurantInfo, "dateYear");
+		String month = Message.getValueString(restaurantInfo, "dateMonth");
 
 		if (year == null || month == null) {
 			Logger.log(Level.DEBUG,

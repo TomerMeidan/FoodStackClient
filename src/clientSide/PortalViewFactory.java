@@ -1,15 +1,8 @@
 package clientSide;
 
-import javafx.stage.Stage;
-import clientSide.BranchManagerPortalView;
-import clientSide.CEOPortalView;
-import clientSide.ComController;
-import clientSide.HRPortalView;
-import clientSide.LoginPortalView;
-import clientSide.PortalViewInterface;
-import clientSide.SupplierPortalView;
 import common.Logger;
 import common.Logger.Level;
+import javafx.stage.Stage;
 
 public class PortalViewFactory {
 

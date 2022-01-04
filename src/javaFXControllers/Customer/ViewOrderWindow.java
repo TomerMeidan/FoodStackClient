@@ -10,6 +10,10 @@ import org.json.simple.JSONObject;
 import clientSide.CustomerPortalView;
 import common.Logger;
 import common.Logger.Level;
+import common.Meal;
+import common.Message;
+import common.OptionalFeature;
+import common.Order;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,10 +36,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import util.Meal;
-import util.Message;
-import util.OptionalFeature;
-import util.Order;
 
 /** * ViewOrderWindow
  * 

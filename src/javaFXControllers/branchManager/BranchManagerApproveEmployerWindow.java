@@ -7,8 +7,8 @@ import org.json.simple.JSONObject;
 
 import clientSide.BranchManagerPortalView;
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
+import common.Message;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -134,10 +134,10 @@ public class BranchManagerApproveEmployerWindow {
 
 		for (int i = 0; i < employers.size(); i++) {
 			JSONObject employer = (JSONObject) employers.get(i);
-			String name = Message.getValue(employer, "name");
-			String phone = Message.getValue(employer, "number");
-			String email = Message.getValue(employer, "email");
-			String credit = Message.getValue(employer, "credit");
+			String name = Message.getValueString(employer, "name");
+			String phone = Message.getValueString(employer, "number");
+			String email = Message.getValueString(employer, "email");
+			String credit = Message.getValueString(employer, "credit");
 
 			VBox rowVBox = buildEmployerRow(name, phone, email, credit);
 
@@ -215,10 +215,10 @@ public class BranchManagerApproveEmployerWindow {
 	 * @author Roman Milman
 	 */
 	public void showPopup(JSONObject descriptor) {
-		String msg = Message.getValue(descriptor, "update");
+		String msg = Message.getValueString(descriptor, "update");
 
 		if (msg.equals("employer has been activated")) {
-			approveButtonMap.get(Message.getValue(descriptor, "employer")).setDisable(true);
+			approveButtonMap.get(Message.getValueString(descriptor, "employer")).setDisable(true);
 		}
 
 		Platform.runLater(() -> {

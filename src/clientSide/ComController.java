@@ -16,23 +16,51 @@ import static common.Message.*;
 public class ComController extends AbstractClient {
 
 	protected PortalViewInterface view;
-
 	private String ip;
 	private int port;
 	private PortalViewFactory factory;
-
 	private Timer timer;
 
+	/**
+	 * Communication Controller
+	 * <p>
+	 * This method sets the current IP and port address of the server side
+	 * implemented with EchoServer, contains the main method for the server program
+	 * and performs the work of listening to the port, establishing connections, and
+	 * reading from and writing to the socket.
+	 */
 	public ComController(String ip, int port) {
 		super(ip, port);
 		this.ip = ip;
 		this.port = port;
 	}
 
+	/**
+	 * Communication Controller
+	 * <p>
+	 * The server side is using a certain factory method to establish which
+	 * communication control each user is using at the time they are connected via
+	 * TCP\IP link between the client and the server side.
+	 * 
+	 * @param factory - If the associated connection factory is configured for
+	 *                single- use connections, a new connection is immediately
+	 *                created for each new request. Otherwise, if the connection is
+	 *                in use, the calling thread blocks on the connection until
+	 *                either a response is received or a timeout or I/O error
+	 *                occurs.
+	 */
 	public void setPortalFactory(PortalViewFactory factory) {
 		this.factory = factory;
 	}
 
+	/**
+	 * Start
+	 * <p>
+	 * The method upon starting the server will create and initiate the starting
+	 * portal view window as the log in portal screen, the method will then attempt
+	 * to connect to a certain server on the same IP\PORT using the tryToConnect
+	 * method.
+	 */
 	public void start() {
 		view = factory.createPortalView("login");
 		view.init(null);
@@ -44,6 +72,15 @@ public class ComController extends AbstractClient {
 		tryToConnect();
 	}
 
+	/**
+	 * Stop
+	 * <p>
+	 * The method will initiate the close connection method defined by the abstract
+	 * client to close the connection with the server from the client side, if the
+	 * closing connection isn't successful then an IO exception will be thrown
+	 * instead.
+	 * 
+	 */
 	public void stop() {
 		try {
 			closeConnection();
@@ -54,6 +91,12 @@ public class ComController extends AbstractClient {
 		}
 	}
 
+	/** Try To Connect<p>
+	 * This method is sending a connection request to a certain port\ip, every time period using a Date
+	 * object, the method will try and connect again and again each 5 seconds (5000 miliseconds as defined) with the server
+	 * side.
+	 * 
+	 * */
 	private void tryToConnect() {
 
 		try {
@@ -79,6 +122,15 @@ public class ComController extends AbstractClient {
 		}
 	}
 
+	/**
+	 * Connection Established
+	 * <p>
+	 * 
+	 * This method is a built in overridable method extended from AbstractClient.
+	 * The purpose of this method is once a connection between the server and the
+	 * client has been made, it will send a message to the Log In portal view
+	 * notifying the status of the connection between a client and the server.
+	 */
 	@Override
 	public void connectionEstablished() {
 		// log
@@ -97,6 +149,19 @@ public class ComController extends AbstractClient {
 		}
 	}
 
+	/**
+	 * Handle Message From Server
+	 * <p>
+	 * 
+	 * This method is a built in overridable method extended from AbstractClient.
+	 * The purpose of this method is to receive and handle all the messages that are
+	 * sent by the server through an Object message. This message will usually have
+	 * a JSON including a command status (such as: ""update) indicating on which
+	 * task there is to perform.
+	 * 
+	 * @param msg - Message type send by the server to the client holding a certain
+	 *            task to perform or an update message.
+	 */
 	@Override
 	public void handleMessageFromServer(Object msg) {
 
@@ -142,6 +207,18 @@ public class ComController extends AbstractClient {
 		}
 	}
 
+	/**
+	 * Handle Message From Server
+	 * <p>
+	 * 
+	 * This method's purpose is to take a certain message from the client side and
+	 * send it to the client's portal view on the server side. Usually the messages
+	 * consist of update status regarding a state in a certain FX window, or an
+	 * update message or a permission to move from one window to another.
+	 * 
+	 * @param msg - Message type send by the client to the server holding a certain
+	 *            task to perform or an update message.
+	 */
 	public void handleUserAction(JSONObject msg) {
 		try {
 			sendToServer(Parser.encode(msg));
@@ -152,6 +229,18 @@ public class ComController extends AbstractClient {
 		}
 	}
 
+	/**
+	 * Connection Closed
+	 * <p>
+	 * 
+	 * This method's purpose is to take a certain message from the client side and
+	 * send it to the client's portal view on the server side. Usually the messages
+	 * consist of update status regarding a state in a certain FX window, or an
+	 * update message or a permission to move from one window to another.
+	 * 
+	 * @param msg - Message type send by the client to the server holding a certain
+	 *            task to perform or an update message.
+	 */
 	@Override
 	protected void connectionClosed() {
 		// log

@@ -4,16 +4,17 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import clientSide.CustomerPortalView;
+import common.Logger;
+import common.Logger.Level;
+import common.Message;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,10 +24,6 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import util.Order;
-import common.Logger;
-import common.Message;
-import common.Logger.Level;
 
 /** * CustomerWindow
  * 
@@ -219,17 +216,17 @@ public class CustomerWindow {
 			window.setTitle("Message");
 			window.setMinWidth(300);
 			window.setMinHeight(100);
-			String restaurantName = Message.getValue(descriptor, "restaurantName");
-			String customerID1 = Message.getValue(descriptor, "customerID");
+			String restaurantName = Message.getValueString(descriptor, "restaurantName");
+			String customerID1 = Message.getValueString(descriptor, "customerID");
 			VBox v = new VBox(5);
 			int ordersNum = 0;
 			JSONArray approvalOrders = (JSONArray) descriptor.get("approvalOrders");
 			for (int i = 0; i < approvalOrders.size(); i++) {
 				JSONObject json = (JSONObject) approvalOrders.get(i);
 
-				String email = Message.getValue(json, "email");
-				String orderID = Message.getValue(json, "orderID");
-				String customerID2 = Message.getValue(json, "customerID");
+				String email = Message.getValueString(json, "email");
+				String orderID = Message.getValueString(json, "orderID");
+				String customerID2 = Message.getValueString(json, "customerID");
 				if (customerID1.equals(customerID2)) {
 					ordersNum++;
 					if (ordersNum == 1) {

@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 
 import common.Logger;
 import common.Logger.Level;
+import common.Message;
 import javaFXControllers.Customer.CustomerWindow;
 import javaFXControllers.Customer.OrderWindow;
 import javaFXControllers.Customer.PaymentWindow;
@@ -14,7 +15,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import util.Message;
 /**
  * Class used implement "PortalViewInterface" Loads the relevant templates and information that
  * the customer can see, also handles messages from/to server

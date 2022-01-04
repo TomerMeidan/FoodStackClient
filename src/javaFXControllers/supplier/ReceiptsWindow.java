@@ -8,8 +8,8 @@ import org.json.simple.JSONObject;
 
 import clientSide.SupplierPortalView;
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
+import common.Message;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -145,11 +145,11 @@ public class ReceiptsWindow {
 			for (int i = 0; i < receipts.size(); i++) {
 				VBox v = new VBox();
 				JSONObject receipt = (JSONObject) receipts.get(i);
-				String date = Message.getValue(receipt, "date");
+				String date = Message.getValueString(receipt, "date");
 				Label tim = new Label(date);
 				tim.setFont(new Font("verdana", 14));
 				v.getChildren().add(tim);
-				String price = Message.getValue(receipt, "price");
+				String price = Message.getValueString(receipt, "price");
 				int priI = Integer.parseInt(price);
 				priI = (int) (priI * 1.07);
 				sum += priI;

@@ -7,15 +7,14 @@ import org.json.simple.JSONObject;
 
 import clientSide.BranchManagerPortalView;
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
+import common.Message;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -29,9 +28,7 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import util.W4C;
 
@@ -192,9 +189,9 @@ public class BranchManagerRegistrationWindow {
 
 			JSONObject tableRow = new JSONObject();
 
-			String firstName = Message.getValue(customer, "first name");
-			String lastName = Message.getValue(customer, "last name");
-			String id = Message.getValue(customer, "id");
+			String firstName = Message.getValueString(customer, "first name");
+			String lastName = Message.getValueString(customer, "last name");
+			String id = Message.getValueString(customer, "id");
 			String w4c = W4C.createW4C();
 
 			tableRow.put("First name", firstName);
@@ -239,10 +236,10 @@ public class BranchManagerRegistrationWindow {
 					statusLabel.setTextFill(Paint.valueOf("black"));
 
 
-					String name = Message.getValue(selectedCustomer, "First name") + " "
-							+ Message.getValue(selectedCustomer, "Last name");
-					String id = "id: " + Message.getValue(selectedCustomer, "id");
-					String w4c = Message.getValue(selectedCustomer, "w4c");
+					String name = Message.getValueString(selectedCustomer, "First name") + " "
+							+ Message.getValueString(selectedCustomer, "Last name");
+					String id = "id: " + Message.getValueString(selectedCustomer, "id");
+					String w4c = Message.getValueString(selectedCustomer, "w4c");
 
 					nameLabel.setText(name);
 					idLabel.setText(id);
@@ -340,13 +337,13 @@ public class BranchManagerRegistrationWindow {
 	@FXML
 	void onRegisterButton(ActionEvent event) {
 
-		String name = Message.getValue(selectedCustomer, "First name") + " "
-				+ Message.getValue(selectedCustomer, "Last name");
+		String name = Message.getValueString(selectedCustomer, "First name") + " "
+				+ Message.getValueString(selectedCustomer, "Last name");
 		// log
 		System.out.println("BranchManagerRegistrationWindow: " + name + " register button was pressed");
 		Logger.log(Level.DEBUG, "BranchManagerRegistrationWindow: \" + name + \" register button was pressed");
 
-		if (isRegistered(Message.getValue(selectedCustomer, "w4c"))) {
+		if (isRegistered(Message.getValueString(selectedCustomer, "w4c"))) {
 			showPopup("This customer has been switched allready");
 			return;
 		}
@@ -358,12 +355,12 @@ public class BranchManagerRegistrationWindow {
 
 		JSONObject json = new JSONObject();
 		json.put("command", "customer register was pressed");
-		json.put("firstname", Message.getValue(selectedCustomer, "First name"));
-		json.put("lastname", Message.getValue(selectedCustomer, "Last name"));
-		json.put("id", Message.getValue(selectedCustomer, "id"));
+		json.put("firstname", Message.getValueString(selectedCustomer, "First name"));
+		json.put("lastname", Message.getValueString(selectedCustomer, "Last name"));
+		json.put("id", Message.getValueString(selectedCustomer, "id"));
 		json.put("username", usernameTextArea.getText());
 		json.put("password", passwordField.getText());
-		json.put("w4c", Message.getValue(selectedCustomer, "w4c"));
+		json.put("w4c", Message.getValueString(selectedCustomer, "w4c"));
 		json.put("branch", view.getBranch());
 
 		if (isBusinessCustomerCheckBox.isSelected()) {
@@ -476,15 +473,15 @@ public class BranchManagerRegistrationWindow {
 	 * @author Roman Milman
 	 */
 	public void showPopup(JSONObject descriptor) {
-		String msg = Message.getValue(descriptor, "update");
+		String msg = Message.getValueString(descriptor, "update");
 
 		if (msg.equals("business customer has been registered")) {
-			registeredCustomers.add(Message.getValue(descriptor, "w4c"));
+			registeredCustomers.add(Message.getValueString(descriptor, "w4c"));
 			statusLabel.setTextFill(Paint.valueOf("green"));
 		}
 
 		if (msg.equals("regular customer has been registered")) {
-			registeredCustomers.add(Message.getValue(descriptor, "w4c"));
+			registeredCustomers.add(Message.getValueString(descriptor, "w4c"));
 			statusLabel.setTextFill(Paint.valueOf("green"));
 		}
 

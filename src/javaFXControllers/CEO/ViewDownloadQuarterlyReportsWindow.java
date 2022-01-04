@@ -13,8 +13,8 @@ import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 import clientSide.CEOPortalView;
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
+import common.Message;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +23,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.chart.StackedBarChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -53,7 +52,7 @@ public class ViewDownloadQuarterlyReportsWindow {
     @FXML
     private Label titleLabel;
     
-    @FXML
+    @FXML	
     private Button BackButton;
 
 	private Stage primaryStage;
@@ -143,9 +142,9 @@ public class ViewDownloadQuarterlyReportsWindow {
 		for(int i = 0 ; i < numberOfFiles ; i++) {
 			Map<String, Object> tableRow = new HashMap<>();
 			JSONObject fileRow = (JSONObject) filesArray.get(i);
-			String branch = Message.getValue(fileRow, "branch");
-			String year = Message.getValue(fileRow, "year");
-			String quarter = Message.getValue(fileRow, "quarter");
+			String branch = Message.getValueString(fileRow, "branch");
+			String year = Message.getValueString(fileRow, "year");
+			String quarter = Message.getValueString(fileRow, "quarter");
 			
 			fileRow.put("Branch", branch);
 			fileRow.put("Quarter", quarter);
@@ -228,7 +227,7 @@ public class ViewDownloadQuarterlyReportsWindow {
 
 			// Initialize a pointer
 			// in file using OutputStream
-			String filePath = selectedDirectory.getAbsolutePath()+ "\\" + Message.getValue(selectedFileFromTable, "fileName");
+			String filePath = selectedDirectory.getAbsolutePath()+ "\\" + Message.getValueString(selectedFileFromTable, "fileName");
 			OutputStream os = new FileOutputStream(filePath);
 			
 			// Starts writing the bytes in it

@@ -4,17 +4,17 @@ import java.io.IOException;
 
 import org.json.simple.JSONObject;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
+import common.Message;
 import javaFXControllers.ViewMonthlyReportsWindow;
 import javaFXControllers.CEO.CEOWindow;
 import javaFXControllers.CEO.ViewDownloadQuarterlyReportsWindow;
 import javaFXControllers.CEO.ViewQuarterlyIncomeReportsWindow;
 import javaFXControllers.CEO.ViewQuarterlyReportsWindow;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 public class CEOPortalView implements PortalViewInterface {
 
@@ -81,7 +81,7 @@ public class CEOPortalView implements PortalViewInterface {
 			// log
 			Logger.log(Level.DEBUG, "CEOPortalView: init: ceoWindow initialized");
 			System.out.println("CEOPortalView: init: ceoWindow initialized");
-			firstName = Message.getValue(json, "FirstName");
+			firstName = Message.getValueString(json, "FirstName");
 			Logger.log(Level.DEBUG, "CEOPortalView: init: CEO User " + firstName + " is now on the CEO window");
 			System.out.println("CEOPortalView: init: CEO User " + firstName + " is now on the CEO window");
 			ceoWindow.showWindow();
@@ -98,10 +98,10 @@ public class CEOPortalView implements PortalViewInterface {
 	 * */
 	@Override
 	public void handleMsg(JSONObject descriptor) {
-		switch (Message.getValue(descriptor, "command")) {
+		switch (Message.getValueString(descriptor, "command")) {
 
 		case "update":
-			String message = Message.getValue(descriptor, "update");
+			String message = Message.getValueString(descriptor, "update");
 			if (message.equals("all restaurants reports")) {
 				Logger.log(Level.DEBUG, "CEOPortalView: handleMsg: recieved list of reports from server: "
 						+ descriptor.toString());

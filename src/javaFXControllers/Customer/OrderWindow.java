@@ -9,7 +9,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import clientSide.CustomerPortalView;
-
+import common.DateParser;
+import common.Logger;
+import common.Logger.Level;
+import common.Meal;
+import common.Message;
+import common.OptionalFeature;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
@@ -47,13 +52,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import common.Logger;
-import util.Message;
-import common.Logger.Level;
 import util.MyGrid;
-import util.OptionalFeature;
-import util.DateParser;
-import util.Meal;
 
 /**
  * OrderWindow
@@ -302,7 +301,6 @@ public class OrderWindow {
 	 * Set action for backButton to showRestaurants method
 	 * 
 	 * @param jsonMenu
-	 * @see Menu class for keys in jsonMenu
 	 */
 	public void showTypesList(JSONObject jsonMenu) {
 		if (jsonMenu != null)
@@ -585,6 +583,12 @@ public class OrderWindow {
 		}
 	}
 
+	/**
+	 * load image by using name<br>
+	 *  if image is not found, load "not available" image 
+	 * @param name (name of image)
+	 * @return ImageView containing the respective image
+	 */
 	public ImageView getIMG(String name) {
 		Image img;
 		if (name != null) {

@@ -1,17 +1,18 @@
 package clientSide;
 
+
+import common.Message;
+
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.json.simple.JSONObject;
 
-import ocsf.client.AbstractClient;
-import common.*;
-import common.Logger.Level;
 import common.Logger;
-
-import static common.Message.*;
+import common.Logger.Level;
+import common.Parser;
+import ocsf.client.AbstractClient;
 
 public class ComController extends AbstractClient {
 
@@ -183,7 +184,7 @@ public class ComController extends AbstractClient {
 		System.out.println("ComController: message : " + json.toString());
 
 		// TODO create Message class to handle all the converts
-		switch (getValue(json, "command")) {
+		switch (Message.getValueString(json, "command")) {
 		case "handshake":
 			// log
 			Logger.log(Level.INFO, "ComController: messageType: handshake");
@@ -223,7 +224,7 @@ public class ComController extends AbstractClient {
 		try {
 			sendToServer(Parser.encode(msg));
 		} catch (IOException e) {
-			String warning = createMessage(msg, "ComController: IOException in handleUserAction: ", "command");
+			String warning = Message.createMessage(msg, "ComController: IOException in handleUserAction: ", "command");
 			Logger.log(Level.WARNING, warning);
 			System.out.println(warning);
 		}

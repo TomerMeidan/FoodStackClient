@@ -7,14 +7,13 @@ import org.json.simple.JSONObject;
 
 import clientSide.BranchManagerPortalView;
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
+import common.Message;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -29,7 +28,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -148,11 +146,11 @@ public class BranchManagerSupplierRgstrWindow {
 	 */
 	private VBox buildSupplierRow(JSONObject supplier) {
 
-		String firstName = Message.getValue(supplier, "first name");
-		String lastName = Message.getValue(supplier, "last name");
-		String supplierName = Message.getValue(supplier, "supplier name");
-		String phoneNumber = Message.getValue(supplier, "phone number");
-		String email = Message.getValue(supplier, "email");
+		String firstName = Message.getValueString(supplier, "first name");
+		String lastName = Message.getValueString(supplier, "last name");
+		String supplierName = Message.getValueString(supplier, "supplier name");
+		String phoneNumber = Message.getValueString(supplier, "phone number");
+		String email = Message.getValueString(supplier, "email");
 
 		VBox rowVBox = new VBox();
 		HBox rowHBox = new HBox();
@@ -328,10 +326,10 @@ public class BranchManagerSupplierRgstrWindow {
 	 * @author Roman Milman
 	 */
 	public void showPopup(JSONObject descriptor) {
-		String msg = Message.getValue(descriptor, "update");
+		String msg = Message.getValueString(descriptor, "update");
 
 		if (msg.equals("supplier has been registered")) {
-			registerButtonMap.get(Message.getValue(descriptor, "supplier name")).setDisable(true);
+			registerButtonMap.get(Message.getValueString(descriptor, "supplier name")).setDisable(true);
 			statusLabel.setTextFill(Paint.valueOf("green"));
 		}
 

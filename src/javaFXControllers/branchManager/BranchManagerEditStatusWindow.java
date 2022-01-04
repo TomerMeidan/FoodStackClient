@@ -7,15 +7,14 @@ import org.json.simple.JSONObject;
 
 import clientSide.BranchManagerPortalView;
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
+import common.Message;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,9 +24,7 @@ import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -195,9 +192,9 @@ public class BranchManagerEditStatusWindow {
 					statusLabel.setTextFill(Paint.valueOf("black"));	
 					
 					switchButton.setVisible(true);
-					String status = Message.getValue(selectedUser, "Status");
+					String status = Message.getValueString(selectedUser, "Status");
 
-					nameLabel.setText(Message.getValue(selectedUser, "Name"));
+					nameLabel.setText(Message.getValueString(selectedUser, "Name"));
 
 					switchFromLabel.setText("Switch from: " + status);
 					if (status.equals("active")) {
@@ -232,12 +229,12 @@ public class BranchManagerEditStatusWindow {
 
 			JSONObject tableRow = new JSONObject();
 
-			String name = Message.getValue(user, "name");
-			String phoneNumber = Message.getValue(user, "phone number");
-			String email = Message.getValue(user, "email");
-			String status = Message.getValue(user, "status");
-			String role = Message.getValue(user, "role");
-			String username = Message.getValue(user, "username");
+			String name = Message.getValueString(user, "name");
+			String phoneNumber = Message.getValueString(user, "phone number");
+			String email = Message.getValueString(user, "email");
+			String status = Message.getValueString(user, "status");
+			String role = Message.getValueString(user, "role");
+			String username = Message.getValueString(user, "username");
 
 			tableRow.put("Name", name);
 			tableRow.put("Phone number", phoneNumber);
@@ -315,8 +312,8 @@ public class BranchManagerEditStatusWindow {
 	@FXML
 	void onSwitch(ActionEvent event) {
 		
-		String key = Message.getValue(selectedUser, "Phone number") + Message.getValue(selectedUser, "Email")
-		+ Message.getValue(selectedUser, "Name");
+		String key = Message.getValueString(selectedUser, "Phone number") + Message.getValueString(selectedUser, "Email")
+		+ Message.getValueString(selectedUser, "Name");
 
 		if (isSwitched(key)) {
 			showPopup("This user has been registered allready");
@@ -356,11 +353,11 @@ public class BranchManagerEditStatusWindow {
 	 * @author Roman Milman
 	 */
 	public void showPopup(JSONObject descriptor) {
-		String msg = Message.getValue(descriptor, "update");
+		String msg = Message.getValueString(descriptor, "update");
 
 		if (msg.equals("user status has been changed")) {
-			String key = Message.getValue(descriptor, "phone number") + Message.getValue(descriptor, "email")
-					+ Message.getValue(descriptor, "name");
+			String key = Message.getValueString(descriptor, "phone number") + Message.getValueString(descriptor, "email")
+					+ Message.getValueString(descriptor, "name");
 			switchedUsers.add(key);
 			statusLabel.setTextFill(Paint.valueOf("green"));
 		}

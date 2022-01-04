@@ -7,27 +7,18 @@ import org.json.simple.JSONObject;
 
 import clientSide.HRPortalView;
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
+import common.Message;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import util.W4C;
 
@@ -160,10 +151,10 @@ public class HRRegisterEmployerWindow {
 
 			w4c = W4C.createW4C();
 
-			nameLabel.setText("Employer name: " + Message.getValue(employer, "employer name"));
-			creditLabel.setText("Credit: " + Message.getValue(employer, "credit"));
-			phoneNumberLabel.setText("Phone number: " + Message.getValue(employer, "phone number"));
-			emailLabel.setText("Email: " + Message.getValue(employer, "email"));
+			nameLabel.setText("Employer name: " + Message.getValueString(employer, "employer name"));
+			creditLabel.setText("Credit: " + Message.getValueString(employer, "credit"));
+			phoneNumberLabel.setText("Phone number: " + Message.getValueString(employer, "phone number"));
+			emailLabel.setText("Email: " + Message.getValueString(employer, "email"));
 			w4cLabel.setText("W4C: " + w4c);
 			balanceLabel.setText("Enter daily balance: ");
 		}
@@ -182,7 +173,7 @@ public class HRRegisterEmployerWindow {
 	@FXML
 	public void onRegisterButton(ActionEvent event) {
 		JSONObject employer = (JSONObject) employers.get(0);
-		String employerName = Message.getValue(employer, "employer name");
+		String employerName = Message.getValueString(employer, "employer name");
 
 		String balance = balanceTextArea.getText();
 
@@ -230,7 +221,7 @@ public class HRRegisterEmployerWindow {
 	 * @author Roman Milman
 	 */
 	public void showPopup(JSONObject descriptor) {
-		String msg = Message.getValue(descriptor, "update");
+		String msg = Message.getValueString(descriptor, "update");
 
 		if (msg.equals("employer has been registered")) {
 			registerButton.setDisable(true);

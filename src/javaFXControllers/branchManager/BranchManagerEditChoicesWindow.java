@@ -4,7 +4,6 @@ import org.json.simple.JSONObject;
 
 import clientSide.BranchManagerPortalView;
 import common.Logger;
-import common.Message;
 import common.Logger.Level;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

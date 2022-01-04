@@ -1,19 +1,11 @@
 package javaFXControllers.supplier;
-////
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import com.mysql.cj.x.protobuf.MysqlxCrud.Update;
 
 import clientSide.SupplierPortalView;
 import common.Logger;
@@ -22,18 +14,15 @@ import common.Message;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+////
 import javafx.fxml.FXML;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
@@ -46,6 +35,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -53,9 +43,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.scene.image.ImageView;
 /**
  * functionality of update menu action Add type, edit type, add meal (needs
  * enter to specified type), edit meal.
@@ -459,13 +447,13 @@ public class UpdateMenuWindow {
 			for (int i = 0; i < items.size(); i++) {
 				HBox h = new HBox();
 				JSONObject item = (JSONObject) items.get(i);
-				String itemName = Message.getValue(item, "itemName");
+				String itemName = Message.getValueString(item, "itemName");
 				if (itemName != null) {
 					Label itemLabel = new Label(itemName);
 					itemLabel.setPrefWidth(120);
 					itemLabel.setFont(new Font("verdana", 16));
 					h.getChildren().add(itemLabel);
-					Image img = new Image(Message.getValue(item, "imgMeal"));
+					Image img = new Image(Message.getValueString(item, "imgMeal"));
 					ImageView imgView = new ImageView(img);
 					imgView.setFitHeight(65);
 					imgView.setFitWidth(65);
@@ -479,10 +467,10 @@ public class UpdateMenuWindow {
 						public void handle(ActionEvent event) {
 							JSONObject json = new JSONObject();
 							json.put("command", "Edit meal button was pressed");
-							json.put("itemName", Message.getValue(item, "itemName"));
+							json.put("itemName", Message.getValueString(item, "itemName"));
 							json.put("itemType", itemType);
 							json.put("item", item);
-							json.put("imgMeal", Message.getValue(item, "imgMeal"));
+							json.put("imgMeal", Message.getValueString(item, "imgMeal"));
 							view.ready(json);
 						}
 					});
@@ -495,9 +483,9 @@ public class UpdateMenuWindow {
 						public void handle(ActionEvent event) {
 							JSONObject json = new JSONObject();
 							json.put("command", "Delete Meal Button was pressed");
-							json.put("itemID", Message.getValue(item, "itemID"));
+							json.put("itemID", Message.getValueString(item, "itemID"));
 							json.put("itemType", itemType);
-							json.put("itemName", Message.getValue(item, "itemName"));
+							json.put("itemName", Message.getValueString(item, "itemName"));
 							json.put("userID", userID);
 							json.put("numOfItems", numOfItems);
 							json.put("items", items);
@@ -646,8 +634,8 @@ public class UpdateMenuWindow {
 		Logger.log(Level.WARNING, "UpdateMenuWindow: showEditTypeDetails");
 		System.out.println("UpdateMenuWindow: showEditTypeDetails");
 		JSONObject json = new JSONObject();
-		String itemType = Message.getValue(descriptor, "itemType");
-		String imgType = Message.getValue(descriptor, "imgType");
+		String itemType = Message.getValueString(descriptor, "itemType");
+		String imgType = Message.getValueString(descriptor, "imgType");
 		VBox v = forEditType.get(itemType);
 
 		json.put("imgType", "typeImg/noImg.jpg");
@@ -744,7 +732,7 @@ public class UpdateMenuWindow {
 		Logger.log(Level.WARNING, "UpdateMenuWindow: afterPressedSaveEditType");
 		System.out.println("UpdateMenuWindow: afterPressedSaveEditType");
 
-		String feedback = Message.getValue(descriptor, "feedback");
+		String feedback = Message.getValueString(descriptor, "feedback");
 
 		boolean feedOK = (boolean) descriptor.get("feedOK");
 		Platform.runLater(() -> {
@@ -867,7 +855,7 @@ public class UpdateMenuWindow {
 	public void afterPressedSaveAddType(JSONObject descriptor) {
 		Logger.log(Level.WARNING, "UpdateMenuWindow: afterPressedSaveAddType");
 		System.out.println("UpdateMenuWindow: afterPressedSaveAddType");
-		String feedback = Message.getValue(descriptor, "feedback");
+		String feedback = Message.getValueString(descriptor, "feedback");
 		boolean feedOK = (boolean) descriptor.get("feedOK");
 		Platform.runLater(() -> {
 			feedAddType.setText(feedback);
@@ -968,7 +956,7 @@ public class UpdateMenuWindow {
 		forEdHBox.getChildren().add(price);
 		TextField priceField = new TextField();
 		priceField.setMaxWidth(80);
-		priceField.setText(Message.getValue(feature, "price"));
+		priceField.setText(Message.getValueString(feature, "price"));
 		forEdHBox.getChildren().add(priceField);
 		JSONObject forEditFeat = new JSONObject();
 		forEditFeat.put("delete", false);
@@ -1139,12 +1127,12 @@ public class UpdateMenuWindow {
 		ListView listView = new ListView();
 		Logger.log(Level.WARNING, "UpdateMenuWindow: showEditDishDetails");
 		System.out.println("UpdateMenuWindow: showEditDishDetails");
-		String itemName = Message.getValue(descriptor, "itemName");
+		String itemName = Message.getValueString(descriptor, "itemName");
 		JSONObject item = (JSONObject) descriptor.get("item");
-		json.put("imgMeal", Message.getValue(item, "imgMeal")); // default
+		json.put("imgMeal", Message.getValueString(item, "imgMeal")); // default
 		JSONArray mustEdit = new JSONArray();
 		JSONArray optionalEdit = new JSONArray();
-		String itemType = Message.getValue(descriptor, "itemType");
+		String itemType = Message.getValueString(descriptor, "itemType");
 		json.put("dishName", itemName);
 		Platform.runLater(() -> {
 			backButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -1169,7 +1157,7 @@ public class UpdateMenuWindow {
 					"mealImg/hotdog.png", "mealImg/meat.png", "mealImg/pizza.png", "mealImg/rise.png",
 					"mealImg/vegetable.png" };
 			ArrayList<String> imgName = buildArrayForImages(path);
-			Button imageGridB = buildGridImg(json, imgName, "imgMeal", Message.getValue(descriptor, "imgMeal"));
+			Button imageGridB = buildGridImg(json, imgName, "imgMeal", Message.getValueString(descriptor, "imgMeal"));
 			Tooltip.install(imageGridB, new Tooltip("Click here to select image"));
 			forEditHBox.getChildren().add(imageGridB);
 			HBox.setMargin(imageGridB, new Insets(0, 0, 0, 50));
@@ -1187,7 +1175,7 @@ public class UpdateMenuWindow {
 			forEditHBox.getChildren().add(price);
 			TextField priceField = new TextField();
 			priceField.setMaxWidth(80);
-			priceField.setText(Message.getValue(item, "itemPrice"));
+			priceField.setText(Message.getValueString(item, "itemPrice"));
 			forEditHBox.getChildren().add(priceField);
 			viewFeatures.getChildren().clear();
 
@@ -1213,9 +1201,9 @@ public class UpdateMenuWindow {
 				VBox opVb = new VBox();
 				Label feedOp = new Label();
 				opVb.getChildren().add(feedOp);
-				String nameOp = Message.getValue(option, "optional");
-				String priceOp = Message.getValue(option, "price");
-				String IDOp = Message.getValue(option, "opID");
+				String nameOp = Message.getValueString(option, "optional");
+				String priceOp = Message.getValueString(option, "price");
+				String IDOp = Message.getValueString(option, "opID");
 				RadioButton optionRb = new RadioButton(nameOp);
 				optionRb.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
@@ -1263,9 +1251,9 @@ public class UpdateMenuWindow {
 				VBox muVb = new VBox();
 				Label feedMu = new Label();
 				muVb.getChildren().add(feedMu);
-				String nameMu = Message.getValue(must, "must");
-				String priceMu = Message.getValue(must, "price");
-				String IDMu = Message.getValue(must, "muID");
+				String nameMu = Message.getValueString(must, "must");
+				String priceMu = Message.getValueString(must, "price");
+				String IDMu = Message.getValueString(must, "muID");
 				RadioButton mustRb = new RadioButton((String) must.get("must"));
 				mustRb.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
@@ -1328,8 +1316,8 @@ public class UpdateMenuWindow {
 					json.put("newDishName", nameField.getText());
 					json.put("newDishPrice", priceField.getText());
 					json.put("userID", userID);
-					json.put("itemID", Message.getValue(item, "itemID"));
-					json.put("itemType", Message.getValue(descriptor, "itemType"));
+					json.put("itemID", Message.getValueString(item, "itemID"));
+					json.put("itemType", Message.getValueString(descriptor, "itemType"));
 					json.put("menu", menu);
 					json.put("selectedItem", item);
 					json.put("optionalEdit", editOpArr);
@@ -1363,7 +1351,7 @@ public class UpdateMenuWindow {
 		JSONObject menuOb = (JSONObject) descriptor.get("menu");
 		showMenuDescriptor = menuOb;
 		menu = (HashMap<String, JSONArray>) showMenuDescriptor.get("menuList");
-		String feedback = Message.getValue(descriptor, "feedback");
+		String feedback = Message.getValueString(descriptor, "feedback");
 		Label feedbackShow = new Label(feedback);
 		feedbackShow.setFont(Font.font("verdana", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
 		boolean feedOK = (boolean) descriptor.get("feedOK");
@@ -1392,7 +1380,7 @@ public class UpdateMenuWindow {
 		Logger.log(Level.WARNING, "UpdateMenuWindow: showAddMealDetails");
 		System.out.println("UpdateMenuWindow: showAddMealDetails");
 		ListView listView = new ListView();
-		String itemType = Message.getValue(descriptor, "itemType");
+		String itemType = Message.getValueString(descriptor, "itemType");
 		String imgType = (String) ((JSONObject) menu.get(itemType).get(0)).get("imgType");
 		JSONObject json = new JSONObject();
 		mustFeat.clear();
@@ -1511,7 +1499,7 @@ public class UpdateMenuWindow {
 		System.out.println("UpdateMenuWindow: responseForDeleteDish");
 		Platform.runLater(() -> {
 
-			showItemNames(Message.getValue(descriptor, "itemType"));
+			showItemNames(Message.getValueString(descriptor, "itemType"));
 
 		});
 		JSONObject menuOb = (JSONObject) descriptor.get("menu");
@@ -1532,12 +1520,12 @@ public class UpdateMenuWindow {
 	public void responseForAddFeat(JSONObject descriptor) {
 		Logger.log(Level.WARNING, "UpdateMenuWindow: responseForAddFeat");
 		System.out.println("UpdateMenuWindow: responseForAddFeat");
-		String feedback = Message.getValue(descriptor, "feedback");
-		String feature = Message.getValue(descriptor, "feature");
-		String price = Message.getValue(descriptor, "price");
+		String feedback = Message.getValueString(descriptor, "feedback");
+		String feature = Message.getValueString(descriptor, "feature");
+		String price = Message.getValueString(descriptor, "price");
 		HashMap<String, String> map = (HashMap<String, String>) descriptor.get("map");
 
-		String key = Message.getValue(descriptor, "key");
+		String key = Message.getValueString(descriptor, "key");
 		if (key.equals("Must"))
 			mustFeat = map;
 		if (key.equals("Optional"))
@@ -1579,12 +1567,12 @@ public class UpdateMenuWindow {
 		Logger.log(Level.WARNING, "UpdateMenuWindow: responseForEditFeat");
 		System.out.println("UpdateMenuWindow: responseForEditFeat");
 		JSONArray editFeat = (JSONArray) descriptor.get("editFeat");
-		String key = Message.getValue(descriptor, "key");
+		String key = Message.getValueString(descriptor, "key");
 		HashMap<String, String> map = (HashMap<String, String>) descriptor.get("map");
-		String feedback = Message.getValue(descriptor, "feedback");
-		String feature = Message.getValue(descriptor, "feature");
-		String oldName = Message.getValue(descriptor, "oldName");
-		String price = Message.getValue(descriptor, "price");
+		String feedback = Message.getValueString(descriptor, "feedback");
+		String feature = Message.getValueString(descriptor, "feature");
+		String oldName = Message.getValueString(descriptor, "oldName");
+		String price = Message.getValueString(descriptor, "price");
 		Platform.runLater(() -> {
 
 			VBox viewfeed = feedEditFeatV.get(oldName);

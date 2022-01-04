@@ -3,6 +3,9 @@ package javaFXControllers.branchManager;
 import org.json.simple.JSONObject;
 
 import clientSide.BranchManagerPortalView;
+import common.Logger;
+import common.Logger.Level;
+import common.Message;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,9 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import common.Logger;
-import common.Logger.Level;
-import common.Message;
 
 /**
  * BranchManagerHomePageWindow
@@ -77,8 +77,8 @@ public class BranchManagerHomePageWindow {
 				System.out.println("BranchManagerHomePage: exception in showWindow");
 			}
 			try {
-			welcomeLabel.setText("Welcome, " + Message.getValue(descriptor, "FirstName") + " "
-					+ Message.getValue(descriptor, "LastName"));
+			welcomeLabel.setText("Welcome, " + Message.getValueString(descriptor, "FirstName") + " "
+					+ Message.getValueString(descriptor, "LastName"));
 
 			primaryStage.setScene(scene);
 			primaryStage.show();

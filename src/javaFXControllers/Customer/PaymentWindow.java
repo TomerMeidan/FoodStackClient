@@ -10,10 +10,14 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import clientSide.CustomerPortalView;
-import clientSide.SupplierPortalView;
+import common.DateParser;
+import common.Logger;
+import common.Logger.Level;
+import common.Meal;
+import common.Message;
+import common.OptionalFeature;
+import common.Order;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,7 +27,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
@@ -37,13 +40,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import util.DateParser;
-import util.Logger;
-import util.Meal;
-import util.Message;
-import util.OptionalFeature;
-import util.Order;
-import util.Logger.Level;
 
 /**
  *  PaymentWindow
@@ -504,14 +500,17 @@ public class PaymentWindow {
 	 */
 	public ImageView getIMG(String name) {
 		Image img;
-		try {
-			img = new Image(name);
-		} catch (IllegalArgumentException e) {
+		if (name != null) {
+			try {
+				img = new Image(name);
+			} catch (IllegalArgumentException e) {
+				img = new Image("/images/not available.jpg");
+			}
+		} else
 			img = new Image("/images/not available.jpg");
-		}
 		ImageView imgView = new ImageView(img);
-		imgView.setFitHeight(40);
-		imgView.setFitWidth(40);
+		imgView.setFitHeight(100);
+		imgView.setFitWidth(100);
 		imgView.setPreserveRatio(true);
 		return imgView;
 	}

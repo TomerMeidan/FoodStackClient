@@ -91,12 +91,11 @@ public class CustomerWindow {
 	}
 
 	/**
-	 * showWindow
-	 * 
-	 * This method sets a welcome message on the screen
-	 * This method calls Platform.runLater() to add javaFX task.
-	 * This method builds the scene and sets to primaryStage.
-	 * This method announces to server side "ready" after showing window.
+	 * Present an empty window of "Customer Window", and send a message to server side
+	 * <p>
+	 * Message sent as JSON, contains keys:<br>
+	 * "command", value "home page is ready"
+	 * "home page", "Customer"
 	 */
 	public void showWindow() {
 		// log

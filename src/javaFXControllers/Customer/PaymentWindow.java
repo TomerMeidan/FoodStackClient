@@ -45,6 +45,15 @@ import util.OptionalFeature;
 import util.Order;
 import util.Logger.Level;
 
+/**
+ *  PaymentWindow
+ * 
+ * This class is the javaFX controller for PaymentWindowTemplate.fxml This class
+ * holds primaryStage, scene, view.
+ * 
+ * @author mosa
+ * @version 3/1/2022
+ */
 @SuppressWarnings("unchecked")
 public class PaymentWindow {
 	private final static String FOLDER_NAME = "/images/";
@@ -55,7 +64,7 @@ public class PaymentWindow {
 	private JSONObject order;
 	int finalCost; //cost of the order after discount
 	boolean businessCustomer;
-	int refBalance;
+	int refBalance; 
 	int leftToPay; // how much the customer has to pay after using refund balance
 
 	@FXML
@@ -142,6 +151,15 @@ public class PaymentWindow {
 	@FXML
 	private Label refBalanceLbl;
 
+	
+	/**
+	 * init
+	 * 
+	 * This method initializes the needed parameters for this controller.
+	 * @param VBox paymentHBox
+	 * @param Stage primaryStage
+	 * @param CustomerPortalView view
+	 */
 	public void init(HBox paymentHBox, Stage primaryStage, CustomerPortalView view) {
 		this.paymentHBox = paymentHBox;
 		this.primaryStage = primaryStage;
@@ -151,7 +169,7 @@ public class PaymentWindow {
 		regRB.setToggleGroup(group);
 		userLabel.setText("Welcome, "+view.getFirstName());
 
-		/////// load icons, can be removed if scenebuilder works////////////
+		/////// load icons
 		Image img = new Image(FOLDER_NAME + "Foodstack.jpg");
 		foodStackIcon.setImage(img);
 		img = new Image(FOLDER_NAME + "Home.jpg");
@@ -171,11 +189,8 @@ public class PaymentWindow {
 		paymentIcon.setBlendMode(BlendMode.LIGHTEN);
 		img = new Image(FOLDER_NAME + "RegularAcc.jpg");
 		regularImage.setImage(img);
-		// regularImage.setBlendMode(BlendMode.LIGHTEN);
 		img = new Image(FOLDER_NAME + "BusinessAcc.jpg");
 		businessImage.setImage(img);
-		// businessImage.setBlendMode(BlendMode.LIGHTEN);
-
 		////////
 	}
 
@@ -328,6 +343,10 @@ public class PaymentWindow {
 
 	}
 
+	/**Method to build a list view of the selected meals 
+	 * @param order
+	 * @return List View of the selected meals in the order
+	 */
 	public ListView<Label> createListViewOfOrder(Order order) {
 		ListView<Label> lv = new ListView<>();
 		ArrayList<Meal> mealList = order.getMeals();
@@ -362,11 +381,20 @@ public class PaymentWindow {
 		return lv;
 	}
 
+	/**
+	 * Method called when a payment method (radio button) is chosen to enable confirm button
+	 */
 	@FXML
-	public void chosePayment() {
+	public void chosePaymentMethod() {
 		confirmButton.disableProperty().set(false);
 	}
 
+	/**
+	 * Method called when "Confirm" button is clicked<br>
+	 * Send message to server side as JSONObject, keys:<br>
+	 * "order", has value JSONObject containing all the necessary information about that the order
+	 * "command", "Confirm button was clicked"
+	 */
 	@FXML
 	public void clickConfirmButton() {
 		JSONObject json = new JSONObject();
@@ -394,26 +422,6 @@ public class PaymentWindow {
 
 	}
 
-//	public static void addTextLimiter(final TextField tf, final int maxLength) {
-//		tf.textProperty().addListener(new ChangeListener<String>() {
-//			@Override
-//			public void changed(final ObservableValue<? extends String> ov, final String oldValue,
-//					final String newValue) {
-//				if (tf.getText().length() > maxLength) {
-//					String s = tf.getText().substring(0, maxLength);
-//					tf.setText(s);
-//				}
-//
-//				if (tf.getText().isEmpty())
-//					;
-//				else if (!(tf.getText().matches("[0-9]+"))) {
-//					String s = tf.getText().substring(0, tf.getText().length() - 1);
-//					tf.setText(s);
-//				}
-//			}
-//		});
-//	}
-
 	public boolean checkEmail() {
 		String email = emailTxt.getText();
 		Pattern pattern = Pattern.compile("^(.+)@(.+)$");
@@ -433,6 +441,10 @@ public class PaymentWindow {
 		return false;
 	}
 
+	/**
+	 * Method called when "Back" button is clicked<br>
+	 * Shows Delivery Window
+	 */
 	@FXML
 	public void onBackButton() {
 		view.getOrderWindow().showWindow();
@@ -445,6 +457,10 @@ public class PaymentWindow {
 		view.ready(json);
 	}
 
+	/**
+	 * When order is successfuly processed, build a new GUI to display<br>
+	 * Contain button to go back to homepage<br>
+	 */
 	public void showSuccessWindow() {
 		Platform.runLater(() -> {
 			backButton.disableProperty().set(true);
@@ -500,6 +516,12 @@ public class PaymentWindow {
 		return imgView;
 	}
 
+	/**Method called by server side when payment fails<br>
+	 * Pop up a dialog window asking if user would like to pay using his credit aswell<br>
+	 * 2 buttons: "yes", "no"
+	 * 
+	 * @param json
+	 */
 	public void orderFailPopUp(JSONObject json) {
 		Long currentBalance = Message.getValueLong(json, "currentBalance");
 		Platform.runLater(() -> {
@@ -546,6 +568,9 @@ public class PaymentWindow {
 		});
 	}
 
+	/**general pop up message
+	 * @param msg
+	 */
 	public void showPopup(String msg) {
 		Platform.runLater(() -> {
 			Stage window = new Stage();
@@ -580,7 +605,6 @@ public class PaymentWindow {
 
 	/**
 	 * Method to check if (difference) time has passed from start to end
-	 * 
 	 * @param start
 	 * @param end
 	 * @param difference (minutes)

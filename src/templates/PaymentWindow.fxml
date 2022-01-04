@@ -89,6 +89,9 @@
                      </children>
                   </HBox>
                </children>
+               <VBox.margin>
+                  <Insets top="-10.0" />
+               </VBox.margin>
             </VBox>
             <HBox prefHeight="44.0" prefWidth="233.0" style="-fx-background-color: #F24444;">
                <children>
@@ -115,7 +118,7 @@
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets top="-20.0" />
+                  <Insets top="-0.0" />
                </VBox.margin>
             </HBox>
          </children>
@@ -187,7 +190,7 @@
                         </Label>
                         <HBox prefHeight="78.0" prefWidth="239.0">
                            <children>
-                              <RadioButton fx:id="regRB" mnemonicParsing="false" onAction="#chosePayment">
+                              <RadioButton fx:id="regRB" mnemonicParsing="false" onAction="#chosePaymentMethod">
                                  <HBox.margin>
                                     <Insets left="50.0" top="32.5" />
                                  </HBox.margin>
@@ -272,7 +275,7 @@
                         </Label>
                         <HBox prefHeight="78.0" prefWidth="239.0">
                            <children>
-                              <RadioButton fx:id="busRB" mnemonicParsing="false" onAction="#chosePayment">
+                              <RadioButton fx:id="busRB" mnemonicParsing="false" onAction="#chosePaymentMethod">
                                  <HBox.margin>
                                     <Insets left="65.0" top="32.5" />
                                  </HBox.margin>

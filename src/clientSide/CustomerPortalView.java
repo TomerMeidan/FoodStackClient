@@ -19,7 +19,7 @@ import util.Message;
 import common.Logger.Level;
 /**
  * Class used implement "PortalViewInterface" Loads the relevant templates and information that
- * the customer can see, also handles messages from/to controller
+ * the customer can see, also handles messages from/to server
  * @author Mosa Hadish
  * @version 3/1/2021
  */
@@ -78,10 +78,17 @@ public class CustomerPortalView implements PortalViewInterface {
 				customerWindow.scanFail();
 			else if (Message.getValueString(descriptor, "update").equals("Order is ready"))
 				customerWindow.orderReadyPopup(descriptor);
-		
+			else if (Message.getValueString(descriptor, "update").equals("W4C found")) {
+				address = Message.getValueString(descriptor, "address");
+				phoneNumber = Message.getValueString(descriptor, "phoneNumber");
+				creditNumber = Message.getValueString(descriptor, "creditNumber");
+				email = Message.getValueString(descriptor, "email");
+				ID = Message.getValueString(descriptor, "ID");
+				customerWindow.scanSuccess();
+			}
 			else if (Message.getValueString(descriptor, "update").equals("Go back to homepage")) {
-				loadOrderWindow();
-				loadPaymentWindow();
+				loadOrderWindow(); //reload because changing a lot
+				loadPaymentWindow();//reload because changing a lot
 				customerWindow.showWindow();
 			}
 			// orderWindow
@@ -122,14 +129,6 @@ public class CustomerPortalView implements PortalViewInterface {
 				viewOrderWindow.displayOrderInformation();
 			else if (Message.getValueString(descriptor, "update").equals("Refresh View Window")) {
 				viewOrderWindow.refreshWindowIfShowing(descriptor);
-			}
-			else if (Message.getValueString(descriptor, "update").equals("W4C found")) {
-				address = Message.getValueString(descriptor, "address");
-				phoneNumber = Message.getValueString(descriptor, "phoneNumber");
-				creditNumber = Message.getValueString(descriptor, "creditNumber");
-				email = Message.getValueString(descriptor, "email");
-				ID = Message.getValueString(descriptor, "ID");
-				customerWindow.scanSuccess();
 			}
 		default:
 			break;

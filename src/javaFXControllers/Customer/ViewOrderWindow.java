@@ -398,7 +398,6 @@ public class ViewOrderWindow {
 				}
 
 			});
-
 			VBox layout = new VBox(10);
 			layout.getChildren().addAll(label, b);
 			layout.setAlignment(Pos.CENTER);
@@ -410,6 +409,11 @@ public class ViewOrderWindow {
 			order.setStatus("Delivered");
 			int index = tableView.getSelectionModel().getSelectedIndex();	
 			tableView.getItems().remove(index);
+			if(tableView.getItems().isEmpty()) {
+				tableView.getSelectionModel().clearSelection();
+				viewButton.setDisable(true);
+				approveButton.setDisable(true);
+			}
 		});
 	}
 	

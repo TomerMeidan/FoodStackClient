@@ -56,7 +56,7 @@ import util.DateParser;
 import util.Meal;
 
 /**
- *  OrderWindow
+ * OrderWindow
  * 
  * This class is the javaFX controller for OrderWindowTemplate.fxml This class
  * holds primaryStage, scene, view.
@@ -1081,8 +1081,10 @@ public class OrderWindow {
 
 	}
 
-	/**Method to append the hours from textfield on delivery window with the minutes
-	 * @param hours (03)
+	/**
+	 * Method to append the hours from textfield on delivery window with the minutes
+	 * 
+	 * @param hours   (03)
 	 * @param minutes (20)
 	 * @return hours:minutes (from example 03:20)
 	 */
@@ -1092,7 +1094,9 @@ public class OrderWindow {
 		return hours + ":" + minutes;
 	}
 
-	/**Check that input phone is not empty, and is 10 characters long
+	/**
+	 * Check that input phone is not empty, and is 10 characters long
+	 * 
 	 * @param phoneNumber
 	 * @return true if not empty and is 10 characters, else false
 	 */
@@ -1104,7 +1108,9 @@ public class OrderWindow {
 		return true;
 	}
 
-	/** Check that input recipient is not empty
+	/**
+	 * Check that input recipient is not empty
+	 * 
 	 * @param recipient
 	 * @return true if not empty, else false
 	 */
@@ -1116,7 +1122,9 @@ public class OrderWindow {
 		return true;
 	}
 
-	/**Check that input address is not empty
+	/**
+	 * Check that input address is not empty
+	 * 
 	 * @param address
 	 * @return true if not empty, else false
 	 */
@@ -1128,7 +1136,9 @@ public class OrderWindow {
 		return true;
 	}
 
-	/**Check that input dueDate is correct
+	/**
+	 * Check that input dueDate is correct
+	 * 
 	 * @param dueDate
 	 * @return
 	 */
@@ -1150,24 +1160,38 @@ public class OrderWindow {
 		String dueMinutes = DateParser.dateParser(dueDate, "minutes");
 		String dueDay = DateParser.dateParser(dueDate, "day");
 
-		if (Integer.valueOf(dueHour) > 23)
-			return false;
-		if (Integer.valueOf(dueMinutes) >= 60)
-			return false;
-		if (!(dueYear.equals(currentYear))) {
-			System.out.println("Please choose a date from current year");
+		if (dueHour.length() < 2 || dueMinutes.length() < 2) {
+			feedBackLabel.setText("Please enter 2 digits in hours and minutes!");
+			feedBackLabel.setVisible(true);
 			return false;
 		}
+		if (Integer.valueOf(dueHour) > 23 || Integer.valueOf(dueHour) < 0) {
+			feedBackLabel.setText("Hours must be between 0-23!");
+			feedBackLabel.setVisible(true);
+			return false;
+		}
+		if (Integer.valueOf(dueMinutes) >= 60 || Integer.valueOf(dueMinutes) < 0) {
+			feedBackLabel.setText("Minutes must be between 0-60!");
+			feedBackLabel.setVisible(true);
+			return false;
+		}
+		if (!(dueYear.equals(currentYear))) {
+			System.out.println("Please choose a date from current year");
+			feedBackLabel.setText("Please choose a date from current year!");
+			feedBackLabel.setVisible(true);
+			return false;
+		}
+
 		if (Integer.valueOf(dueDay) == Integer.valueOf(currentDay)) {
 			if (Integer.valueOf(dueHour) < Integer.valueOf(currentHour)) {
-				feedBackLabel.setText("That time is not available!");
+				feedBackLabel.setText("Time can't be in the past!");
 				feedBackLabel.setVisible(true);
 				System.out.println("That time is not available");
 				return false;
 			}
 			if (Integer.valueOf(dueHour) == Integer.valueOf(currentHour))
 				if (Integer.valueOf(dueMinutes) < Integer.valueOf(currentMinutes)) {
-					feedBackLabel.setText("That time is not available!");
+					feedBackLabel.setText("Time can't be in the past!");
 					feedBackLabel.setVisible(true);
 					System.out.println("That time is not available");
 					return false;
@@ -1175,7 +1199,7 @@ public class OrderWindow {
 		}
 		return flag;
 	}
-	
+
 	public boolean checkDueTime(String dueTime) {
 		if ((dueTime.isEmpty())) {
 			System.out.println("Please enter a time");

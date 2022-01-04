@@ -505,7 +505,6 @@ public class UpdateStatusWindow {
 	*/
 	public void alertSupplier(JSONObject descriptor) {
 		JSONObject json = new JSONObject();
-		JSONObject order = (JSONObject) descriptor.get("orderDetails");
 		json.put("command",  "Order list presented is ready");
 		json.put("supplierID", userID);
 		view.ready(json);

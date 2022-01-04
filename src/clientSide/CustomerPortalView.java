@@ -2,21 +2,19 @@ package clientSide;
 
 import java.io.IOException;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import clientSide.LoginPortalView;
+
+import common.Logger;
+import common.Logger.Level;
 import javaFXControllers.Customer.CustomerWindow;
+import javaFXControllers.Customer.OrderWindow;
 import javaFXControllers.Customer.PaymentWindow;
 import javaFXControllers.Customer.ViewOrderWindow;
-import javaFXControllers.Customer.OrderWindow;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import common.Logger;
 import util.Message;
-import common.Logger.Level;
 /**
  * Class used implement "PortalViewInterface" Loads the relevant templates and information that
  * the customer can see, also handles messages from/to server

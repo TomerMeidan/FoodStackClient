@@ -142,10 +142,10 @@ public class UpdateMenuWindow {
 		sidePaneMeal.setStyle("-fx-background-color:  #F2C12E;");
 		paneType.setStyle("-fx-background-color: #D93B48;");
 		paneMeal1.setStyle("-fx-background-color:   #F24444;");
-		Image img = new Image("templates/Icons/Types.jpeg");
-		imageType.setImage(img);
-		img = new Image("templates/Icons/MealsS.jpeg");
-		imageMeals.setImage(img);
+//		Image img = new Image("templates/Icons/Types.jpeg");
+//		imageType.setImage(img);
+//		img = new Image("templates/Icons/MealsS.jpeg");
+//		imageMeals.setImage(img);
 
 	}
 	
@@ -157,10 +157,10 @@ public class UpdateMenuWindow {
 		sidePaneType.setStyle("-fx-background-color:  #F2C12E;");
 		paneMeal1.setStyle("-fx-background-color: #D93B48;");
 		paneType.setStyle("-fx-background-color:   #F24444;");
-		Image img = new Image("templates/Icons/TypesS.jpeg");
-		imageType.setImage(img);
-		img = new Image("templates/Icons/Meals.jpeg");
-		imageMeals.setImage(img);
+//		Image img = new Image("templates/Icons/TypesS.jpeg");
+//		imageType.setImage(img);
+//		img = new Image("templates/Icons/Meals.jpeg");
+//		imageMeals.setImage(img);
 	}
 
 	/**

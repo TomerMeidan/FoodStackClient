@@ -20,8 +20,9 @@ public class BMClient extends Application {
 		// log
 		System.out.println("BMClient: Logger initialized");
 
-		// Launch() is blocking
-	//	DEFAULT_IP = args[0];
+		//Launch() is blocking
+		if ( args.length > 0)
+			DEFAULT_IP = args[0];
 		launch();
 		
 		// log

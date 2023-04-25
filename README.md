@@ -1,4 +1,4 @@
-# FoodStackClient
+# FoodStack Client Side
 ## About
 The Client Side is responsible for providing a user interface for the system, 
 allowing users to interact with the system and perform various operations such as placing orders and viewing reports.
